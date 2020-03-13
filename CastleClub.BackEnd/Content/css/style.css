@@ -1,0 +1,370 @@
+body {
+    background-color:#FFF;
+    margin:0px;
+    font-size: 11px; 
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+option, select, input, text, textarea, submit, td, span, li, p {
+    color: #444;
+    font-size: 11px;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+select {
+    height: 19px;
+    line-height: 13px;
+    margin: 2px;
+    padding: 1px;
+    border: 1px solid #999;
+    width: 159px;
+}
+
+input[type=text] {
+    height: 15px;
+    line-height: 13px;
+    margin: 2px;
+    padding: 1px;
+    border: 1px solid #999;
+    width: 155px;
+}
+
+.field-validation-error {
+    font-weight: bold;
+    color: red;
+}
+
+form .input-validation-error {
+    background-color: #FFD7D7 !important;
+    border: 1px solid #FF0000;
+}
+
+.SiteTitle {
+    font-weight: bold;
+    color: #0000FF;
+    text-decoration: none;
+}
+
+.headerTable {
+    position: fixed; top: 0; left: 0;
+    height:68px;
+    width:100%;
+    background-image:url("/Content/images/gradient.jpg");
+    border-spacing: 0px; 
+    border-collapse: collapse;
+    z-index: 500;
+}
+
+.menuTable {
+    width:100%;
+    background-color:#4379C1;
+    height:20px;
+}
+
+.renderBody {
+    padding: 10px;
+    margin-top: 68px;
+    margin-bottom: 24px;
+}
+
+.footerTable {
+     height: 24px;
+     width: 100%;
+     background-image:url("/Content/images/gradient.jpg");
+     position: fixed; bottom: 0; left: 0;
+}
+
+.pageTitle {
+    padding-left: 10px;
+    padding-bottom: 15px;
+    padding-top: 10px;
+    font-weight: bold;
+    color: #444;
+}
+
+.tableTitle {
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+    color: #444444;
+    background-color:#EBEBEB;
+}
+
+/* Menu */
+
+nav {
+  background-color:#4379C1;
+  display: block;
+  overflow: hidden;
+  width: 100%; 
+  font-weight: 300;
+  font-size: 15px;
+}
+
+  nav ul {
+    margin: 0;
+    padding: 0;
+  }
+
+    nav ul li {
+        display: inline-block;
+        list-style-type: none;
+      
+        -webkit-transition: all 0.2s;
+        -moz-transition: all 0.2s;
+        -ms-transition: all 0.2s;
+        -o-transition: all 0.2s;
+        transition: all 0.2s; 
+    }
+      
+      nav > ul > li > a > .caret {
+        border-top: 4px solid #aaa;
+        border-right: 4px solid transparent;
+        border-left: 4px solid transparent;
+        content: "";
+        display: inline-block;
+        height: 0;
+        width: 0;
+        vertical-align: middle;
+  
+        -webkit-transition: color 0.1s linear;
+     	-moz-transition: color 0.1s linear;
+       	-o-transition: color 0.1s linear;
+        transition: color 0.1s linear; 
+      }
+
+      nav > ul > li > a {
+        color: #fff;
+        display: block;
+        line-height: 24px;
+        padding: 0 10px;
+        text-decoration: none;
+      }
+
+        nav > ul > li:hover {
+          background-color: #36619A;
+        }
+      
+      nav > ul > li > div {
+        background-color:White;
+        border: solid #ddd;
+        border-width: 1px;
+        display: none;
+        margin: 0;
+        opacity: 0;
+        position: absolute;
+        width: 180px;
+        visibility: hidden;
+	    z-index: 100;
+  
+        -webkit-transiton: opacity 0.2s;
+        -moz-transition: opacity 0.2s;
+        -ms-transition: opacity 0.2s;
+        -o-transition: opacity 0.2s;
+        -transition: opacity 0.2s;
+      }
+
+        nav > ul > li:hover > div {
+          display: block;
+          opacity: 1;
+          visibility: visible;
+        }
+
+          nav > ul > li > div ul > li {
+            display: block;
+          }
+
+            nav > ul > li > div ul > li > a {
+              color:#5588bb;
+              display: block;
+              padding: 12px 5px;
+              text-decoration: none;
+            }
+
+              nav > ul > li > div ul > li:hover > a {
+                background-color:#EEE;
+                color:#285D9F;
+              }
+
+/* Account */
+
+.loginDiv {
+    width: 435px; 
+    padding: 55px; 
+    margin-left: auto; 
+    margin-right: auto;
+    margin-top: 55px;
+    border: solid 2px #EEE;
+}
+
+.loginBlueHeaderText {
+    padding: 5px;
+    font-weight: bold;
+    color: #444444;
+    background-color:#6487DB;
+}
+
+/* Home */
+
+.homeTitleSection {
+    text-align: right;
+    font-weight: bold;
+    color: #444444;
+    background-color:#EBEBEB;
+}
+
+.homeSummaryRow {
+    background-color: #f9f9f9;
+}
+
+    .homeSummaryRow:hover {
+        background-color: #E0E0E0;
+        cursor: pointer;
+    }
+
+/* Report */
+
+.reportsTableName {
+    font-weight: bold;
+    color: #444;
+}
+
+.reportsTable {
+    border: 1px solid #FFF;
+    border-collapse: collapse;
+    width: 100%; 
+    margin-bottom: 20px;
+}
+
+.reportsHeaderRow {
+    background-color: #DDD;
+    font-weight: bold;
+    border: 1px solid #FFF;
+    text-align: center;
+}
+
+.reportsRow {
+    border: 1px solid #FFF;
+    text-align: center;
+}
+
+    .reportsRow:nth-child(even) {
+        background-color: #EEE;
+    }
+
+/* Subscriptions */
+
+.subscriptionsRow {
+    border: 1px solid #FFF;
+    height: 24px;
+}
+
+    .subscriptionsRow:nth-child(even) {
+        background-color: #F0F8FF;
+    }
+
+    .subscriptionsRow:hover {
+        background-color: #E0E0E0;
+        cursor: pointer;
+    }
+
+.subscriptionsCustomerText {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.subscriptionsCustomerDataText {
+    font-weight: bold;
+    color: #000080;
+    font-size: 13px;
+    margin-right: 20px;
+}
+
+.subscriptionsCustomerInfoText {
+    padding-right: 30px; 
+    font-weight: bold; 
+    text-align: right; 
+    width: 50%
+}
+
+.subscriptionInvoiceTable {
+    border: 1px solid #FFF;
+    border-collapse: collapse;
+}
+
+.subscriptionsInvoiceHeaderRow {
+    background-color: #DDD;
+    font-weight: bold;
+    border: 1px solid #FFF;
+    text-align: center;
+}
+
+.subscriptionsInvoiceCell {
+    border: 1px solid #FFF;
+    text-align: center;
+}
+
+.subscriptionsInvoiceRow {
+    height: 34px;
+}
+    .subscriptionsInvoiceRow:nth-child(4n) {
+        background-color: #EEE;
+    }
+
+    .subscriptionsInvoiceRow:hover {
+        background-color: #AAA;
+        cursor: pointer;
+    }
+
+.subscriptionTrnTable {
+    border-collapse: collapse;
+}
+
+.subscriptionsTrnHeaderRow {
+    background-color: #A6C9FF;
+    font-weight: bold;
+    border-left: 1px solid #FFF;
+    text-align: center;
+}
+
+.subscriptionsTrnRow {
+        border-top: 1px solid #FFF;
+    border-left: 1px solid #FFF;
+    text-align: center;
+}
+
+    .subscriptionsTrnRow:nth-child(odd) {
+        background-color: #CEEBFF;
+    }
+
+    .subscriptionsTrnRow:nth-child(even) {
+        background-color: #E6F5FF;
+    }
+
+/* Users */
+
+.usersTable {
+    border: 1px solid #FFF;
+    border-collapse: collapse;
+    min-width: 100%;
+}
+
+.usersHeaderCell {
+    background-color: #DDD;
+    font-weight: bold;
+    border: 1px solid #FFF;
+    text-align: center;
+}
+
+.usersCell {
+    border: 1px solid #FFF;
+    text-align: center;
+    height: 25px;
+}
+
+.usersRow {
+}
+
+    .usersRow:nth-child(odd) {
+        background-color: #EEE;
+    }

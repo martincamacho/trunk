@@ -1,0 +1,443 @@
+﻿@model List<CastleClub.DataTypes.CustomerDT>
+@using CastleClub.DataTypes;
+@using CastleClub.DataTypes.Enums;
+@{
+    Layout = null;
+}
+@if (Model.Count > 0)
+{
+    <table width="100%">
+        <tr>
+            <td>
+                <b>Page: </b>
+                @for (int i = 0; i < ViewBag.PageCount; i++)
+                {
+                    if (i != ViewBag.CurrentPage - 1)
+                    {
+                        string namePage = "page" + (i + 1).ToString();
+                        int page = i + 1;
+                        <a name="@namePage" href="#">@page</a>
+                    }
+                    else
+                    {
+                        int page = i + 1;
+                        <label>@page</label>
+                    }
+                }
+                @if (ViewBag.CurrentPage != 0)
+                {
+                    <a name="all" href="#">all</a>
+                }
+                else
+                {
+                    <label>all</label>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td width="100%">
+                <table cellspacing="1" cellpadding="2" border="0" width="100%" style="vertical-align:top;">
+                    <tr style="background-color:#EEEEEE">
+                        <th>Customer ID</th>
+                        <th>Name</th>                        
+                        <th>Email</th>
+                        <th>Status</th>
+
+                        <th>Amount</th>
+                        <th>Message</th>
+                        
+                        <th>Failed Bill Date</th>
+                        <th>Next Bill Date</th>                      
+                        <th>Failed Tries</th>
+                        <th>Billing History</th>
+                        <th>Try Charge Again</th>
+                        <th>Cancel</th>
+                        <th>Club</th>
+                        <th>Member Since</th>                        
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="datarow_@item.Id"style="font-size: 11px; font-family: Verdana,Geneva,Arial,Helvetica,sans-serif; background-color: #EEEEEE">
+                            <td align="center" onclick="showHideTransactionTable('last_@item.LastInvoice')">
+                                @item.Id
+                                <br />
+                                @item.CreatedAt.ToString("MM/dd/yyyy")
+
+                            </td>
+                            <td align="center" onclick="showHideTransactionTable('last_@item.LastInvoice')">
+                                @{string fullName = item.FirstName + " " + item.LastName;}
+                                @fullName
+                            </td>
+                           
+                            <td align="center" onclick="showHideTransactionTable('last_@item.LastInvoice')">
+                                @{string href = "mailto:" + item.Email;}
+                                <a href="@href">@item.Email</a>
+                            </td>
+                            
+                            <td align="center" onclick="showHideTransactionTable('last_@item.LastInvoice')" style="color: @Html.Raw(item.LastInvoiceDT.Transactions.Where(t => t.SubmitDate == item.LastInvoiceDT.Transactions.Max(j => j.SubmitDate)).FirstOrDefault().Status == TransactionStatus.SUCCESFULL ? "#060" : "#F00")">
+                                @if (item.LastInvoiceDT.Transactions.Count > 0)
+                                {
+                                    @item.LastInvoiceDT.Transactions.Where(t => t.SubmitDate == item.LastInvoiceDT.Transactions.Max(j => j.SubmitDate)).FirstOrDefault().Status
+                                }
+                            </td>
+
+                            <td align="center" onclick="showHideTransactionTable('last_@item.LastInvoice')">
+                                $@String.Format("{0:N2}", item.LastInvoiceDT.Amount)
+                            </td>
+
+                            <td align="center" onclick="showHideTransactionTable('last_@item.LastInvoice')" style="width:150px;">
+                                @if (item.LastInvoiceDT.Transactions.Count > 0)
+                                {
+                                    @item.LastInvoiceDT.Transactions.Where(t => t.SubmitDate == item.LastInvoiceDT.Transactions.Max(j => j.SubmitDate)).FirstOrDefault().Message
+                                }
+                            </td>
+                            <td align="center" onclick="showHideTransactionTable('last_@item.LastInvoice')">
+                                @if (item.LastInvoiceDT.Transactions.Count > 0)
+                                {
+                                    @item.LastInvoiceDT.Transactions.Where(t => t.SubmitDate == item.LastInvoiceDT.Transactions.Max(j => j.SubmitDate)).FirstOrDefault().SubmitDate.ToString("MM/dd/yyyy")
+                                }
+                            </td>
+                            <td align="center" onclick="showHideTransactionTable('last_@item.LastInvoice')">
+                                @item.NextBillDate
+                            </td>                            
+                            <td align="center" onclick="showHideTransactionTable('last_@item.LastInvoice')">
+                                @item.FailledBillingCount
+                            </td>
+                            <td align="center" >
+                                <input onclick="@Html.Raw("BillingHistory(" + @item.Id + ")")" type="button" value="Billing History"  />
+                            </td>
+                            <td align="center" >
+                                <input id="tryChargeAgain_@item.Id" onclick="@Html.Raw("tryChargeAgain(" + @item.LastInvoice+"," + @item.Id + ")")" type="button" value="Try Charge Again">
+                            </td>
+                            <td align="center" >
+                                <input id="statusButton_@item.Id" onclick="@Html.Raw("CancelCustomer(" + @item.Id + ")")" type="button" value="Cancel">
+                            </td>
+                            <td align="center" onclick="showHideTransactionTable('last_@item.LastInvoice')">
+                                @item.Site
+                            </td>
+
+                            <td align="center" onclick="showHideTransactionTable('last_@item.LastInvoice')">
+                                @item.CreatedAt.ToString("MM/dd/yyyy")
+                            </td>                            
+                        </tr>
+
+                        
+                    <tr style="display: none" id="last_@item.LastInvoiceDT.Id" class="transactionTable">
+                        <td colspan="9" style="padding-left: 10px; padding-right: 0px; padding-bottom: 0px; padding-top: 0px;">
+                            @if (item.LastInvoiceDT.Transactions.Count > 0)
+                            {
+                                <table id="transactionsTable_@item.LastInvoiceDT.Id" style="width: 100%" class="subscriptionTrnTable">
+                                    <tbody>
+                                        <tr class="subscriptionsTrnHeaderRow">
+                                            <td>Transaction Id</td>
+                                            <td>Date</td>
+                                            <td>Type</td>
+                                            <td>Status</td>
+                                            <td>Message</td>
+                                            <td>Amount</td>
+                                            <td>Partent Trn Id</td>
+                                        </tr>
+                                        @foreach (TransactionDT transaction in item.LastInvoiceDT.Transactions)
+                                        {
+                                            <tr class="subscriptionsTrnRow">
+                                                <td>@Html.Raw(transaction.AuthorizeTransactionId != 0 ? transaction.AuthorizeTransactionId.ToString() : "")</td>
+                                                <td>@transaction.SubmitDate.ToString()</td>
+                                                <td>@transaction.Type</td>
+                                                <td title="@transaction.Message" style="color: @Html.Raw(transaction.Status == TransactionStatus.SUCCESFULL ? "#060" : "#F00")">@transaction.Status</td>
+                                                <td>@transaction.Message</td>
+                                                <td>$@String.Format("{0:N2}", item.LastInvoiceDT.Amount)</td>
+                                                <td>@Html.Raw(transaction.RefundedTrnAuthorizeId != 0 ? transaction.RefundedTrnAuthorizeId.ToString() : "")</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            @if (item.LastInvoiceDT.Transactions.Count == 0)
+                            {
+                                <span>No Transaction Data</span>
+                            }
+                        </td>
+                    </tr>
+
+
+                    }
+                </table>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $("a[name^=page]").click(function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            page = parseInt($(this).html());
+
+            $.ajax({
+                type: "POST",
+                url: "/Customers/GetListDebtorCustomersFilter",
+                data: { Letter: letter, Page: page, Word: $("#txtFilter").val(), All: false, OnlyActive: true, SiteName: $("#slSite").val() },
+                success: function (data) {
+                    $("#idReplace").html(data);
+                }
+            });
+
+            return false;
+        })
+        $("a[name=all]").click(function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            page = 1;
+
+            $.ajax({
+                type: "POST",
+                url: "/Customers/GetListDebtorCustomersFilter",
+                data: { Letter: letter, Page: 1, Word: $("#txtFilter").val(), All: true, OnlyActive: true, SiteName: $("#slSite").val() },
+                success: function (data) {
+                    $("#idReplace").html(data);
+                }
+            });
+            $("#txtFilter").val("");
+
+            return false;
+        })
+        $("button[id^=btnEnabled]").click(function (event) {
+            var id = $(this).attr("id").split("btnEnabled")[1];
+            $that = $(this);
+
+            $.ajax({
+                type: "POST",
+                url: "/Customers/GetListDebtorCustomersFilter",
+                data: { IdCustomer: parseInt(id) },
+                success: function (data) {
+                    if (data=="True") {
+                        $that.remove();
+                    }
+                }
+            });
+        })
+
+
+
+        function CancelCustomer(cId) {
+            //alert('asdada');
+            var r = confirm("Are you sure you want to cancel?");
+            if (r == true) {
+                //alert('asdassdadadsad');
+                $('button[name=statusButton]').attr('disabled', 'disabled');
+                var values = {
+                    customerId: cId
+                }
+                $.ajax({
+                    type: 'GET',
+                    data: values,
+                    url: '/Subscription/CancelCustomer',
+                    dataType: 'html',
+                    success: function (data) {
+                        $('button[name=statusButton]').removeAttr('disabled');
+
+                        //alert('deberia desaparecer');
+
+                        rechargeTable();
+                        //alert('desaparecio?');
+                    },
+                    error: function (data) {
+                        //alert('deberia desaparecer pero no');
+                        $('button[name=statusButton]').removeAttr('disabled');
+                    }
+                });
+
+            } 
+        }
+
+        function CancelCustomerBillingHist(cId) {
+            //alert('asdada');
+            var r = confirm("Are you sure you want to cancel?");
+            if (r == true) {
+                //alert('asdassdadadsad');
+                $('button[name=statusButton]').attr('disabled', 'disabled');
+                var values = {
+                    customerId: cId
+                }
+                $.ajax({
+                    type: 'GET',
+                    data: values,
+                    url: '/Subscription/CancelCustomer',
+                    dataType: 'html',
+                    success: function (data) {
+                        $('button[name=statusButton]').removeAttr('disabled');
+
+                        //alert(data);
+
+                        
+                        RechargeBillingHistory(cId);
+                        rechargeTable();
+                        //alert('desaparecio?');
+                        
+                    },
+                    error: function (data) {
+                       // alert('deberia desaparecer pero no');
+                        $('button[name=statusButton]').removeAttr('disabled');
+                    }
+                });
+
+            } 
+        }
+
+        function RechargeBillingHistory(cid) {
+            
+            var values = {
+                customerId: cid
+            }
+            $('#billingHistory').html('<span>Loading Billing History.....</span>');
+
+            $.ajax({
+                type: 'GET',
+                data: values,
+                url: '/Subscription/BillingInfo',
+                dataType: 'html',
+                success: function (data) {
+                    $('#billingHistory').html(data);
+                   // alert('wwwwwwwwwwwwww');
+                    //alert(data);
+                },
+                error: function (data) {
+                    alert('error');
+                }
+            });
+
+            return false;
+        }
+
+
+        function BillingHistory(cid) {
+            //alert('1');
+            var values = {
+                customerId: cid
+            }
+            $('#billingHistory').html('<span>Loading Billing History.....</span>');
+            dialog = $("#billingHistory").dialog({
+                        
+                autoOpen: false,
+                height: 450,
+                width: 600,
+                modal: true,
+                buttons: {
+               
+                    Close: function () {
+                       // rechargeTable();
+                        dialog.dialog("close");
+                    }
+                },
+                close: function () {
+                   
+                }
+            });
+            dialog.dialog('open');
+            //$('#billingHistory').html('');
+            //alert('2');
+            $.ajax({
+                type: 'GET',
+                data: values,
+                url: '/Subscription/BillingInfo',
+                dataType: 'html',
+                success: function (data) {
+                    
+                    $('#billingHistory').html(data);
+                    
+                },
+                error: function (data) {
+    
+                }
+            });
+            var div = document.getElementById('billingHistory').innerHTML;
+            
+            return false;
+        }
+        function tryChargeAgain(invoiceId, cid){
+            if (confirm("Do you want to recharge?")) {
+                $that = $(this);
+                $.ajax({
+                    url: "/Subscription/TryChargeAgain",
+                    data: { Id: invoiceId },
+                    type: "POST",
+                    success: function (data) {
+                        if (data.Result) {
+                            alert("Transaction billed.");
+                            /**
+                            $table = $("#transactionsTable_" + $that.attr("id"));
+                            $newTransaction = $('<tr class="subscriptionsTrnRow">'
+                                                    + '<td>' + data.Info.Authorize + '</td>'
+                                                    + '<td>' + data.Info.SubmitDate + '</td>'
+                                                    + '<td>' + data.Info.Type + '</td>'
+                                                    + '<td title="' + data.Info.Message + '" style="color: #060">' + data.Info.Status + '</td>'
+                                                    + '<td>$' + data.Info.Amount + '</td>'
+                                                    + '<td>' + data.Info.Parent + '</td>'
+                                                + '</tr>').appendTo($table);
+                            $that.parent().html('');
+                            **/
+                        }
+                        else {
+
+                            alert("Transaction fail.");
+                            /**
+                            $table = $("#transactionsTable_" + $that.attr("id"));
+                            $newTransaction = $('<tr class="subscriptionsTrnRow">'
+                                                    + '<td></td>'
+                                                    + '<td>' + data.Info.SubmitDate + '</td>'
+                                                    + '<td>' + data.Info.Type + '</td>'
+                                                    + '<td title="' + data.Info.Message + '" style="color: #F00">' + data.Info.Status + '</td>'
+                                                    + '<td>$' + data.Info.Amount + '</td>'
+                                                    + '<td>' + data.Info.Parent + '</td>'
+                                                + '</tr>').appendTo($table);
+                            **/
+                        }
+                    }
+                });
+
+                rechargeTable();
+                RechargeBillingHistory(cid);
+
+
+            }
+        };
+        function rechargeTable() {
+            $.ajax({
+
+                type: "POST",
+                url: "/Customers/GetListDebtorCustomersFilter",
+                data: { Letter: letter, Page: page, Word: $("#txtFilter").val(), All: false, OnlyActive: true, SiteName: $("#slSite").val() },
+                success: function (data) {
+ 
+                    $("#idReplace").html(data);
+                }
+            });
+            refreshCount();
+        }
+
+        function showHideTransactionTable(iId) {
+            //alert(iId);
+            /**/
+            if ($("#" + iId + ".transactionTable").css('display') == 'none') {
+                $(".transactionTable").hide();
+                $("#" + iId + ".transactionTable").show("fast");
+            } else {
+                $(".transactionTable").hide();
+            }/**/
+        }
+    </script>
+    <style type="text/css">
+        BUTTON {
+            font-size: 9px;
+        }
+
+        OPTION, SELECT, BUTTON, TEXT, TEXTAREA, SUBMIT {
+            color: #444;
+            font-size: 11px;
+            font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;
+        }
+    </style>
+
+    
+}
+
+
+

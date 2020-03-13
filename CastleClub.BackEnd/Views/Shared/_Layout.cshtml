@@ -1,0 +1,204 @@
+﻿@using CastleClub.DataTypes;
+@using System.Web.Security;
+@{
+    UserDT user = ViewBag.User;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Castle Club Service Center</title>
+    <link href="/Content/css/style.css" type="text/css" rel="stylesheet" />
+    <link href="/Content/css/jquery-ui.min.css" type="text/css" rel="stylesheet" />
+    <script src="/Content/js/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script src="/Content/js/jquery-ui-1.11.1.min.js" type="text/javascript"></script>
+    <script src="/Content/js/common.js" type="text/javascript"></script>
+   
+    
+</head>
+<body>
+    <script>
+        $(function () {
+            $("input[type=submit], input[type=button], button").button();
+        });
+    </script>
+    <div>
+        <!-- header -->
+        <table class="headerTable">
+            <tr>
+                <td style="height: 17px; padding-left:10px;">
+                    <a class="SiteTitle" href="/Home/Default">Castle Club Service Center</a>
+                </td>
+                <td rowspan="2">
+                    <span style="float: right; padding-right: 10px">
+                        @using (Html.BeginForm("LogOff", "Account"))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="Logout" />
+                        }
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 25px; padding-left:10px;">
+                    @user.FirstName
+                </td>
+            </tr>
+            <tr>
+                @if (!User.IsInRole("Partner") && !User.IsInRole("Full Partner"))
+                {
+                    <td style="padding: 0px; width: 100%; background-color: #4379C1" colspan="2">
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="/Home/Default">Home <span class="caret"></span></a>
+                                    <div>
+                                        <ul>
+                                            <li>
+                                                <a href="/Home/Default">Referer Info</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Home/SitesInfo">Site Info</a>
+                                            </li>
+                                            @if (CastleClub.BusinessLogic.Data.GlobalParameters.EnableChangeActiveOffer)
+                                            {
+                                                <li>
+                                                    <a href="/Home/MagnamentActiveSite">Active Site</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="/Subscription/ManageSubscriptions">Subscriptions <span class="caret"></span></a>
+                                    <div>
+                                        <ul>
+                                            <li><a href="/Subscription/ManageSubscriptions">View/Manage Subscriptions</a></li>
+                                             
+                                           @if (CastleClub.BusinessLogic.Data.GlobalParameters.AMTNewPlatform && (User.IsInRole("Super Admin") || User.IsInRole("Admin")))
+                                            {
+                                                <li><a href="/Customers/Access">Send Active Customers To Access</a></li>
+                                            }    
+                                            
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+
+                                    <a href="@Url.Action("Index","Customers")">Customers <span class="caret"></span></a>
+                                    <div>
+                                        <ul>
+                                            <li><a href="@Url.Action("Index","Customers")">View Customers</a></li>
+                                            @if (CastleClub.BusinessLogic.Data.GlobalParameters.ActiveCustomerReport && (User.IsInRole("Super Admin") || User.IsInRole("Admin")))
+                                                {
+                                                    <li><a href="@Url.Action("ActiveReport", "Customers")">View active customers</a></li>
+                                                }
+                                            @if (CastleClub.BusinessLogic.Data.GlobalParameters.MembershipAgeCountRange && (User.IsInRole("Super Admin") || User.IsInRole("Admin")))
+                                            {
+                                                <li><a href="@Url.Action("MembershipAgeCount", "Customers")">Membership Age Count</a></li>
+                                            }
+                                            
+                                            @if ( (User.IsInRole("Super Admin") || User.IsInRole("Admin")))
+                                            {
+                                                <li><a href="@Url.Action("Debtors", "Customers")">Failed Billing Report</a></li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+                               
+                                @if (User.IsInRole("Super Admin") || User.IsInRole("Admin"))
+                                {
+                                <li>
+                                    <a href="/User/ManageUsers">Users <span class="caret"></span></a>
+                                    <div>
+                                        <ul>
+                                            <li><a href="/User/ManageUsers">Manage Users</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                }
+                                <li>
+                                    @{string reportType = (User.IsInRole("Super Admin") || User.IsInRole("Admin")) ? "SalesReport" : "EmailReport";}
+                                    <a href="/Report/@reportType">Reports <span class="caret"></span></a>
+                                    <div>
+                                        <ul>
+                                            @if (User.IsInRole("Super Admin") || User.IsInRole("Admin"))
+                                            {
+                                                <li><a href="/Report/SalesReport">Sales Report</a></li>
+                                            }
+                                            <li><a href="~/Report/EmailReport">Email Report</a></li>
+                                            @if ((User.IsInRole("Super Admin") || User.IsInRole("Admin")) && CastleClub.BusinessLogic.Data.GlobalParameters.BillingReport)
+                                            {
+                                                <li><a href="~/Report/Chart">Charts Report</a></li>
+                                            }
+                                            @if ((User.IsInRole("Super Admin") || User.IsInRole("Admin")) && CastleClub.BusinessLogic.Data.GlobalParameters.AuthorizeTransactionCompare)
+                                            {
+                                                <li><a href="~/Report/AuthorizeTransactionCompare">Authorize Transactions Compare</a></li>
+                                            }
+                                            @if ((User.IsInRole("Super Admin") || User.IsInRole("Admin")) && CastleClub.BusinessLogic.Data.GlobalParameters.AuthorizeTransactionCompare)
+                                            {
+                                                <li><a href="~/Report/ReportSiteCreditCards">Report Site Credit Cards</a></li>
+                                            }
+                                            
+                                            @if ((User.IsInRole("Super Admin") || User.IsInRole("Admin")) && CastleClub.BusinessLogic.Data.GlobalParameters.AuthorizeTransactionCompare)
+                                            {
+                                                <li><a href="~/Report/ReportWelcomeEmail">Report Welcome Email</a></li>
+                                            }
+                                            @if ((User.IsInRole("Super Admin") || User.IsInRole("Admin")) && CastleClub.BusinessLogic.Data.GlobalParameters.AuthorizeTransactionCompare)
+                                            {
+                                                <li><a href="~/Report/ReportIISReset">Report IIS Reset</a></li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+                                @if (CastleClub.BusinessLogic.Data.GlobalParameters.Syncronizate)
+                                {
+                                    <li>
+                                        @Html.ActionLink("Synchronize Authorize", "Synchronize", "Authorize")
+                                    </li>
+                                }
+                                @if (CastleClub.BusinessLogic.Data.GlobalParameters.TestSendEmail && User.IsInRole("Super Admin") || User.IsInRole("Admin"))
+                                {
+                                    <!--
+                                    <li>
+                                        @Html.ActionLink("Test Page", "TestPage", "Report")
+                                    </li>
+                                    -->
+                                }
+                                
+                                @if (User.IsInRole("Super Admin") || User.IsInRole("Admin") || User.IsInRole("Customer Service"))
+                                {
+                                <li>
+                                    @Html.ActionLink("Welcome Email Page", "WelcomeEmail", "Sites")
+                                </li>
+                                }
+                            </ul>
+                        </nav>
+                    </td>
+                }
+                else
+                {
+                    <td style="padding: 0px; width: 100%; background-color: #4379C1" colspan="2">
+                        &nbsp
+                    </td>
+                }
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+        </table>
+        <!-- end header -->
+        <div class="renderBody">
+            @RenderBody()
+        </div>
+        <!-- footer -->
+        <table class="footerTable">
+            <tr>
+                <td style="padding-left: 10px">&copy; @DateTime.Now.Year Castle Club Discounts. All rights Reserved.</td>
+                <td style="width: 128px; height: 24px;"><a style="color: #FFF; font-weight: bold; font-style: italic; text-decoration: none;" href="http://www.castleclubhub.com">Castle Club</a></td>
+            </tr>
+        </table>
+        <!-- end footer -->
+    </div>
+</body>
+</html>

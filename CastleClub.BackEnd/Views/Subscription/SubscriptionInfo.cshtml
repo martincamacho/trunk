@@ -1,0 +1,578 @@
+﻿@using CastleClub.DataTypes;
+@using CastleClub.DataTypes.Enums;
+@{
+    Layout = null;
+    CustomerDT customer = ViewBag.Customer;
+    UserDT user = ViewBag.User;
+    List<InvoiceDT> invoices = ViewBag.Invoices;
+    decimal balance = ViewBag.Balance;
+}
+<table style="width: 100%">
+    <tbody>
+        <tr>
+            <td colspan="2">
+                <table class="tableTitle" style="width: 100%">
+                    <tbody>
+                        <tr>
+                            <td style="width: 25%">
+                                <span class="subscriptionsCustomerText">MemberId:</span>
+                                <span class="subscriptionsCustomerDataText">@customer.MemberId</span>
+                            </td>
+                            <td style="width: 25%">
+                                <span class="subscriptionsCustomerText">Customer:</span>
+                                <span class="subscriptionsCustomerDataText">@customer.FirstName @customer.LastName</span>
+                            </td>
+                            <td style="width: 25%">
+                                <span class="subscriptionsCustomerText">Opt-In Date:</span>
+                                <span class="subscriptionsCustomerDataText">@customer.CreatedAt.ToShortDateString()</span>
+                            </td>
+                            <td>
+                                <span class="subscriptionsCustomerText">Status:</span>
+                                <span id="customerStatus" class="subscriptionsCustomerDataText" style="color: @Html.Raw(customer.Status == CustomerStatus.ACTIVE ? "#060" : "#F00")">@customer.Status</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; width: 50%">
+                <table style="width: 100%">
+                    <tbody>
+                        <tr>
+                            <td class="tableTitle" colspan="2">Customer Info</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table style="background-color: #f0f8ff; width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="subscriptionsCustomerInfoText">Referrer:</td>
+                                            <td>@customer.Referrer</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="subscriptionsCustomerInfoText">MemberID:</td>
+                                            <td>@customer.MemberId</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="subscriptionsCustomerInfoText">Customer:</td>
+                                            <td>@customer.FirstName @customer.LastName</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="subscriptionsCustomerInfoText">Email:</td>
+                                            <td>@customer.Email</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="subscriptionsCustomerInfoText">Phone:</td>
+                                            <td>@customer.Phone</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="subscriptionsCustomerInfoText">Address:</td>
+                                            <td>
+                                                @customer.Address,
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                @customer.StateId @customer.ZipCode
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="subscriptionsCustomerInfoText">New Password: </td>
+                                            <td>
+                                                <input type="password" id="password" name="password">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="subscriptionsCustomerInfoText">Confirm New Password: </td>
+                                            <td>
+                                                <input type="password" id="password2" name="password2">
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+
+                                            <td align="center" colspan="2">
+                                                <input value="Change Password" onclick="@Html.Raw("ChangePassword(" + @customer.Id + ")")" id="changePassButton" type="button">
+                                                <span id="errorChangePass" class="subscriptionsCustomerDataText"></span>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td style="vertical-align: top">
+                <table style="width: 100%">
+                    <tbody>
+                        <tr>
+                            <td class="tableTitle" colspan="2">Billing Info</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table style="background-color: #f0f8ff; width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="subscriptionsCustomerInfoText">Opt-In Date:</td>
+                                            <td>@customer.CreatedAt.ToLongDateString()</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="subscriptionsCustomerInfoText">Last Bill Date</td>
+                                            <td>@Html.Raw(customer.LastBillDate != DateTime.MinValue ? customer.LastBillDate.ToLongDateString() : "")</td>
+                                        </tr>
+                                        <tr>
+                                            <td id="nextOrCancelledText" class="subscriptionsCustomerInfoText">
+                                                @Html.Raw(customer.Status == CustomerStatus.ACTIVE ? "Next Bill Date:" : "Cancelled Date:")
+                                            </td>
+                                            <td id="nextOrCancelledDate">
+                                                @Html.Raw(customer.Status == CustomerStatus.ACTIVE ? customer.NextBillDate.ToLongDateString() : customer.CancelledDate.Value.ToLongDateString())
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="subscriptionsCustomerInfoText">Balance:</td>
+                                            <td id="customerBalance" style="color: @Html.Raw(balance != 0 ? "#060" : "#444")">$@String.Format("{0:N2}", balance)</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="subscriptionsCustomerInfoText">Card Number:</td>
+                                            <td>
+                                                @{
+                                                    string cardNumber = ViewBag.CardNumber;
+                                                    if (ViewBag.CardType != null && !string.IsNullOrEmpty((string)ViewBag.CardType))
+                                                    {
+                                                        cardNumber = cardNumber + " (" + (string)ViewBag.CardType + ")";
+                                                    }
+                                                }
+                                                @cardNumber
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="subscriptionsCustomerInfoText">
+                                                <input id="statusButton" onclick="@Html.Raw(customer.Status == CustomerStatus.ACTIVE ? "CancelCustomer(" + @customer.Id + ")" : "ActivateCustomer(" + @customer.Id + ")")" type="button" value="@Html.Raw(customer.Status == CustomerStatus.ACTIVE ? "Cancel Billing" : "Activate Billing")">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table style="width: 100%">
+                    <tbody>
+                        <tr>
+                            <td class="tableTitle" colspan="2">Invoice Info</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @if (invoices.Count > 0)
+                                {
+                                    <table style="width: 100%" class="subscriptionInvoiceTable">
+                                        <tbody>
+                                            <tr class="subscriptionsInvoiceHeaderRow">
+                                                <td>Date</td>
+                                                <td style="width: 15%">Status</td>
+                                                <td style="width: 10%">Credit</td>
+                                                <td style="width: 10%">Debit</td>
+                                                <td style="width: 10%">Balance</td>
+                                                <td style="width: 30%">
+                                                    Refund / Refund Reason
+                                                    @if (CastleClub.BusinessLogic.Data.GlobalParameters.TryChargeAgain)
+                                                    {
+                                                        <lable> / Try Charge Again</lable>
+                                                    }
+                                                </td>
+                                            </tr>
+                                            @foreach (InvoiceDT invoice in invoices)
+                                            {
+                                                <tr class="subscriptionsInvoiceRow">
+                                                    <td onclick="showHideTransactionTable(@invoice.Id)" class="subscriptionsInvoiceCell">
+                                                        <span style="font-weight: bold">
+                                                            @invoice.CreatedAt.ToShortDateString()
+                                                        </span>&nbsp;&nbsp;@invoice.CreatedAt.ToShortTimeString()
+                                                    </td>
+                                                    <td onclick="showHideTransactionTable(@invoice.Id)" id="invoiceStatus_@invoice.Id" class="subscriptionsInvoiceCell" style="color: @Html.Raw(invoice.Status == InvoiceStatus.BILLEDFAIL || invoice.Status == InvoiceStatus.REFUNDEDFAIL ? "#F00" : "#444")">@InvoiceStatusHelper.GetString(invoice.Status)</td>
+                                                    <td onclick="showHideTransactionTable(@invoice.Id)" id="invoiceCredit_@invoice.Id" class="subscriptionsInvoiceCell" style="color: #060">$@String.Format("{0:N2}", invoice.Credit)</td>
+                                                    <td onclick="showHideTransactionTable(@invoice.Id)" id="invoiceDebit_@invoice.Id" class="subscriptionsInvoiceCell" style="color: #F00">@Html.Raw(invoice.Debit != 0 ? "-" : "")$@String.Format("{0:N2}", invoice.Debit)</td>
+                                                    <td onclick="showHideTransactionTable(@invoice.Id)" id="invoiceBalance_@invoice.Id" class="subscriptionsInvoiceCell" style="color: @Html.Raw(invoice.Balance != 0 ? "#060" : "#F00")">$@String.Format("{0:N2}", invoice.Balance)</td>
+                                                    @if (invoice.Status == InvoiceStatus.BILLED || invoice.Status == InvoiceStatus.REFUNDEDFAIL)
+                                                    {
+                                                        <td id="invoiceRefund_@invoice.Id" class="subscriptionsInvoiceCell">
+                                                            <input id="invoiceRefundButton_@invoice.Id" onclick="StartRefund(@customer.Id,@invoice.Id)" type="button" value="Start Refund" />
+                                                        </td>
+                                                    }
+                                                    else if (invoice.Status == InvoiceStatus.REFUNDED)
+                                                    {
+                                                        <td onclick="showHideTransactionTable(@invoice.Id)" id="invoiceRefund_@invoice.Id" class="subscriptionsInvoiceCell">
+                                                            @invoice.RefundReason
+                                                        </td>
+                                                    }
+                                                    else if (CastleClub.BusinessLogic.Data.GlobalParameters.TryChargeAgain && (invoice.Status == InvoiceStatus.BILLEDFAIL) && (customer.CancelledDate == DateTime.MinValue))
+                                                    {
+                                                        <td class="subscriptionsInvoiceCell">
+                                                            <button id="@invoice.Id" name="TryChargeAgain">Try charge again</button>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td onclick="showHideTransactionTable(@invoice.Id)" id="invoiceRefund_@invoice.Id" class="subscriptionsInvoiceCell"></td>
+                                                    }
+                                                </tr>
+                                                <tr style="display: none" id="@invoice.Id" class="transactionTable">
+                                                    <td colspan="6" style="padding-left: 10px; padding-right: 0px; padding-bottom: 0px; padding-top: 0px;">
+                                                        @if (invoice.Transactions.Count > 0)
+                                                        {
+                                                            <table id="transactionsTable_@invoice.Id" style="width: 100%" class="subscriptionTrnTable">
+                                                                <tbody>
+                                                                    <tr class="subscriptionsTrnHeaderRow">
+                                                                        <td>Transacrion Id</td>
+                                                                        <td>Date</td>
+                                                                        <td>Type</td>
+                                                                        <td>Status</td>
+                                                                        <td>Amount</td>
+                                                                        <td>Partent Trn Id</td>
+                                                                    </tr>
+                                                                    @foreach (TransactionDT transaction in invoice.Transactions)
+                                                                    {
+                                                                        <tr class="subscriptionsTrnRow">
+                                                                            <td>@Html.Raw(transaction.AuthorizeTransactionId != 0 ? transaction.AuthorizeTransactionId.ToString() : "")</td>
+                                                                            <td>@transaction.SubmitDate.ToString()</td>
+                                                                            <td>@transaction.Type</td>
+                                                                            <td title="@transaction.Message" style="color: @Html.Raw(transaction.Status == TransactionStatus.SUCCESFULL ? "#060" : "#F00")">@transaction.Status</td>
+                                                                            <td>$@String.Format("{0:N2}", invoice.Amount)</td>
+                                                                            <td>@Html.Raw(transaction.RefundedTrnAuthorizeId != 0 ? transaction.RefundedTrnAuthorizeId.ToString() : "")</td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                        @if (invoice.Transactions.Count == 0)
+                                                        {
+                                                            <span>No Transaction Data</span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                @if (invoices.Count == 0)
+                                {
+                                    <span>No Invoice Data</span>
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table style="width: 100%">
+                    <tbody>
+                        <tr>
+                            <td class="tableTitle" colspan="2">Notes:</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table id="notesTable" style="background-color: #f0f8ff; width: 100%;">
+                                    <tbody>
+                                        @foreach (NoteDT note in customer.Notes)
+                                        {
+                                            <tr>
+                                                <td style="font-weight: bold">
+                                                    <span>@note.CreatedAt.ToString()</span>
+                                                    &nbsp;-&nbsp;
+                                                    <span>@note.User.FirstName</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-style: italic">
+                                                    <span>@note.Text</span>
+                                                </td>
+                                            </tr>
+                                        }
+                                        <tr id="noteTextRow">
+                                            <td>
+                                                <textarea id="noteText" rows="5" style="width: 99%"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input id="noteAddButton" type="button" value="Add Note" onclick="AddNote(@customer.Id)">
+                                                <span id="noteAddResult" style="padding-left: 10px; font-weight: bold"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(function () {
+        $("input[type=submit], input[type=button], button").button();
+        $(document).tooltip();
+    });
+
+    function showHideTransactionTable(iId) {
+        if ($("#" + iId + ".transactionTable").css('display') == 'none') {
+            $(".transactionTable").hide();
+            $("#" + iId + ".transactionTable").show("fast");
+        } else {
+            $(".transactionTable").hide();
+        }
+    }
+
+    function AddNote(cId) {
+        if ($('#noteText').val() != '') {
+            $('#noteAddButton').attr('disabled', 'disabled');
+            var values = {
+                customerId: cId,
+                text: $('#noteText').val()
+            }
+            $.ajax({
+                type: 'GET',
+                data: values,
+                url: '/Subscription/AddCustomerNote',
+                dataType: 'html',
+                success: function (data) {
+                    $('#noteText').val('');
+                    $('#noteTextRow').before(data);
+                    $('#noteAddButton').removeAttr('disabled');
+                    $('#noteAddResult').css('color', '#060');
+                    $('#noteAddResult').fadeIn().html('Note Added Successfully').delay(2000).fadeOut();
+                },
+                error: function (data) {
+                    $('#noteAddButton').removeAttr('disabled');
+                    $('#noteAddResult').css('color', '#F00');
+                    $('#noteAddResult').fadeIn().html('Error').delay(3000).fadeOut();
+                }
+            });
+        }
+        else {
+            $('#noteAddResult').css('color', '#F00');
+            $('#noteAddResult').fadeIn().html('Empty Note').delay(3000).fadeOut();
+        }
+    }
+
+    function CancelCustomer(cId) {
+        if (confirm("Are you sure?")) {
+            $('#statusButton').attr('disabled', 'disabled');
+            var values = {
+                customerId: cId
+            }
+            $.ajax({
+                type: 'GET',
+                data: values,
+                url: '/Subscription/CancelCustomer',
+                dataType: 'html',
+                success: function (data) {
+                    $('#statusButton').removeAttr('disabled');
+                    $('#statusButton').attr('onclick', 'ActivateCustomer(' + cId + ')');
+                    $('#statusButton').val('Activate Billing');
+
+                    $('#nextOrCancelledText').html('Cancelled Date:');
+                    $('#nextOrCancelledDate').html(data);
+                    $('#customerStatus').html('@CustomerStatus.CANCELLED');
+                    $('#customerStatus').css('color', '#F00');
+                    $('#customerStatus_' + cId).html('@CustomerStatus.CANCELLED');
+                    $('#customerStatus_' + cId).css('color', '#F00');
+                },
+                error: function (data) {
+                    $('#statusButton').removeAttr('disabled');
+                }
+            });
+        }
+    }
+
+    function ChangePassword(cId) {
+        var pass = document.getElementById("password").value;
+        var pass2 = document.getElementById("password2").value;
+        $('#changePassButton').attr('disabled', 'disabled');
+
+        if ((pass == pass2) && (pass != '')) {
+            var values = {
+                customerId: cId,
+                newPassword: pass
+            }
+            $.ajax({
+                type: 'GET',
+                data: values,
+                url: '/Subscription/ChangePassword',
+                dataType: 'html',
+                success: function (data) {
+                    $('#changePassButton').removeAttr('disabled');
+                    $('#errorChangePass').html('The customer\'s password has been changed');
+                },
+                error: function (data) {
+                    $('#changePassButton').removeAttr('disabled');
+                }
+            });
+        } else {
+            $('#changePassButton').removeAttr('disabled');
+            if (pass != pass2)
+                $('#errorChangePass').html('Error: The new password and confirm new password must be equal');
+            if (pass == '')
+                $('#errorChangePass').html('Error: The new password can\'t be empty');
+
+        }
+    }    
+
+    function ActivateCustomer(cId) {        
+        if (confirm("Are you sure?")) {
+            $('#statusButton').attr('disabled', 'disabled');
+            var values = {
+                customerId: cId
+            }
+            $.ajax({
+                type: 'GET',
+                data: values,
+                url: '/Subscription/ActivateCustomer',
+                dataType: 'html',
+                success: function (data) {
+                    $('#statusButton').removeAttr('disabled');
+                    $('#statusButton').attr('onclick', 'CancelCustomer(' + cId + ')');
+                    $('#statusButton').val('Cancel Billing');
+
+                    $('#nextOrCancelledText').html('Next Bill Date:');
+                    $('#nextOrCancelledDate').html(data);
+                    $('#customerStatus').html('@CustomerStatus.ACTIVE');
+                    $('#customerStatus').css('color', '#060');
+                    $('#customerStatus_' + cId).html('@CustomerStatus.ACTIVE');
+                    $('#customerStatus_' + cId).css('color', '#060');
+                },
+                error: function (data) {
+                    $('#statusButton').removeAttr('disabled');
+                }
+            });
+        }
+    }
+
+    function StartRefund(cId, iId) {
+        $('#refundText').val('');
+        dialog = $("#refundDiv").dialog({
+            autoOpen: false,
+            height: 150,
+            width: 300,
+            modal: true,
+            buttons: {
+                "Refund": function () {
+                    Refund(cId, iId, $('#refundText').val());
+                    dialog.dialog("close");
+                },
+                Cancel: function () {
+                    dialog.dialog("close");
+                }
+            },
+            close: function () {
+            }
+        });
+        dialog.dialog('open');
+    }
+
+    function Refund(cId, iId, rr) {
+        $('#invoiceRefundButton_' + iId).hide();
+        $('#invoiceStatus_' + iId).html('@InvoiceStatusHelper.GetString(InvoiceStatus.REFUNDING)');
+        $('#invoiceStatus_' + iId).css('color', '#444');
+        var values = {
+            customerId: cId,
+            invoiceId: iId,
+            refundReason: rr
+        }
+        $.ajax({
+            type: 'GET',
+            data: values,
+            url: '/Subscription/Refund',
+            dataType: 'html',
+            success: function (data) {
+                $('#transactionsTable_' + iId + ' > tbody:last').append(data);
+                if ($('#transactionStatusInvoice_' + iId).html() == '@TransactionStatus.SUCCESFULL') {
+                    $('#invoiceStatus_' + iId).html('@InvoiceStatusHelper.GetString(InvoiceStatus.REFUNDED)');
+                    $('#invoiceRefund_' + iId).attr('onclick', 'showHideTransactionTable(' + iId + ')')
+                    $('#invoiceRefund_' + iId).html(rr);
+                    $('#invoiceBalance_' + iId).html('$0.00');
+                    $('#invoiceBalance_' + iId).css('color', '#F00');
+                    $('#invoiceDebit_' + iId).html('-' + $('#invoiceCredit_' + iId).html());
+                    UpdateBalance(cId);
+                } else {
+                    $('#invoiceRefundButton_' + iId).show();
+                    $('#invoiceStatus_' + iId).html('@InvoiceStatusHelper.GetString(InvoiceStatus.REFUNDEDFAIL)');
+                    $('#invoiceStatus_' + iId).css('color', '#F00');
+                }
+                $('#transactionStatusInvoice_' + iId).removeAttr('id');
+            },
+            error: function (data) {
+                $('#invoiceRefundButton_' + iId).show();
+                $('#invoiceStatus_' + iId).html('@InvoiceStatusHelper.GetString(InvoiceStatus.REFUNDEDFAIL)');
+                $('#invoiceStatus_' + iId).css('color', '#F00');
+            }
+        });
+    }
+
+    function UpdateBalance(cId) {
+        var values = {
+            customerId: cId,
+        }
+        $.ajax({
+            type: 'GET',
+            data: values,
+            url: '/Subscription/UpdateBalance',
+            dataType: 'html',
+            success: function (data) {
+                $('#customerBalance').html('$' + data);
+            },
+            error: function (data) {
+                alert(data);
+            }
+        });
+    }
+
+    $("button[name=TryChargeAgain]").click(function (event) {
+        if (confirm("Do you want to recharge?")) {
+            $that = $(this);
+            $.ajax({
+                url: "/Subscription/TryChargeAgain",
+                data: { Id: $that.attr('id') },
+                type: "POST",
+                success: function (data) {
+                    if (data.Result) {
+                        alert("Transaction billed.");
+                        $table = $("#transactionsTable_" + $that.attr("id"));
+                        $newTransaction = $('<tr class="subscriptionsTrnRow">'
+                                                + '<td>' + data.Info.Authorize + '</td>'
+                                                + '<td>' + data.Info.SubmitDate + '</td>'
+                                                + '<td>' + data.Info.Type + '</td>'
+                                                + '<td title="' + data.Info.Message + '" style="color: #060">' + data.Info.Status + '</td>'
+                                                + '<td>$' + data.Info.Amount + '</td>'
+                                                + '<td>' + data.Info.Parent + '</td>'
+                                            + '</tr>').appendTo($table);
+                        $that.parent().html('');
+                    }
+                    else {
+                        alert("Transaction fail.");
+                        $table = $("#transactionsTable_" + $that.attr("id"));
+                        $newTransaction = $('<tr class="subscriptionsTrnRow">'
+                                                + '<td></td>'
+                                                + '<td>' + data.Info.SubmitDate + '</td>'
+                                                + '<td>' + data.Info.Type + '</td>'
+                                                + '<td title="' + data.Info.Message + '" style="color: #F00">' + data.Info.Status + '</td>'
+                                                + '<td>$' + data.Info.Amount + '</td>'
+                                                + '<td>' + data.Info.Parent + '</td>'
+                                            + '</tr>').appendTo($table);
+                    }
+                }
+            });
+        }
+    });
+</script>

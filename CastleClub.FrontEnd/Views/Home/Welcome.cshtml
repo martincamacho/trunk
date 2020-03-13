@@ -1,0 +1,69 @@
+﻿@using CastleClub.DataTypes.Enums
+@using CastleClub.DataTypes
+@{
+    SiteDT site = ViewBag.Site;
+    CustomerDT customer = ViewBag.Customer != null ? ViewBag.Customer : new CustomerDT();
+    string aOrAn = site.Name.ToLower().StartsWith("a") ? "an" : "a";
+    string referrer = (string)ViewBag.Referrer;
+}
+<div id="header">
+    <div class="logo"><a target="_blank" href="@Html.Raw("http://www." + site.OfferDomain)">
+        <img vspace="4" border="0" src="@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/logo.jpg")"></a></div>
+    <div class="partnership">
+        <img alt="" src="@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/inpartnership-partsgeek.gif")"></div>
+    <div class="clearfix"></div>
+</div>
+<div id="thanks">
+    <p><strong>THANK YOU!</strong></p>
+    <p>Congratulations, your @site.Name membership is now active! You can now enjoy full access to all of the great money saving discounts, promotions and rewards that our membership program has to offer. Very shortly you will receive a welcome email to the email address you used when registering your account with us today that will provide you with detailed instructions on how to claim your $15 Cash Back Reward on your next @referrer purchase. Your welcome email will also confirm your membership details, including your registration information, member ID #, username &amp; password. If you do  not receive your welcome email, please call our Customer Service Team and we will be more than happy to assist you.</p>
+    <p>
+        Member  ID #: @Html.Raw("M" + site.GroupId)-@customer.Id<br>
+        Username:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>@customer.Email</strong><br>
+        Password: <strong>&nbsp;&nbsp;&nbsp;&nbsp;@customer.ClearPassword</strong><br>
+        Login at:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><a class="mainlink" href="@Html.Raw("http://www." + site.OfferDomain)">@Html.Raw("www." + site.AltNames.Split(',')[1])</a></strong><br>
+        <br>
+        If  you have any questions and/or concerns, please feel free to contact us at  anytime.
+    </p>
+    <p>
+        Customer Service Phone Number:<br>
+        @site.Phone
+    </p>
+    <p>
+        Customer Service Email:<br>
+        <span class="mainlink">customerservice@@@site.OfferDomain   </span>
+    </p>
+    <p>Our Customer Service  office hours are from 9:00 a.m. to 5:00 p.m. EST Monday – Friday.   If you are calling us when our office is closed, please leave a detailed  voice mail message and one of our Customer Service Representatives will be back  in touch with you within 1 business day.</p>
+    <hr>
+    <br>
+    <p><strong>@site.Name Member Benefits  Include:</strong><br>
+    </p>
+    @Html.Raw(site.Benefits)
+    <p>
+        @Html.Raw(site.WeHaveAmassed)
+    </p>
+    <p>
+        <strong>
+            <br>
+            Offer &amp; Billing Details:<br>
+        </strong>For your records,  this receipt confirms the offer billing details for your @site.Name membership. Please print or save a copy of this email receipt for your  records: Try the service for the first month (30 days) for FREE. Your @site.Name membership will automatically be extended for three months at the $@site.PricePerQuarter fee, and automatically renewed every three months thereafter until if and when you wish to cancel your membership. We will bill the credit card or debit card used during your initial purchase and authorized when you registered to enroll in the @site.Name membership program unless you call customer service toll free at @site.Phone and/or email customerservice@@@site.OfferDomain during your 30 day free trial to cancel. Cancel this agreement during  your 30 day free trial and you will not be billed. If you cancel this agreement after your 30 day free trial period, you will not be billed for any additional months and your membership benefits will remain active for the duration of your then three month term. You will remain liable for membership fees &amp; charges accrued after your 30 day trial period has ended up to the ending date of your then three month billing cycle in pursuant of  this agreement and the billing terms furnished to you upon your enrollment in  the service. @site.Name member benefits may be enhanced or modified at anytime without prior notice. If at any time you are not completely satisfied with our membership service, simply call us at @site.Phone and/or email us at customerservice@@@site.OfferDomain to let us know you wish to cancel your membership benefits. Your membership  will be cancelled immediately and all your member benefits and website access will be extended through the end of your three month billing cycle. Your membership fees will show up on your card statement as billed by @site.Name. The $15 Cash Back Reward on your next purchase is yours to keep  as our way of saying thank you for giving our @site.Name membership program a try. By registering to become @aOrAn @site.Name member, you  consent to enrolling in the @site.Name membership program and to  receive electronic email disclosures. Please read our <a  target="_blank" href="/salesterms" class="mainlink" rel="gb_page_center[450, 450]" title="@site.Name Terms &amp; Conditions">Terms &amp; Conditions</a> &amp; <a href="/salesprivacy" class="mainlink" rel="gb_page_center[450, 450]" title="@site.Name Privacy Policy">Privacy Policies</a> carefully while  saving &amp; printing a copy of each for your records. You should periodically review these terms, conditions, and policies for any updates or changes. Your continued use of the @site.Name membership program shall constitute notice and acceptance of any such changes. @site.Name will communicate  your benefits and other membership information to you, including payment  authorization, by email as well as electronic postings on our site. You may withdraw this consent by canceling the membership program. You can update your member identification information at anytime by logging into your account or contacting our customer service team.
+    </p>
+    <p>
+        <strong>Customer  Service</strong>:<br>
+        You can contact our Customer Service Team at anytime for any reason and we will be more than happy to assist you.
+    </p>
+    <p>
+        Contact  Information:<br>
+        @site.Phone<em><br>
+        </em><span class="mainlink">customerservice@@@site.OfferDomain</span>
+    </p>
+    <p>Our Customer Service office hours are from 9:00 a.m. to 5:00 p.m. EST Monday – Friday. If you are calling us when our office is closed, please leave a detailed voice mail message and one of our customer service representatives will be back  in touch with you within 1 business day.</p>
+    <p></p>
+    <p style="font: 12px Arial, Helvetica, sans-serif;">
+        Thank  you for giving our @site.AltNames.Split(',')[0] Membership program a try. Our company motto is <em>“@site.Subtitle”</em> and we take our business very  seriously. You can now save up to 50% from popular @site.BusinessSector across America. We will continue to work day in and day out to provide you with additional money saving discounts &amp; promotions. So don’t wait, log into your @site.AltNames.Split(',')[0] Membership account today and start saving money now.
+    </p>
+    <p></p>
+    <p>All  our best,</p>
+    <p></p>
+    @site.Name Team
+            <p></p>
+</div>

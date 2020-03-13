@@ -1,0 +1,17 @@
+﻿@using CastleClub.DataTypes;
+@{
+    Layout = null;
+    NoteDT note = ViewBag.Note;
+}
+<tr>
+    <td style="font-weight: bold">
+        <span>@note.CreatedAt.ToString()</span>
+        &nbsp;-&nbsp;
+        <span>@note.User.FirstName</span>
+    </td>
+</tr>
+<tr>
+    <td style="font-style: italic">
+        <span>@note.Text</span>
+    </td>
+</tr>

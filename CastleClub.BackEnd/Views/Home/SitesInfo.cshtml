@@ -1,0 +1,133 @@
+﻿@model CastleClub.BackEnd.Models.SiteInfoFilterVM
+@{
+    ViewBag.Title = "Sites Info";
+}
+
+@using(Html.BeginForm())
+{
+    <table width="100%">
+        <tr>
+            <td style="vertical-align: top" width="20%">
+                <table>
+                    <tr>
+                        <td class="tableTitle">Date Range:</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="background-color: #FFFFCC">
+                                <tr>
+                                    <th>From:</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.From)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>To:</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.To)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" align="center">
+                                        <button id="btnSubmit">
+                                            Submit
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>                    
+                </table>
+            </td>
+            <td style ="vertical-align:top;" align="center">
+                @if (Model.SitesInfo!=null && Model.SitesInfo.Count>0)
+                {
+                    <table width="100%">
+                        <tr class="reportsHeaderRow">
+                            <th>
+                                SiteID
+                            </th>
+                            <th>
+                                Site Name
+                            </th>
+                            <th>
+                                Signup
+                            </th>
+                            <th>
+                                Visits
+                            </th>
+                            <th>
+                                Percentage
+                            </th>
+                            <th>
+                                Percentage Signup Today
+                            </th>
+                            <th>
+                                Active Customers
+                            </th>
+                            <th>
+                                Refund
+                            </th>
+                        </tr>
+                        @foreach (var siteInfo in Model.SitesInfo)
+                        {
+                            string porcentage = string.Format("{0:N2}", siteInfo.Percentage);
+                            string porcentageSignupToday= string.Format("{0:N2}", siteInfo.PercentageSignupToday);
+                            string refund = string.Format("{0:N2}", siteInfo.Refund);
+                            <tr class="reportsRow">
+                                <td>
+                                    @siteInfo.Id
+                                </td>
+                                <td>
+                                    @siteInfo.Name
+                                </td>
+                                <td>
+                                    @siteInfo.Signup
+                                </td>
+                                <td>
+                                    @siteInfo.Visits
+                                </td>
+                                <td>
+                                    @porcentage %
+                                </td>
+                                <td>
+                                    @porcentageSignupToday %
+                                </td>
+                                <td>
+                                    @siteInfo.ActiveCustomers
+                                </td>
+                                <td>
+                                    @refund %
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                }
+            </td>
+        </tr>
+    </table>
+}
+
+<script>
+    $(document).ready(function () {
+        $("#From").datepicker();
+        $("#To").datepicker();
+
+        @if (Model.SitesInfo==null || Model.SitesInfo.Count==0)
+        {
+            WriteLiteral("$('#From').datepicker('setDate', \""+DateTime.Now.ToString()+"\");");
+            WriteLiteral("$('#To').datepicker('setDate', \"" + DateTime.Now.ToString() + "\");");    
+        }   
+    })
+</script>
+
+<style type="text/css">
+    TD, SPAN, LI, BODY, P {
+        color: #444;
+        font-size: 11px;
+        font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;
+    }
+</style>
+
+
+

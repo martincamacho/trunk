@@ -1,0 +1,160 @@
+﻿@model List<CastleClub.DataTypes.CustomerDT>
+@{
+    Layout = null;
+}
+@if (Model.Count > 0)
+{
+    <table width="100%">
+        <tr>
+            <td>
+                <b>Page: </b>
+                @for (int i = 0; i < ViewBag.PageCount; i++)
+                {
+                    if (i!=ViewBag.CurrentPage-1)
+                    {
+                        string namePage = "page" + (i + 1).ToString();
+                        int page = i + 1;
+                        <a name="@namePage" href="#">@page</a>
+                    }
+                    else
+                    {
+                        int page = i + 1;
+                        <label>@page</label>
+                    }   
+                }
+                @if (ViewBag.CurrentPage!=0)
+                { 
+                    <a name="all" href="#">all</a>
+                }
+                else
+                {
+                    <label>all</label>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td width="100%">
+                <table cellspacing="1" cellpadding="2" border="0" width="100%" style="vertical-align:top;">
+                    <tr style="background-color:#EEEEEE">
+                        <th>Customer ID</th>
+                        <th>Name</th>
+                        <th>Order History</th>
+                        <th>EMail</th>
+                        <th>Billing Address</th>
+                        <th>Club</th>
+                        <th>Active</th>
+                        <th>Cancel Date</th>
+                        <th>Member Since</th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr style="font-size: 11px; font-family: Verdana,Geneva,Arial,Helvetica,sans-serif; background-color: #EEEEEE">
+                            <td align="center">
+                                @item.Id
+                                <br />
+                                @item.CreatedAt.ToString("MM/dd/yyyy")
+                            </td>
+                            <td align="center">
+                                @{string fullName = item.FirstName + " " + item.LastName;}
+                                @fullName
+                            </td>
+                            <td align="center">
+                                @{string emailEncode = HttpUtility.UrlEncode(item.Email);}
+                                <a href="~/Subscription/ManageSubscriptions?customerEmail=@emailEncode">View</a>
+                            </td>
+                            <td align="center">
+                                @{string href = "mailto:" + item.Email;}
+                                <a href="@href">@item.Email</a>
+                            </td>
+                            <td align="center">
+                                @{string fullAddress = item.Address + ", " + item.StateId + " " + item.ZipCode + " USA";}
+                                @fullAddress
+                            </td>
+                            <td align="center">
+                                @item.Site
+                            </td>
+                            <td align="center">
+                                @{
+                                    string active = (item.CancelledDate.HasValue) ? "FALSE" : "TRUE";
+                                }
+                                @active
+                            </td>
+                            <td align="center">
+                                @{
+                                    string cancellDate = item.CancelledDate.HasValue ? item.CancelledDate.Value.ToShortDateString() : string.Empty;                                
+                                }
+                                @cancellDate
+                            </td>
+                            <td align="center">
+                                @item.CreatedAt.ToString("MM/dd/yyyy")
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $("a[name^=page]").click(function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            page = parseInt($(this).html());
+
+            $.ajax({
+                type: "POST",
+                url: "/Customers/GetListCustomersFilter",
+                data: { Letter: letter, Page: page, Word: $("#txtFilter").val(), All: false, OnlyActive: $("#chkOnlyActive").is(':checked'), SiteName: $("#slSite").val() },
+                success: function (data) {
+                    $("#idReplace").html(data);
+                }
+            });
+
+            return false;
+        })
+        $("a[name=all]").click(function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            page = 1;
+
+            $.ajax({
+                type: "POST",
+                url: "/Customers/GetListCustomersFilter",
+                data: { Letter: letter, Page: 1, Word: $("#txtFilter").val(), All: true, OnlyActive: $("#chkOnlyActive").is(':checked'), SiteName: $("#slSite").val() },
+                success: function (data) {
+                    $("#idReplace").html(data);
+                }
+            });
+            $("#txtFilter").val("");
+
+            return false;
+        })
+        $("button[id^=btnEnabled]").click(function (event) {
+            var id = $(this).attr("id").split("btnEnabled")[1];
+            $that = $(this);
+
+            $.ajax({
+                type: "POST",
+                url: "/Customers/EnabledDisabledCustomer",
+                data: { IdCustomer: parseInt(id) },
+                success: function (data) {
+                    if (data=="True") {
+                        $that.remove();
+                    }
+                }
+            });
+        })
+    </script>
+    <style type="text/css">
+        BUTTON {
+            font-size: 9px;
+        }
+
+        OPTION, SELECT, BUTTON, TEXT, TEXTAREA, SUBMIT {
+            color: #444;
+            font-size: 11px;
+            font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;
+        }
+    </style>
+}
+
+

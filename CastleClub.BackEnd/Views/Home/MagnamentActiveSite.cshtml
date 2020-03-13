@@ -1,0 +1,386 @@
+﻿@model CastleClub.BackEnd.Models.MagnementActivesSitesVM
+@{
+    ViewBag.Title = "MagnamentActiveSite";
+}
+
+@if (Model!=null && Model.Sites!=null && Model.Sites.Count>0)
+{
+    <h4>Select the new active offer</h4>
+    
+    <h5>Select the type of form to show:</h5>
+    <table style="vertical-align:top;" align="center" width="60%">
+        <tr>
+            <th class="reportsHeaderRow">
+                Email Only Form Mastercard
+            </th>
+        </tr>
+        <tr>
+            <td width="100%">
+                <table width="100%">
+                    <tr>
+                        <td align="center">
+                            Email Only Form @Html.EditorFor(m => m.MasterEmailFormProcentage, new { type = "number", @class = "emailForm", max = 100, min = 0 }) %
+                        </td>
+                        <td align="center">
+                            @{
+                                decimal fullMasterPorcentage = 100 - Model.MasterEmailFormProcentage;
+                            }
+                            Full Data Form <input type="number" class="fullForm" id="fullMastercard" value="@fullMasterPorcentage" max="100" min="0" /> %
+                        </td>
+                        <td align="center">
+                            <a href="#" id="Mastercad" class="creditCard">UPDATE</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <th class="reportsHeaderRow">
+                Email Only Form Visa
+            </th>
+        </tr>
+        <tr>
+            <td width="100%">
+                <table width="100%">
+                    <tr>
+                        <td align="center">
+                            Email Only Form @Html.EditorFor(m => m.VisaEmailFormPorcentage, new { type = "number", @class = "emailForm", max = 100, min = 0 }) %
+                        </td>
+                        <td align="center">
+                            @{
+                                decimal fullVisaPorcentage = 100 - Model.VisaEmailFormPorcentage;
+                            }
+                            Full Data Form <input type="number" class="fullForm" id="fullVisa" value="@fullVisaPorcentage" max="100" min="0" /> %
+                        </td>
+                        <td align="center">
+                            <a href="#" id="Visa" class="creditCard">UPDATE</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <th class="reportsHeaderRow">
+                Email Only Form Discover
+            </th>
+        </tr>
+        <tr>
+            <td width="100%">
+                <table width="100%">
+                    <tr>
+                        <td align="center">
+                            Email Only Form @Html.EditorFor(m => m.DiscoverEmailFormPorcentage, new { type="number", @class = "emailForm", max = 100, min = 0 }) %
+                        </td>
+                        <td align="center">
+                            @{
+                                decimal fullDiscoverPorcentage = 100 - Model.DiscoverEmailFormPorcentage;
+                            }
+                            Full Data Form <input type="number" class="fullForm" id="fullDiscover" value="@fullDiscoverPorcentage" max="100" min="0" /> %
+                        </td>
+                        <td align="center">
+                            <a href="#" id="Discover" class="creditCard">UPDATE</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+    using (Html.BeginForm(null, null, FormMethod.Post, new { id = "form" }))
+    {
+        <h5>Is advisable visit the page before change</h5>
+        <table style="vertical-align:top;" align="center" width="60%">
+            <tr class="reportsHeaderRow">
+                <th>
+                    Enabled
+                </th>
+                <th>
+                    Site name
+                </th>
+                <th>
+                    View page
+                </th>
+            </tr>
+            @foreach (var site in Model.Sites)
+            {
+                <tr class="reportsRow">
+                    <td>
+                        @if (site.Active)
+                        {
+                            <input type="radio" id="siteID" name="SiteID" value="@site.SiteId" data="@site.Site.Name" checked />
+                        }
+                        else
+                        {
+                            <input type="radio" id="siteID" name="SiteID" value="@site.SiteId" data="@site.Site.Name" />
+                        }
+                    </td>
+                    <td>
+                        @site.Site.Name
+                    </td>
+                    <td>
+                        <a href="@site.Url" name="view">View page</a>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="3" align="center">
+                    <input type="submit" id="btnSubmit" value="Change" />
+                </td>
+            </tr>
+        </table>
+    
+        <div id="alertDiv">
+
+        </div>
+    }
+}
+else
+{
+    <h3>There are not offer site.</h3>
+}
+
+<script>
+    var activeOfferName = @{WriteLiteral("'" + Model.Sites.FirstOrDefault(x => x.Active).Site.Name + "';");}
+
+    $('form[id=form]').submit(function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        var newOffer = $("#form input[type='radio'][name='SiteID']:checked").attr("data");
+
+        $("#alertDiv").html("Are you sure you want to swap the active offer out from: " + activeOfferName + " to " + newOffer + "?");
+        dialogChangePassword = $("#alertDiv").dialog({
+            autoOpen: true,
+            height: 240,
+            width: 340,
+            modal: true,
+            title: "Question",
+            buttons: {
+                "Ok": function () {
+                    ok = true;
+                    dialogChangePassword.dialog("close");
+
+                    $.ajax({
+                        type: 'POST',
+                        data: { SiteID: $("#form input[type='radio'][name='SiteID']:checked").val() },
+                        url: '/home/MagnamentActiveSite',
+                        success: function (data) {
+                            if (data == "True") {
+                                $("#alertDiv").html(newOffer + " is now active.");
+                                activeOfferName = newOffer;
+                            }
+                            else {
+                                $("#alertDiv").html("Site offer not change.");
+                            }
+
+                            dialogChangePassword = $("#alertDiv").dialog({
+                                autoOpen: true,
+                                height: 200,
+                                width: 312,
+                                modal: true,
+                                title: "Notification",
+                                buttons: {
+                                    "Ok": function () {
+                                        dialogChangePassword.dialog("close");
+                                    }
+                                },
+                                close: function () {
+                                }
+                            });
+                            dialogChangePassword.dialog('open');
+                        }
+                    });
+                },
+                "Cancel": function () {
+                    dialogChangePassword.dialog("close");
+                }
+            },
+            close: function () {
+            }
+        });
+        dialogChangePassword.dialog('open');
+
+        return false;
+    });
+
+    $("a[name^=view]").click(function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        window.open($(this).attr('href'), "_blank", "toolbar=no, scrollbars=yes, resizable=yes, top=500, left=500, width=715px, height=2223");
+
+        return false;
+    });
+
+    @{
+        WriteLiteral("var masterEmailOld="+Model.MasterEmailFormProcentage+";");
+        WriteLiteral("var masterFullOld=" + (100 - Model.MasterEmailFormProcentage) + ";");
+
+        WriteLiteral("var visaEmailOld=" + Model.MasterEmailFormProcentage + ";");
+        WriteLiteral("var visaFullOld=" + (100 - Model.MasterEmailFormProcentage) + ";");
+            
+        WriteLiteral("var discoverEmailOld="+Model.MasterEmailFormProcentage+";");
+        WriteLiteral("var discoverFullOld=" + (100-Model.MasterEmailFormProcentage) + ";");
+    }
+
+    $("a[class=creditCard]").click(function () {
+        var email = 0;
+        var full = 0;
+
+        var emailOld = 0;
+        var fullOld = 0;
+
+        var title = "";
+        if ($(this).attr("id") == "Mastercad") {
+            email = $("#MasterEmailFormProcentage").val();
+            emailOld = masterEmailOld;
+            title = "Mastercard";
+        }
+        else if ($(this).attr("id") == "Visa") {
+            email = $("#VisaEmailFormPorcentage").val();
+            emailOld = visaEmailOld;
+            title = "Visa";
+        }
+        else if ($(this).attr("id") == "Discover") {
+            email = $("#DiscoverEmailFormPorcentage").val();
+            emailOld = discoverEmailOld;
+            title = "Discover";
+        }
+        full = 100 - email;
+        fullOld = 100 - emailOld;
+
+        $("#alertDiv").html("<table><tr><td>"
+            + "You’re going to change the "+title+" from " + masterEmailOld + "% Email Only Form and "+fullOld+"% Full Data Form to " + email + "% Email Only Form and " + full + "% Full Data Form.  Would you like to proceed?"
+            + "</td></tr></table>");
+
+        dialogChangePassword = $("#alertDiv").dialog({
+            autoOpen: true,
+            height: 200,
+            width: 312,
+            modal: true,
+            title: "Credit Card - " + title,
+            buttons: {
+                "Ok": function () {
+
+                    $.ajax({
+                        data: { Type: title, EmailForm: email, FullForm: full },
+                        type: "POST",
+                        url: "/Home/ChangePercentageCreditCard",
+                        success: function (data) {
+                            if (data) {
+                                $("#alertDiv").html("Ready, the new percentage for "+title+ " are " + email + "% Email Only Form and " + full + "% Full Data Form.");
+                            }
+                            else {
+                                $("#alertDiv").html("An error ocuerred, the new percentage did not changed for " + title+". Try leater again.");
+                            }
+
+                            dialogChangePassword = $("#alertDiv").dialog({
+                                autoOpen: true,
+                                height: 200,
+                                width: 312,
+                                modal: true,
+                                title: "Credit Card - " + title,
+                                buttons: {
+                                    "OK": function () {
+                                        dialogChangePassword.dialog("close");
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+                    dialogChangePassword.dialog("close");
+                },
+                "Cancel": function () {
+                    dialogChangePassword.dialog("close");
+                }
+            },
+            close: function () {
+            }
+        });
+        dialogChangePassword.dialog('open');
+    });
+
+    $(".fullForm").change(function () {
+        var value = 100 - $(this).val();
+        if ($(this).attr('id') == "fullMastercard") {
+            $("#MasterEmailFormProcentage").val(value);
+        }
+        else if ($(this).attr('id') == "fullVisa") {
+            $("#VisaEmailFormPorcentage").val(value);
+        }
+        else if ($(this).attr('id') == "fullDiscover") {
+            $("#DiscoverEmailFormPorcentage").val(value);
+        }
+    });
+    $("#MasterEmailFormProcentage").change(function () {
+        if ($(this).val() > 100) {
+            $(this).val(masterEmailOld);
+        }
+        else if ($(this).val() < 0) {
+            $(this).val(masterEmailOld);
+        }
+        var value = 100 - $(this).val();
+        $("#fullMastercard").val(value);
+    });
+    $("#VisaEmailFormPorcentage").change(function () {
+        if ($(this).val() > 100) {
+            $(this).val(visaEmailOld);
+        }
+        else if ($(this).val() < 0) {
+            $(this).val(visaEmailOld);
+        }
+        var value = 100 - $(this).val();
+        $("#fullVisa").val(value);
+    });
+    $("#DiscoverEmailFormPorcentage").change(function () {
+        if ($(this).val() > 100) {
+            $(this).val(discoverEmailOld);
+        }
+        else if ($(this).val() < 0) {
+            $(this).val(discoverEmailOld);
+        }
+        var value = 100 - $(this).val();
+        $("#fullDiscover").val(value);
+    });
+
+    $(".fullForm").keydown(function (event) {
+        if (event.keyCode == 13) {
+            if ($(this).attr('id') == "fullMastercard") {
+                $("#Mastercad").click();
+            }
+            else if ($(this).attr('id') == "fullVisa") {
+                $("#Visa").val();
+            }
+            else if ($(this).attr('id') == "fullDiscover") {
+                $("#Discover").val();
+            }
+        }
+    });
+    $("#MasterEmailFormProcentage").keydown(function (event) {
+        if (event.keyCode == 13) {
+            $("#Mastercad").click();
+        }
+    });
+    $("#VisaEmailFormPorcentage").keydown(function (event) {
+        if (event.keyCode == 13) {
+            $("#Visa").click();
+        }
+    });
+    $("#DiscoverEmailFormPorcentage").keydown(function (event) {
+        if (event.keyCode == 13) {
+            $("#Discover").click();
+        }
+    });
+</script>
+
+<style type="text/css">
+    TD, SPAN, LI, BODY, P {
+        color: #444;
+        font-size: 11px;
+        font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;
+    }
+</style>
+

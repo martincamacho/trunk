@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="EmailWelcomeBody" xml:space="preserve">
+    <value>&lt;html&gt;"
+                                   &lt;body&gt;"
+                                        &lt;p&gt;Hello {0},&lt;/p&gt;"
+
+                                        + "&lt;br/&gt;"
+                                        + "&lt;p&gt;Welcome to {3}!  We are pleased to confirm your {4} Membership to America's Leading Shopping Discount Club.&lt;/p&gt;"
+
+                                        + "&lt;p&gt;This email confirms your registration during your order checkout on &lt;b&gt;{5}&lt;/b&gt;.&lt;/p&gt;"
+
+                                        + "&lt;p&gt;To access your members only benefits and special savings, simply follow the instructions below.&lt;/p&gt;"
+                                        + "&lt;ol&gt;"
+                                            + "&lt;li&gt;Visit &lt;a href='http://{10}' style='color:rgb(15,105,151)'&gt;&lt;b&gt;{10}&lt;/b&gt;&lt;/a&gt;&lt;/li&gt;"
+                                            + "&lt;li&gt;Log into our 'members only' area using your login information below&lt;/li&gt;"
+                                            + "&lt;li&gt;Update or change your password&lt;/li&gt;"
+                                            + "&lt;li&gt;Choose from thousands of {4} Member discounts, benefits and savings offers.&lt;/li&gt;"
+                                            + "&lt;li&gt;Start saving money today&lt;/li&gt;"
+                                        + "&lt;/ol&gt;"
+                                        + "&lt;br /&gt;"
+                                        + "&lt;p&gt;&lt;b&gt;&lt;u style='color:rgb(61,133,198)'&gt;{3} Login Information:&lt;/u&gt;&lt;/b&gt;&lt;/p&gt;"
+                                        + "&lt;br /&gt;"
+                                        + "&lt;p&gt;Your username is: {1}&lt;/p&gt;"
+                                        + "&lt;p&gt;Your password is: {2}&lt;/p&gt;"
+                                        + "&lt;br /&gt;"
+                                        + "&lt;br /&gt;"
+                                        + "&lt;p&gt;&lt;b&gt;Trial Offer &amp; Billing Details:&lt;/b&gt;&lt;/p&gt;"
+                                        + "&lt;p&gt;"
+                                        + "Try the {3} membership service for one full month, FREE.  Your {3} Membership will automatically be renewed for three months at the ${6} per month (billed ${7} every 3 months) and auto renewed every three months thereafter billed to the credit or debit card you used during your initial registration unless you contact us to cancel."
+                                        + "&lt;/p&gt;"
+                                        + "&lt;p&gt;"
+                                        + "If at anytime you are not completely satisfied with our membership service, simply contact us at {8} or email us at {9} to let us know you wish to cancel your monthly membership benefits. If you cancel during the first 30 days, you owe nothing further. If you cancel after the first 30 days, let us know if you wish to cancel your membership and owe nothing further. All your benefits and access will then be immediately canceled.  Your membership fee will show up on your card statement as billed by &lt;b&gt;'{3}'&lt;/b&gt;. "
+                                        + "&lt;p&gt;"
+                                        + "&lt;br /&gt;"
+                                        + "&lt;p&gt;&lt;b&gt;How to Redeem your $15 Cash Back Reward:&lt;/b&gt;&lt;/p&gt;"
+                                        + "&lt;ol&gt;"
+                                            + "&lt;li&gt;Print a copy of this welcome email that includes your {3} Member identification information.&lt;/li&gt;"
+                                            + "&lt;li&gt;Make any purchase at any of our partners within the next 90 days.&lt;/li&gt;"
+                                            + "&lt;li&gt;Print a copy of your order receipt from this order.&lt;/li&gt;"
+                                            + "&lt;li&gt;Write the return mailing address where you wish to receive your reward check on the printout copy of this email.&lt;/li&gt;"
+                                            + "&lt;li&gt;Mail a copy of your order receipt &amp; welcome email to our mailing address at {3}, PO Box 292, Colts Neck, New Jersey 07722 (do not mail to our corporate NYC mailing address).&lt;/li&gt;"
+                                            + "&lt;li&gt;Allow 4-6 weeks for us to process your Cash Back Reward and mail you your $15 reward check.&lt;/li&gt;"
+                                            + "&lt;li&gt;Use your $15 Reward money for anything you wish!&lt;/li&gt;"
+                                            + "&lt;li&gt;Continue to use your {4} Membership to save money each and every time you shop.&lt;/li&gt;"
+                                        + "&lt;/ol&gt;"
+                                        + "&lt;br /&gt;"
+                                        + "&lt;p&gt;"
+                                            + "&lt;b&gt;{3} Members Enjoy:&lt;/b&gt;&lt;br /&gt;"
+                                            + "&lt;span style='color: rgb(15,105,151)'&gt;&lt;b&gt;Discount Savings of Up to 50% from Your Favorite Merchants&lt;/b&gt;&lt;/span&gt;&lt;br /&gt;"
+                                            + "Enjoy incredible savings from up to 200,000 merchants across America.  Save up to 50% off retail prices each and every time you make a purchase"
+                                        + "&lt;/p&gt;"
+                                        + "&lt;p&gt;"
+                                            + "&lt;span style='color:rgb(15,105,151)'&gt;&lt;b&gt;24x7 Online Member Login Access&lt;/b&gt;&lt;/span&gt;&lt;br /&gt;"
+                                            + "Log into your account at any time of the day or night to view discounts and special offers.  Use this competitive price information to help you make smart purchasing decisions."
+                                        + "&lt;/p&gt;"
+                                        + "&lt;p&gt;"
+                                            + "&lt;span style='color:rgb(15,105,151)'&gt;&lt;b&gt;Hundreds of Nationally Recognized Brands&lt;/b&gt;&lt;/span&gt;&lt;br /&gt;"
+                                            + "Compare and shop for discount savings from hundreds of America’s most prestigious and well known household name brand companies."
+                                        + "&lt;/p&gt;"
+                                        + "&lt;p&gt;"
+                                            + "&lt;span style='color:rgb(15,105,151)'&gt;&lt;b&gt;$15 Cash Back Reward&lt;/b&gt;&lt;/span&gt;&lt;br /&gt;"
+                                            + "On top of receiving every day savings, NEW {4} Members qualify to receive a $15 cash back reward to be used on your next purchase, absolutely FREE!"
+                                        + "&lt;/p&gt;"
+                                        + "&lt;p&gt;"
+                                            + "&lt;span style='color:rgb(15,105,151)'&gt;&lt;b&gt;Local Merchant Savings in Your Area Based on Your Zip Code&lt;/b&gt;&lt;/span&gt;&lt;br /&gt;"
+                                            + "Search for price discount offers in your local geographical area by typing in your local zip code and let our network of retailers do the price shopping leg work for you."
+                                        + "&lt;/p&gt;"
+                                        + "&lt;p&gt;"
+                                            + "We have amassed one of the largest selections of consumer discounts &amp; savings programs found anywhere in the world.   So log into your account today and start saving money each and every time you shop!"
+                                        + "&lt;/p&gt;"
+                                        + "&lt;br /&gt;"
+                                        + "&lt;p&gt;"
+                                            + "&lt;b&gt;Customer Service:&lt;/b&gt;"
+                                        + "&lt;/p&gt;"
+                                        &lt;br /&gt;"
+                                        &lt;p&gt;"
+                                            Customer Service Contact Information:&lt;br /&gt;"
+                                            &lt;span style='color:rgb(17,85,204)'&gt;&lt;u&gt;{8}&lt;/u&gt;&lt;/span&gt;&lt;br /&gt;"
+                                            &lt;span style='color:rgb(15,105,151)'&gt;&lt;b&gt;&lt;u&gt;{9}&lt;/u&gt;&lt;/b&gt;&lt;/span&gt;&lt;br /&gt;"
+                                        &lt;/p&gt;"
+                                        &lt;br /&gt;"
+                                        &lt;p&gt;"
+                                            You can contact our Customer Service Team at any time for any reason and we will be more than happy to assist you.  Our Customer Service office hours are from 9:30 a.m. to 5:30 p.m. EST Monday - Friday.  If you are calling us when our office is closed, please leave a detailed voice mail message and one of our customer service representatives will be back in touch with you within 1 business day."
+                                        &lt;/p&gt;"
+                                        &lt;p&gt;"
+                                            Thank you for giving our {4} Membership program a try.  Our company motto is &lt;i&gt;'Your Savings is our Business'&lt;/i&gt; and we take our business very seriously.  You can now save up to 50% from over 250,000 merchants and brand name companies across America.  We will continue to work day in and day out to provide you with additional money saving discounts &amp; promotions.  So don't wait, log into your {4} Membership account today and start saving money now."
+                                        &lt;/p&gt;"
+                                        &lt;br /&gt;"
+                                        &lt;p&gt;"
+                                            All our best,
+                                        &lt;/p&gt;
+                                        &lt;br /&gt;
+                                        &lt;br /&gt;
+                                        &lt;p&gt;
+                                            {3} Customer Service Team&lt;br /&gt;
+                                            &lt;span style='color:rgb(17,85,204)'&gt;&lt;u&gt;888-859-4282&lt;/u&gt;&lt;/span&gt;&lt;br /&gt;
+                                            &lt;span style='color:rgb(15,105,151)'&gt;&lt;b&gt;&lt;u&gt;{9}&lt;/u&gt;&lt;/b&gt;&lt;/span&gt;
+                                        &lt;/p&gt;
+                                    &lt;/body&gt;
+                                &lt;head&gt;</value>
+  </data>
+  <data name="EmailWelcomeSubjet" xml:space="preserve">
+    <value>Welcome to {0}</value>
+  </data>
+</root>

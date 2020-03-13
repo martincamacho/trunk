@@ -1,0 +1,43 @@
+﻿@{
+    CastleClub.DataTypes.SiteDT site = ViewBag.Site;
+    string aOrAn = site.Name.ToLower().StartsWith("a") ? "an" : "a";
+
+    CastleClub.BusinessLogic.Data.Referrer referrer = ViewBag.Referrer != null ? CastleClub.BusinessLogic.Managers.ReferrersManagers.GetReferrerByName(ViewBag.Referrer) : new CastleClub.BusinessLogic.Data.Referrer();
+
+}
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>How to Claim Your $15 Cash Back Savings</title>
+    <link href="/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div id="rightcontent">
+      <h1>How to Claim Your $15 Cash Back Savings</h1>
+      <div class="pagecontent">
+        <p> As a member of @site.Name you will receive a $15.00 Cash Back Savings on your next <strong>@referrer.Name</strong> purchase!&nbsp;  Once you become @aOrAn @site.Name member, you will receive a welcome email that will detail the following instructions:</p>
+        <p>How  to redeem your $15 Cash Back Savings on your next <strong>@referrer.Name</strong> Purchase:</p>
+        <ol start="1" type="1">
+          <li> Print a copy of this welcome email that includes your @site.Name Member username, password &amp; signup date.</li>
+          <li> Make any purchase at <strong>@referrer.Name</strong> within the next 90 days.</li>
+          <li> Print a copy of your order receipt from <strong>@referrer.Name</strong>.</li>
+          <li> Write the return mailing address where you wish to receive your savings check in the address area in the email printout.</li>
+          <li> Mail a copy of your order receipt &amp; welcome email to our Cash Back Savings Department PO Box address at: @site.Name, @Html.Raw(site.ShortAddress.Replace(",,", ",")) (do not mail to our corporate mailing address)</li>
+          <li> Or, you can forward an email copy of the purchase order receipt that you receive from your next online order from <strong>@referrer.Name</strong> within the next 90 days, including your return address in the body of the email, to <strong>customerservice@@@site.OfferDomain</strong>.  Please title the subject line &quot;Cash Back Savings Redemption – your name&quot;</li>
+          <li> Allow 4-6 weeks for us to process your Cash Back Savings and mail you your $15 savings check.</li>
+          <li> Use your $15 Savings money for anything you wish!</li>
+          <li> Continue to use your @site.Name Membership to save money each and every time you shop.</li>
+        </ol>
+        <p>Please note:&nbsp;  Do not attempt to redeem and/or mail your Cash Back Savings through <strong>@referrer.Name</strong>.  You can only redeem your $15 Cash Back Savings directly through @site.Name. Your $15 Cash Back Savings is a one-time only, non-transferable offer.  You must redeem your $15 Cash Back offer within 90 days from receiving your confirmation email or the offer becomes null and void.  If you did not receive your confirmation email, please contact customer service. Only one Cash Back Savings may be redeemed per household.</p>
+        <p>&nbsp;</p>
+        <p>Thank you!</p>
+        <p>@site.Name Customer Service</p>
+      </div>
+    </div>
+</body>
+</html>

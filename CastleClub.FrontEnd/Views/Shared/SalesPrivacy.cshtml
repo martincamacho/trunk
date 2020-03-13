@@ -1,0 +1,44 @@
+﻿@{
+    CastleClub.DataTypes.SiteDT site = ViewBag.Site;
+}
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Privacy Policy</title>
+    <link href="/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div id="rightcontent">
+      <h1>Privacy Policy</h1>
+      <div class="pagecontent">
+        <p>Here at @site.AltNames.Split(',')[1], we believe that respecting your Privacy is of the up  most importance.&nbsp; Since all of us here at @site.AltNames.Split(',')[1] use the  internet, we are aware of the problems and annoyances that arise when a company  doesn't respect your privacy.&nbsp; So, please be assured that we will continue  to do everything we can to protect your privacy.&nbsp; In this Privacy  Statement we will tell you what information we need from you and how we use it  in the future.</p>
+        <p>We  value the trust you place in our team. We want to ensure that you understand  what information we gather about you, how we use it, and the safeguards we have  in place in order to protect this information.&nbsp; If you have additional  questions or would like further information on this topic, please feel free to  contact us at <span class="mainlink">customerservice@@@site.OfferDomain</span> and/or @site.Phone at anytime.&nbsp;&nbsp; Please note that we may update this  policy from time to time to better protect and serve our users. Please check  our Privacy Policy periodically for changes.</p>
+        <p><strong>SECURE SITE:</strong><br />
+          Our  website and opt in order forms use secure socket layer (ssl) encryption  technology for all of our online orders.&nbsp; When we collect confidential  customer information, our certified secure socket layer technology (SSL)  encrypts all order information you input before it is sent to us. The  encryption of the information you sent to us does not guaranty its security, as  encryption code can be broken, however all of the customer data we collect is  protected with SSL encryption technology to help fight against unauthorized  access.</p>
+        <p><strong>CONSUMER INFORMATION:</strong><br />
+          The  personal identification information needed to process your membership order,  might include contact information such as your name, mailing address, telephone  number, fax number, credit card information, additional forms of payment  information and/or your email address.&nbsp;&nbsp; All of the customer  information we collect is strictly confidential and maintained in electronic  files in our New York City head-office. Our participating professionals, to  whom this information may or may not be transferred, are bound by the same  terms of confidentiality.</p>
+        <p><strong>PROMOTIONS:</strong><br />
+          To  preserve customer’s anonymity and to assure the quality of customer  communications, @site.AltNames.Split(',')[1] provides customers with the opportunity  to opt in or out of any further marketing promotions or receiving  communications from us, or our partners.</p>
+        <p><strong>Membership Cancellations &amp; Email Opt-Outs:</strong><br />
+          At  anytime for any reason, you may cancel your monthly membership  subscription.&nbsp; Please allow 48 hours for us to process your  cancellation.&nbsp; You may also, at anytime for any reason, opt- out of  receiving promotional emails and/or if you do not want us to share your  Personal Information with affiliates and/or unaffiliated third parties.&nbsp;  Simply contact our customer service department at customerservice@@@site.OfferDomain and/or @site.Phone and we will be more than happy to assist you. Please allow  up to 7 business days for your email to be removed from our active customer  database.</p>
+        <p><strong>DISCLOSURE TO OUTSIDE PARTIES:</strong><br />
+          From  time to time, we may share Personal Information relating to your transactions  or experience with us, with our affiliates, such as the other membership  services operated by Castle Club Rewards, LLC and our affiliates (including  those existing currently or in the future). &nbsp;&nbsp;We may also share your  Personal Information with trustworthy un-affiliated third parties, who offer  products or services that we feel may be of interest to you when we believe, in  good faith, that such release is reasonably necessary to comply with the law,  enforce or apply the terms of any of our user agreements or protect the rights,  property or safety of @site.AltNames.Split(',')[1], our customers or others.</p>
+        <p><strong>COOKIES:</strong><br />
+          Like  many companies, we may use a technology called &quot;cookies&quot; to enhance  your experience on our site or partner sites. The cookies we use do not contain  any personally identifiable information and cannot profile your system or  collect information from your hard drive. You are not identified by name or  e-mail address, just by a unique string of numbers that we assign the first  time you come to our site or partner sites.</p>
+        <p><strong>THIRD PARTY PRACTICES:</strong><br />
+          The  Privacy Policy of an advertiser or promotional service appearing at our site  may differ from ours. We encourage you to read that policy before responding to  that offer. We are not responsible for the privacy practices or the content of  such other sites.</p>
+        <p><strong>CHILDREN UNDER 18:</strong><br />
+          We  have no way of distinguishing the age of individuals who access our web site;  however, in the event that we discover that a child under the age of 18 is  providing personally-identifying information, we will not accept any such  information. If a child had provided us with personally-identifying information  without parental or guardian consent, the parent or guardian should contact us  to remove that information and opt out of promotional opportunities.</p>
+        <p><strong>CONSENT:</strong><br />
+          By  using our site, you consent to the collection and use of this information by @site.AltNames.Split(',')[1].&nbsp; If you do not agree with the terms of this policy, please do not use our @site.AltNames.Split(',')[1] website.&nbsp; If we decide to change our privacy policy, we will post those  changes on this page so that you are always aware of what information we  collect, how we use it and under what circumstances we may disclose it. This  Privacy Policy supersedes all privacy policies and other similar standards  previously issued by us. Since the privacy standards set forth herein are  subject to updates and other changes from time to time, please note that this  Privacy Policy is subject to change at any time. Your continued use of our site  following the posting of changes to these terms means you accept these changes.</p>
+        <p><strong>Questions?</strong><br />
+          If  you do not understand our Privacy Policy, we invite you to contact us at @site.AltNames.Split(',')[1] (a DBA of Castle Club Rewards, LLC), @Html.Raw(site.ShortAddress.Replace(",,", ",")).&nbsp;&nbsp; Please feel free to call us toll-free at @site.Phone and/or email us at <span class="mainlink">customerservice@@@site.OfferDomain</span>.&nbsp; Thank you for your cooperation.</p>
+        <span class="small">This Privacy Policy was last updated on @site.LastUpdate.</span></div>
+    </div>
+</body>
+</html>

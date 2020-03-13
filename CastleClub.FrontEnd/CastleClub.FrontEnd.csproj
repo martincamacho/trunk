@@ -1,0 +1,543 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D805E29A-60CD-4B02-B02B-D076DBC18AE0}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CastleClub.FrontEnd</RootNamespace>
+    <AssemblyName>CastleClub.FrontEnd</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah.Mvc">
+      <HintPath>..\packages\Elmah.MVC.2.1.1\lib\net40\Elmah.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="LoggingUtilities">
+      <HintPath>..\..\..\Users\w8a\Downloads\LoggingUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\js\common.js" />
+    <Content Include="Content\js\greybox\AJS.js" />
+    <Content Include="Content\js\greybox\AJS_fx.js" />
+    <Content Include="Content\js\greybox\gb_scripts.js" />
+    <Content Include="Content\js\greybox\gb_styles.css" />
+    <Content Include="Content\js\greybox\g_close.gif" />
+    <Content Include="Content\js\greybox\header_bg.gif" />
+    <Content Include="Content\js\greybox\indicator.gif" />
+    <Content Include="Content\js\greybox\loader_frame.html" />
+    <Content Include="Content\js\greybox\next.gif" />
+    <Content Include="Content\js\greybox\prev.gif" />
+    <Content Include="Content\js\greybox\w_close.gif" />
+    <Content Include="Content\Offer10\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer10\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer10\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer10\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer10\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer10\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer10\popgraphics\logo.jpg" />
+    <Content Include="Content\Offer10\popgraphics\newcars_sm.jpg" />
+    <Content Include="Content\Offer10\popgraphics\newtires_sm.jpg" />
+    <Content Include="Content\Offer10\popgraphics\oilchanges_sm.jpg" />
+    <Content Include="Content\Offer10\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer10\popgraphics\repairs_sm.jpg" />
+    <Content Include="Content\Offer10\popgraphics\step1.gif" />
+    <Content Include="Content\Offer10\popgraphics\step2.gif" />
+    <Content Include="Content\Offer10\popgraphics\step3.gif" />
+    <Content Include="Content\Offer10\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer10\popgraphics\yesjoinnow.gif" />
+    <Content Include="Content\Offer11\popgraphics\apparel_sm.jpg" />
+    <Content Include="Content\Offer11\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer11\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer11\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer11\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer11\popgraphics\departmentstores_sm.jpg" />
+    <Content Include="Content\Offer11\popgraphics\electronics_sm.jpg" />
+    <Content Include="Content\Offer11\popgraphics\flowersgifts_sm.jpg" />
+    <Content Include="Content\Offer11\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer11\popgraphics\homegarden_sm.jpg" />
+    <Content Include="Content\Offer11\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer11\popgraphics\jewelry_sm.jpg" />
+    <Content Include="Content\Offer11\popgraphics\logo.jpg" />
+    <Content Include="Content\Offer11\popgraphics\magazines_sm.jpg" />
+    <Content Include="Content\Offer11\popgraphics\moviesmusicbooks_sm.jpg" />
+    <Content Include="Content\Offer11\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer11\popgraphics\pets_sm.jpg" />
+    <Content Include="Content\Offer11\popgraphics\shoes_sm.jpg" />
+    <Content Include="Content\Offer11\popgraphics\sportinggoods_sm.jpg" />
+    <Content Include="Content\Offer11\popgraphics\step1.gif" />
+    <Content Include="Content\Offer11\popgraphics\step2.gif" />
+    <Content Include="Content\Offer11\popgraphics\step3.gif" />
+    <Content Include="Content\Offer11\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer11\popgraphics\toysandchildren_sm.jpg" />
+    <Content Include="Content\Offer11\popgraphics\yesjoinnow.gif" />
+    <Content Include="Content\Offer12\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer12\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer12\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer12\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer12\popgraphics\desserts_sm.jpg" />
+    <Content Include="Content\Offer12\popgraphics\finedining_sm.jpg" />
+    <Content Include="Content\Offer12\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer12\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer12\popgraphics\logo.jpg" />
+    <Content Include="Content\Offer12\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer12\popgraphics\restaurants_sm.jpg" />
+    <Content Include="Content\Offer12\popgraphics\specialorder_sm.jpg" />
+    <Content Include="Content\Offer12\popgraphics\step1.gif" />
+    <Content Include="Content\Offer12\popgraphics\step2.gif" />
+    <Content Include="Content\Offer12\popgraphics\step3.gif" />
+    <Content Include="Content\Offer12\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer12\popgraphics\yesjoinnow.gif" />
+    <Content Include="Content\Offer13\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer13\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer13\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer13\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer13\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer13\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer13\popgraphics\logo.jpg" />
+    <Content Include="Content\Offer13\popgraphics\newcars_sm.jpg" />
+    <Content Include="Content\Offer13\popgraphics\newtires_sm.jpg" />
+    <Content Include="Content\Offer13\popgraphics\oilchanges_sm.jpg" />
+    <Content Include="Content\Offer13\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer13\popgraphics\repairs_sm.jpg" />
+    <Content Include="Content\Offer13\popgraphics\step1.gif" />
+    <Content Include="Content\Offer13\popgraphics\step2.gif" />
+    <Content Include="Content\Offer13\popgraphics\step3.gif" />
+    <Content Include="Content\Offer13\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer13\popgraphics\yesjoinnow.gif" />
+    <Content Include="Content\Offer14\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer14\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer14\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer14\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer14\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer14\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer14\popgraphics\logo.jpg" />
+    <Content Include="Content\Offer14\popgraphics\newcars_sm.jpg" />
+    <Content Include="Content\Offer14\popgraphics\newtires_sm.jpg" />
+    <Content Include="Content\Offer14\popgraphics\oilchanges_sm.jpg" />
+    <Content Include="Content\Offer14\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer14\popgraphics\repairs_sm.jpg" />
+    <Content Include="Content\Offer14\popgraphics\step1.gif" />
+    <Content Include="Content\Offer14\popgraphics\step2.gif" />
+    <Content Include="Content\Offer14\popgraphics\step3.gif" />
+    <Content Include="Content\Offer14\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer14\popgraphics\yesjoinnow.gif" />
+    <Content Include="Content\Offer15\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer15\popgraphics\cargirl.jpg" />
+    <Content Include="Content\Offer15\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer15\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer15\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer15\popgraphics\exclusivesavings.jpg" />
+    <Content Include="Content\Offer15\popgraphics\free-pop.jpg" />
+    <Content Include="Content\Offer15\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer15\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer15\popgraphics\limited-time.jpg" />
+    <Content Include="Content\Offer15\popgraphics\limited-time2.jpg" />
+    <Content Include="Content\Offer15\popgraphics\lock.png" />
+    <Content Include="Content\Offer15\popgraphics\logo.jpg" />
+    <Content Include="Content\Offer15\popgraphics\newcars_sm.jpg" />
+    <Content Include="Content\Offer15\popgraphics\newtires_sm.jpg" />
+    <Content Include="Content\Offer15\popgraphics\oilchanges_sm.jpg" />
+    <Content Include="Content\Offer15\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer15\popgraphics\repairs_sm.jpg" />
+    <Content Include="Content\Offer15\popgraphics\step1.gif" />
+    <Content Include="Content\Offer15\popgraphics\step2.gif" />
+    <Content Include="Content\Offer15\popgraphics\step3.gif" />
+    <Content Include="Content\Offer15\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer15\popgraphics\vip-dark.png" />
+    <Content Include="Content\Offer15\popgraphics\yesjoinnow.gif" />
+    <Content Include="Content\Offer15\salesmain.css" />
+    <Content Include="Content\Offer16\popgraphics\apparel_sm.jpg" />
+    <Content Include="Content\Offer16\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer16\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer16\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer16\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer16\popgraphics\departmentstores_sm.jpg" />
+    <Content Include="Content\Offer16\popgraphics\electronics_sm.jpg" />
+    <Content Include="Content\Offer16\popgraphics\flowersgifts_sm.jpg" />
+    <Content Include="Content\Offer16\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer16\popgraphics\homegarden_sm.jpg" />
+    <Content Include="Content\Offer16\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer16\popgraphics\jewelry_sm.jpg" />
+    <Content Include="Content\Offer16\popgraphics\logo.jpg" />
+    <Content Include="Content\Offer16\popgraphics\magazines_sm.jpg" />
+    <Content Include="Content\Offer16\popgraphics\moviesmusicbooks_sm.jpg" />
+    <Content Include="Content\Offer16\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer16\popgraphics\pets_sm.jpg" />
+    <Content Include="Content\Offer16\popgraphics\shoes_sm.jpg" />
+    <Content Include="Content\Offer16\popgraphics\sportinggoods_sm.jpg" />
+    <Content Include="Content\Offer16\popgraphics\step1.gif" />
+    <Content Include="Content\Offer16\popgraphics\step2.gif" />
+    <Content Include="Content\Offer16\popgraphics\step3.gif" />
+    <Content Include="Content\Offer16\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer16\popgraphics\toysandchildren_sm.jpg" />
+    <Content Include="Content\Offer16\popgraphics\yesjoinnow.gif" />
+    <Content Include="Content\Offer17\popgraphics\airlines_sm.jpg" />
+    <Content Include="Content\Offer17\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer17\popgraphics\carrentals_sm.jpg" />
+    <Content Include="Content\Offer17\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer17\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer17\popgraphics\condoresorts_sm.jpg" />
+    <Content Include="Content\Offer17\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer17\popgraphics\cruises_sm.jpg" />
+    <Content Include="Content\Offer17\popgraphics\family_sm.jpg" />
+    <Content Include="Content\Offer17\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer17\popgraphics\hotels_sm.jpg" />
+    <Content Include="Content\Offer17\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer17\popgraphics\logo.jpg" />
+    <Content Include="Content\Offer17\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer17\popgraphics\spas_sm.jpg" />
+    <Content Include="Content\Offer17\popgraphics\step1.gif" />
+    <Content Include="Content\Offer17\popgraphics\step2.gif" />
+    <Content Include="Content\Offer17\popgraphics\step3.gif" />
+    <Content Include="Content\Offer17\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer17\popgraphics\travelpackages_sm.jpg" />
+    <Content Include="Content\Offer17\popgraphics\yesjoinnow.gif" />
+    <Content Include="Content\Offer1\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer1\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer1\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer1\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer1\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer1\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer1\popgraphics\logo.gif" />
+    <Content Include="Content\Offer1\popgraphics\partnerlogos.jpg" />
+    <Content Include="Content\Offer1\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer1\popgraphics\step1.gif" />
+    <Content Include="Content\Offer1\popgraphics\step2.gif" />
+    <Content Include="Content\Offer1\popgraphics\step3.gif" />
+    <Content Include="Content\Offer1\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer1\popgraphics\yesjoinnow.gif" />
+    <Content Include="Content\Offer2\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer2\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer2\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer2\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer2\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer2\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer2\popgraphics\logo.gif" />
+    <Content Include="Content\Offer2\popgraphics\partnerlogos.jpg" />
+    <Content Include="Content\Offer2\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer2\popgraphics\step1.gif" />
+    <Content Include="Content\Offer2\popgraphics\step2.gif" />
+    <Content Include="Content\Offer2\popgraphics\step3.gif" />
+    <Content Include="Content\Offer2\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer2\popgraphics\yesjoinnow.gif" />
+    <Content Include="Content\Offer3\popgraphics\airlines_sm.jpg" />
+    <Content Include="Content\Offer3\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer3\popgraphics\carrentals_sm.jpg" />
+    <Content Include="Content\Offer3\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer3\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer3\popgraphics\condoresorts_sm.jpg" />
+    <Content Include="Content\Offer3\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer3\popgraphics\cruises_sm.jpg" />
+    <Content Include="Content\Offer3\popgraphics\family_sm.jpg" />
+    <Content Include="Content\Offer3\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer3\popgraphics\hotels_sm.jpg" />
+    <Content Include="Content\Offer3\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer3\popgraphics\logo.gif" />
+    <Content Include="Content\Offer3\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer3\popgraphics\spas_sm.jpg" />
+    <Content Include="Content\Offer3\popgraphics\step1.gif" />
+    <Content Include="Content\Offer3\popgraphics\step2.gif" />
+    <Content Include="Content\Offer3\popgraphics\step3.gif" />
+    <Content Include="Content\Offer3\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer3\popgraphics\travelpackages_sm.jpg" />
+    <Content Include="Content\Offer3\popgraphics\yesjoinnow.gif" />
+    <Content Include="Content\Offer4\popgraphics\airlines_sm.jpg" />
+    <Content Include="Content\Offer4\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer4\popgraphics\carrentals_sm.jpg" />
+    <Content Include="Content\Offer4\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer4\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer4\popgraphics\condoresorts_sm.jpg" />
+    <Content Include="Content\Offer4\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer4\popgraphics\cruises_sm.jpg" />
+    <Content Include="Content\Offer4\popgraphics\family_sm.jpg" />
+    <Content Include="Content\Offer4\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer4\popgraphics\hotels_sm.jpg" />
+    <Content Include="Content\Offer4\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer4\popgraphics\logo.gif" />
+    <Content Include="Content\Offer4\popgraphics\logo.jpg" />
+    <Content Include="Content\Offer4\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer4\popgraphics\spas_sm.jpg" />
+    <Content Include="Content\Offer4\popgraphics\step1.gif" />
+    <Content Include="Content\Offer4\popgraphics\step2.gif" />
+    <Content Include="Content\Offer4\popgraphics\step3.gif" />
+    <Content Include="Content\Offer4\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer4\popgraphics\travelpackages_sm.jpg" />
+    <Content Include="Content\Offer4\popgraphics\yesjoinnow.gif" />
+    <Content Include="Content\Offer5\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer5\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer5\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer5\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer5\popgraphics\desserts_sm.jpg" />
+    <Content Include="Content\Offer5\popgraphics\finedining_sm.jpg" />
+    <Content Include="Content\Offer5\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer5\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer5\popgraphics\logo.jpg" />
+    <Content Include="Content\Offer5\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer5\popgraphics\restaurants_sm.jpg" />
+    <Content Include="Content\Offer5\popgraphics\specialorder_sm.jpg" />
+    <Content Include="Content\Offer5\popgraphics\step1.gif" />
+    <Content Include="Content\Offer5\popgraphics\step2.gif" />
+    <Content Include="Content\Offer5\popgraphics\step3.gif" />
+    <Content Include="Content\Offer5\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer5\popgraphics\yesjoinnow.gif" />
+    <Content Include="Content\Offer6\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer6\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer6\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer6\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer6\popgraphics\desserts_sm.jpg" />
+    <Content Include="Content\Offer6\popgraphics\finedining_sm.jpg" />
+    <Content Include="Content\Offer6\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer6\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer6\popgraphics\logo.jpg" />
+    <Content Include="Content\Offer6\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer6\popgraphics\restaurants_sm.jpg" />
+    <Content Include="Content\Offer6\popgraphics\specialorder_sm.jpg" />
+    <Content Include="Content\Offer6\popgraphics\step1.gif" />
+    <Content Include="Content\Offer6\popgraphics\step2.gif" />
+    <Content Include="Content\Offer6\popgraphics\step3.gif" />
+    <Content Include="Content\Offer6\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer6\popgraphics\yesjoinnow.gif" />
+    <Content Include="Content\Offer7\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer7\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer7\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer7\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer7\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer7\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer7\popgraphics\logo.jpg" />
+    <Content Include="Content\Offer7\popgraphics\newcars_sm.jpg" />
+    <Content Include="Content\Offer7\popgraphics\newtires_sm.jpg" />
+    <Content Include="Content\Offer7\popgraphics\oilchanges_sm.jpg" />
+    <Content Include="Content\Offer7\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer7\popgraphics\repairs_sm.jpg" />
+    <Content Include="Content\Offer7\popgraphics\step1.gif" />
+    <Content Include="Content\Offer7\popgraphics\step2.gif" />
+    <Content Include="Content\Offer7\popgraphics\step3.gif" />
+    <Content Include="Content\Offer7\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer7\popgraphics\yesjoinnow.gif" />
+    <Content Include="Content\Offer8\popgraphics\appliances_sm.jpg" />
+    <Content Include="Content\Offer8\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer8\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer8\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer8\popgraphics\cleaning_sm.jpg" />
+    <Content Include="Content\Offer8\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer8\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer8\popgraphics\homerepairs_sm.jpg" />
+    <Content Include="Content\Offer8\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer8\popgraphics\lighting_sm.jpg" />
+    <Content Include="Content\Offer8\popgraphics\logo.jpg" />
+    <Content Include="Content\Offer8\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer8\popgraphics\step1.gif" />
+    <Content Include="Content\Offer8\popgraphics\step2.gif" />
+    <Content Include="Content\Offer8\popgraphics\step3.gif" />
+    <Content Include="Content\Offer8\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer8\popgraphics\yesjoinnow.gif" />
+    <Content Include="Content\Offer9\popgraphics\bullet1.gif" />
+    <Content Include="Content\Offer9\popgraphics\cashbacksavingstext.gif" />
+    <Content Include="Content\Offer9\popgraphics\catleftbookmark.jpg" />
+    <Content Include="Content\Offer9\popgraphics\creditcards1.jpg" />
+    <Content Include="Content\Offer9\popgraphics\eyecare_sm.jpg" />
+    <Content Include="Content\Offer9\popgraphics\fitness_sm.jpg" />
+    <Content Include="Content\Offer9\popgraphics\goldstar.gif" />
+    <Content Include="Content\Offer9\popgraphics\inpartnership-partsgeek.gif" />
+    <Content Include="Content\Offer9\popgraphics\logo.jpg" />
+    <Content Include="Content\Offer9\popgraphics\partsgeeklogo.gif" />
+    <Content Include="Content\Offer9\popgraphics\spas_sm.jpg" />
+    <Content Include="Content\Offer9\popgraphics\step1.gif" />
+    <Content Include="Content\Offer9\popgraphics\step2.gif" />
+    <Content Include="Content\Offer9\popgraphics\step3.gif" />
+    <Content Include="Content\Offer9\popgraphics\thawte_small.gif" />
+    <Content Include="Content\Offer9\popgraphics\vitamins_sm.jpg" />
+    <Content Include="Content\Offer9\popgraphics\yesjoinnow.gif" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\js\jquery-1.10.2.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BaseVM.cs" />
+    <Compile Include="Models\Home\EmailFormVM.cs" />
+    <Compile Include="Models\Home\FullFormVM.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\CssViewResult.cs" />
+    <Compile Include="Utils\LuhnUtility.cs" />
+    <Compile Include="Utils\Validators\LuhnAttribute.cs" />
+    <Compile Include="Utils\Validators\MonthYearAttribute.cs" />
+    <Compile Include="Utils\Validators\UniqueEmailAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="packages.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Css.cshtml" />
+    <Content Include="Views\Home\FullForm.cshtml" />
+    <Content Include="Views\Shared\TermsOfMembership.cshtml" />
+    <Content Include="Views\Shared\SalesPrivacy.cshtml" />
+    <Content Include="Views\Shared\SalesClaim.cshtml" />
+    <Content Include="Views\Shared\SalesTerms.cshtml" />
+    <Content Include="Views\Home\Welcome.cshtml" />
+    <Content Include="Views\Home\EmailForm.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <None Include="Properties\PublishProfiles\a.pubxml" />
+    <None Include="Properties\PublishProfiles\Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\frontend.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CastleClub.BusinessLogic\CastleClub.BusinessLogic.csproj">
+      <Project>{740cdc8b-f2cc-4173-8fe8-16e80558c2fd}</Project>
+      <Name>CastleClub.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CastleClub.DataTypes\CastleClub.DataTypes.csproj">
+      <Project>{02bca3d4-c671-4c84-821f-baaac16a69fa}</Project>
+      <Name>CastleClub.DataTypes</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>false</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>1108</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://castleclub</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  
+  <Target Name="SVNChecker" AfterTargets="CopyAllFilesToSingleFolderForPackage">
+    <Exec Command="svnchecker $(_PackageTempDir)">
+    </Exec>
+  </Target>-->
+</Project>

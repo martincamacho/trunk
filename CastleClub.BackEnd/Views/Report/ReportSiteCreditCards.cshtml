@@ -1,0 +1,133 @@
+﻿@model CastleClub.BackEnd.Models.ReportSiteCreditCardsVM
+@{
+    ViewBag.Title = "ReportSiteCreditCards";
+}
+
+<table width="100%">
+    <tr>
+        <td width="20%" valign="top">
+            @using (Html.BeginForm())
+            {
+                <table width="100%" style="background-color: #FFFFCC">
+                    <tr>
+                        <td colspan="2" align="center" class="tableTitle">
+                            Date
+                        </td>
+                    </tr>
+                    <tr>
+                        <th align="left">
+                            From:
+                        </th>
+                        <td>
+                            @Html.EditorFor(m => m.From)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th align="left">
+                            To:
+                        </th>
+                        <td>
+                            @Html.EditorFor(m => m.To)
+                        </td>
+                    </tr>
+                    <tr class="tableTitle">
+                        <th colspan="2" align="center">
+                            Web Sites
+                        </th>
+                    </tr>
+                    <tr>
+                        <th align="left">
+                            Web Site:
+                        </th>
+                        <td>
+                            @Html.DropDownListFor(m => m.SiteID, Model.Sites.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }))
+                        </td>
+                    </tr>
+                    <tr class="tableTitle">
+                        <td colspan="2" align="center">
+                            <input type="submit" value="Submit" />
+                        </td>
+                    </tr>
+                </table>
+            }
+        </td>
+        <td width="80%" valign="top">
+            @if (Model!=null && Model.Data!=null)
+            {
+                int totalActive=Model.Data.Values.Sum(x => x.Sum(y => y.TotalActive));
+                foreach (var site in Model.Data.Keys)
+                {
+                    <b>@site.Name</b>
+                    <table width="100%">
+                        <tr class="reportsHeaderRow">
+                            <th>
+                                CC Type/Method
+                            </th>
+                            <th>
+                                Total Count Ever Signed Up
+                            </th>
+                            <th>
+                                Views     
+                            </th>
+                            <th>
+                                Conversion
+                            </th>
+                            <th>
+                                Active Right Now
+                            </th>
+                        </tr>
+                        @foreach (var data in Model.Data[site])
+                        {
+                            <tr class="reportsRow">
+                                <td align="left">
+                                    @data.Name
+                                </td>
+                                <td align="center">
+                                    @data.TotalSignup (@(Model.Total>0 ? (data.TotalSignup*100/Model.Total) : 0)% - @data.TotalSignup/@Model.Total)
+                                </td>
+                               
+                                <td align="center">
+                                    @Model.Total
+                                </td>
+
+                                <td align="center">
+                                    @(Model.Total > 0 ? (data.TotalSignup * 100 / Model.Total) : 0)%
+                                </td>
+                                
+                                <td align="center">
+                                    @data.TotalActive (@(Model.Total>0 ? (data.TotalActive * 100 / Model.Total) : 0)% - @data.TotalActive/@Model.Total)
+                                </td>
+                            </tr>
+                        }
+                        <tr class="reportsHeaderRow">
+                            <td>
+                                Total
+                            </td>
+                            <td>
+                                @Model.Total
+                            </td>
+                            <td colspan="2">
+
+                            </td>
+                            <td>
+                                @totalActive
+                            </td>
+                        </tr>
+                    </table>
+                    <br />                                     
+                }
+            }
+        </td>
+    </tr>
+</table>
+
+<script>
+    $(function () {
+        $("#From").datepicker();
+        $("#To").datepicker();
+
+        $("#From").val('@Model.From.ToShortDateString()');
+        $("#To").val('@Model.To.ToShortDateString()');
+    });
+</script>
+

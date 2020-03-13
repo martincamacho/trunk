@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{02BCA3D4-C671-4C84-821F-BAAAC16A69FA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CastleClub.DataTypes</RootNamespace>
+    <AssemblyName>CastleClub.DataTypes</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccessCustomerDT.cs" />
+    <Compile Include="CreditCardDT.cs" />
+    <Compile Include="CustomerDT.cs" />
+    <Compile Include="EmailReportDT.cs" />
+    <Compile Include="Enums\CCType.cs" />
+    <Compile Include="Enums\CustomerStatus.cs" />
+    <Compile Include="Enums\DateGroupBy.cs" />
+    <Compile Include="Enums\InvoiceStatus.cs" />
+    <Compile Include="Enums\TransactionStatus.cs" />
+    <Compile Include="Enums\TransactionType.cs" />
+    <Compile Include="Enums\UserRole.cs" />
+    <Compile Include="Exceptions\InvalidCustomerException.cs" />
+    <Compile Include="Exceptions\InvalidDomainException.cs" />
+    <Compile Include="Exceptions\InvalidInvoiceException.cs" />
+    <Compile Include="Exceptions\InvalidReferrerException.cs" />
+    <Compile Include="Exceptions\InvalidSiteException.cs" />
+    <Compile Include="Exceptions\InvalidTransactionException.cs" />
+    <Compile Include="Exceptions\InvalidUserException.cs" />
+    <Compile Include="Exceptions\TokenErrorException.cs" />
+    <Compile Include="IISResetLogDT.cs" />
+    <Compile Include="InvoiceDT.cs" />
+    <Compile Include="NoteDT.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReferrerDT.cs" />
+    <Compile Include="ReferrerSalesInfoDT.cs" />
+    <Compile Include="SiteDT.cs" />
+    <Compile Include="ReferrerInfoDT.cs" />
+    <Compile Include="SitesInfoDT.cs" />
+    <Compile Include="StateDT.cs" />
+    <Compile Include="TransactionDT.cs" />
+    <Compile Include="UserDT.cs" />
+    <Compile Include="VisitDT.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Target Name="SVNChecker" AfterTargets="CopyAllFilesToSingleFolderForPackage">
+    <Exec Command="svnchecker $(_PackageTempDir)">
+    </Exec>
+  </Target>
+</Project>

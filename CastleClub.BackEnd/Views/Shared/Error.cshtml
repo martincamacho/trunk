@@ -1,0 +1,40 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+@{
+    Layout = null;
+}
+
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2>
+<div>
+    <table>
+        <tr>
+            <th>
+                Controller:
+            </th>
+            <td>
+                @Model.ControllerName
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Action:
+            </th>
+            <td>
+                @Model.ActionName
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th align="left">
+                Exception:
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Model.Exception.ToString()
+            </td>
+        </tr>
+    </table>
+</div>
+

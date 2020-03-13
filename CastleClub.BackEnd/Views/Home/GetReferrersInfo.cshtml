@@ -1,0 +1,455 @@
+﻿@model List<CastleClub.BackEnd.Models.CustomerVM>
+@using CastleClub.DataTypes.Enums
+@{
+    Layout = null;
+    List<CastleClub.DataTypes.ReferrerInfoDT> sitesInfo = ViewBag.SitesInfo;
+}
+
+@if (!User.IsInRole("Partner") && !User.IsInRole("Customer Service"))
+{
+    <tr>
+        <td style="vertical-align: top; width: 230px">
+            <table style="width: 100%">
+                <tbody>
+                    <tr>
+                        <td class="tableTitle" colspan="2">
+                            Summary:
+                        </td>
+                    </tr>
+                    @foreach (CastleClub.DataTypes.ReferrerInfoDT siteInfo in sitesInfo)
+                    {
+                    <tr class="homeSummaryRow" onclick="ShowSiteInfoTable(@siteInfo.Id)">
+                        <td>
+                            <table style="width: 100%; padding: 0px 10px 0px 5px">
+                                <tbody>
+                                    <tr>
+                                        <td style="font-weight: bold">@siteInfo.Name</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 130px; padding-left: 10px">Total Signups</td>
+                                        <td style="text-align: right">@siteInfo.TotalSignups</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 130px; padding-left: 10px"># of Free Trial</td>
+                                        <td style="text-align: right">@siteInfo.FreeTrial</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 130px; padding-left: 10px"># of Active</td>
+                                        <td style="text-align: right">@siteInfo.Active</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 130px; padding-left: 10px"># of Cancels</td>
+                                        <td style="text-align: right">@siteInfo.Cancels</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 130px; padding-left: 30px"># of Refunds</td>
+                                        <td style="text-align: right">@siteInfo.Refunds</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </td>
+        <td style="vertical-align: top; padding-left: 20px;">
+            @foreach (CastleClub.DataTypes.ReferrerInfoDT siteInfo in sitesInfo)
+            {
+                <table style="width: 100%; display: none" id="@siteInfo.Id" class="siteInfoTable">
+                    <tbody>
+                        <tr>
+                            <td class="tableTitle" colspan="2">@siteInfo.Name</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table style="width: 100%">
+                                    <tbody>
+                                        @if (siteInfo.TotalVisits>0)
+                                        {
+                                            <tr>
+                                                <td style="width: 130px; font-weight: bold">Total Visits</td>
+                                                <td style="text-align: right">@siteInfo.TotalVisits</td>
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <td style="width: 130px; font-weight: bold">Total Signups</td>
+                                            <td style="text-align: right">@siteInfo.TotalSignups</td>
+                                        </tr>
+                                        @if (siteInfo.TotalVisits>0)
+                                        {
+                                        <tr>
+                                            <td style="width: 130px; font-weight: bold">Signup %</td>
+                                            <td style="text-align: right">@string.Format("{0:0.00}", siteInfo.SignupPercentage)%</td>
+                                        </tr>
+                                        }
+                                        <tr>
+                                            <td colspan="4">
+                                                <hr />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 130px; font-weight: bold"># of Free Trial</td>
+                                            <td style="text-align: right">@siteInfo.FreeTrial</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 130px; font-weight: bold"># of Active</td>
+                                            <td style="text-align: right">@siteInfo.Active</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 130px; font-weight: bold"># of Cancels</td>
+                                            <td style="text-align: right">@siteInfo.Cancels</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 130px; font-weight: bold; padding-left: 20px"># of Refunds</td>
+                                            <td style="text-align: right">@siteInfo.Refunds</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <hr />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 130px; font-weight: bold">Cancellation %</td>
+                                            <td style="width: 100px; text-align: right">@string.Format("{0:0.00}", siteInfo.CancellationPercentage)%</td>
+                                            <td style="width: 230px; font-weight: bold; padding-left: 20px">% of Cancellations Refunded</td>
+                                            <td>@string.Format("{0:0.00}", siteInfo.CancellationsRefundedPercentage)%</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight: bold">Refund %</td>
+                                            <td style="text-align: right">@string.Format("{0:0.00}", siteInfo.RefundPercentage)%</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <hr />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight: bold">Revenue $</td>
+                                            <td style="text-align: right">$@String.Format("{0:N2}", siteInfo.RevenueAmount)</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight: bold">Refund $</td>
+                                            <td style="text-align: right">-$@String.Format("{0:N2}", siteInfo.RefundAmount)</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight: bold">Balance</td>
+                                            <td style="text-align: right">$@String.Format("{0:N2}", siteInfo.BalanceAmount)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table style="width: 100%">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 25%; text-align: left" class="homeTitleSection">New Sign-Ups</td>
+                                            <td style="width: 12%" class="homeTitleSection">Today</td>
+                                            <td style="width: 12%" class="homeTitleSection">Yesterday</td>
+                                            <td style="width: 12%" class="homeTitleSection">This Week</td>
+                                            <td style="width: 12%" class="homeTitleSection">This Month</td>
+                                            <td style="width: 12%" class="homeTitleSection">This Year</td>
+                                            <td style="width: auto" class="homeTitleSection">All Time</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left">#</td>
+                                            <td style="text-align: right">@siteInfo.SignupsToday</td>
+                                            <td style="text-align: right">@siteInfo.SignupsYesterday</td>
+                                            <td style="text-align: right">@siteInfo.SignupsThisWeek</td>
+                                            <td style="text-align: right">@siteInfo.SignupsThisMonth</td>
+                                            <td style="text-align: right">@siteInfo.SignupsThisYear</td>
+                                            <td style="text-align: right">@siteInfo.TotalSignups</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table style="width: 100%">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 25%; text-align: left" class="homeTitleSection">Processed Orders</td>
+                                            <td style="width: 12%" class="homeTitleSection">Today</td>
+                                            <td style="width: 12%" class="homeTitleSection">Yesterday</td>
+                                            <td style="width: 12%" class="homeTitleSection">This Week</td>
+                                            <td style="width: 12%" class="homeTitleSection">This Month</td>
+                                            <td style="width: 12%" class="homeTitleSection">This Year</td>
+                                            <td style="width: auto" class="homeTitleSection">All Time</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#</td>
+                                            <td style="text-align: right">@siteInfo.BilledToday</td>
+                                            <td style="text-align: right">@siteInfo.BilledYesterday</td>
+                                            <td style="text-align: right">@siteInfo.BilledThisWeek</td>
+                                            <td style="text-align: right">@siteInfo.BilledThisMonth</td>
+                                            <td style="text-align: right">@siteInfo.BilledThisYear</td>
+                                            <td style="text-align: right">@siteInfo.BilledTotal</td>
+                                        </tr>
+                                        <tr>
+                                            <td>$</td>
+                                            <td style="text-align: right">$@String.Format("{0:N2}", siteInfo.BilledTodayAmount)</td>
+                                            <td style="text-align: right">$@String.Format("{0:N2}", siteInfo.BilledYesterdayAmount)</td>
+                                            <td style="text-align: right">$@String.Format("{0:N2}", siteInfo.BilledThisWeekAmount)</td>
+                                            <td style="text-align: right">$@String.Format("{0:N2}", siteInfo.BilledThisMonthAmount)</td>
+                                            <td style="text-align: right">$@String.Format("{0:N2}", siteInfo.BilledThisYearAmount)</td>
+                                            <td style="text-align: right">$@String.Format("{0:N2}", siteInfo.RevenueAmount)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table style="width: 100%">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 100px; text-align: left" class="homeTitleSection">Cancellations:</td>
+                                            <td style="width: 130px" class="homeTitleSection">0 - 30 Days</td>
+                                            <td style="width: 130px" class="homeTitleSection">30 - 120 Days</td>
+                                            <td style="width: 130px" class="homeTitleSection">120 - 210 Days</td>
+                                            <td style="width: 130px" class="homeTitleSection">210+ Days</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#</td>
+                                            <td style="text-align: right">@siteInfo.Cancellations_0_30</td>
+                                            <td style="text-align: right">@siteInfo.Cancellations_30_120</td>
+                                            <td style="text-align: right">@siteInfo.Cancellations_120_210</td>
+                                            <td style="text-align: right">@siteInfo.Cancellations_210</td>
+                                        </tr>
+                                        <tr>
+                                            <td>%</td>
+                                            <td style="text-align: right">@string.Format("{0:0.00}", siteInfo.CancellationsPercentage_0_30)%</td>
+                                            <td style="text-align: right">@string.Format("{0:0.00}", siteInfo.CancellationsPercentage_30_120)%</td>
+                                            <td style="text-align: right">@string.Format("{0:0.00}", siteInfo.CancellationsPercentage_120_210)%</td>
+                                            <td style="text-align: right">@string.Format("{0:0.00}", siteInfo.CancellationsPercentage_210)%</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left" class="homeTitleSection">Refunds:</td>
+                                            <td class="homeTitleSection">&nbsp;</td>
+                                            <td class="homeTitleSection">30 - 120 Days</td>
+                                            <td class="homeTitleSection">120 - 210 Days</td>
+                                            <td class="homeTitleSection">210+ Days</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#</td>
+                                            <td style="text-align: right">&nbsp;</td>
+                                            <td style="text-align: right">@siteInfo.Refunds_30_120</td>
+                                            <td style="text-align: right">@siteInfo.Refunds_120_210</td>
+                                            <td style="text-align: right">@siteInfo.Refunds_210</td>
+                                        </tr>
+                                        <tr>
+                                            <td>$</td>
+                                            <td style="text-align: right">&nbsp;</td>
+                                            <td style="text-align: right">-$@String.Format("{0:N2}", siteInfo.RefundsAmount_30_120)</td>
+                                            <td style="text-align: right">-$@String.Format("{0:N2}", siteInfo.RefundsAmount_120_210)</td>
+                                            <td style="text-align: right">-$@String.Format("{0:N2}", siteInfo.RefundsAmount_210)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>%</td>
+                                            <td style="text-align: right">&nbsp;</td>
+                                            <td style="text-align: right">@string.Format("{0:0.00}", siteInfo.RefundsPercentage_30_120)%</td>
+                                            <td style="text-align: right">@string.Format("{0:0.00}", siteInfo.RefundsPercentage_120_210)%</td>
+                                            <td style="text-align: right">@string.Format("{0:0.00}", siteInfo.RefundsPercentage_210)%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            @if (Model != null && Model.Count > 0)
+            {
+                <table width="100%">
+                    <tr>
+                        <td colspan="9">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="9">
+                            New today subscription
+                        </th>
+                    </tr>
+                    <tr class="reportsHeaderRow">
+                        <th>
+                            CustomerID
+                        </th>
+                        <th>
+                            WebSite
+                        </th>
+                        <th>
+                            FirstName
+                        </th>
+                        <th>
+                            LastName
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Zip
+                        </th>
+                        <th>
+                            DataSent
+                        </th>
+                        <th>
+                            Credit Card Type
+                        </th>
+                        <th>
+                            Email Only Form
+                        </th>
+                    </tr>
+                    @foreach (var customer in Model)
+                    {
+                        <tr class="reportsRow">
+                            <td class="test">
+                                @customer.Id
+                            </td>
+                            <td class="test">
+                                @customer.Site
+                            </td>
+                            <td class="test">
+                                @customer.FirstName
+                            </td>
+                            <td class="test">
+                                @customer.LastName
+                            </td>
+                            <td class="test">
+                                @customer.Email
+                            </td>
+                            <td class="test">
+                                @customer.ZipCode
+                            </td>
+                            <td class="test">
+                                @customer.CreatedAt.ToString()
+                            </td>
+                            <td class="test">
+                                @customer.CreditCardType
+                            </td>
+                            <td class="test">
+                                @customer.EmailForm.ToString()
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="9">
+                            <hr />
+                        </td>
+                    </tr>
+                </table>
+            }
+            </td>
+    </tr>
+}
+else if (User.IsInRole("Customer Service"))
+{
+    <tr>
+        <td style="vertical-align: top; width: 230px">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="tableTitle" colspan="2">
+                            Common Links:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="width: 100%; padding: 0px 10px 0px 5px">
+                                <tbody>
+                                    <tr>
+                                        <td style="font-weight: bold">
+                                            @Html.ActionLink("View/Manage Subscriptions", "ManageSubscriptions", "Subscription")
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold">
+                                            @Html.ActionLink("View/Manage Customers", "Default", "Home")
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold">
+                                            @Html.ActionLink("Email Report", "EmailReport", "Report")
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+}
+else
+{
+    <tr class="rowHeader">
+        <th align="left">
+            New Sign-Ups
+        </th>
+        <th align="right">
+            Today
+        </th>
+        <th align="right">
+            Yesterday
+        </th>
+        <th align="right">
+            This Week
+        </th>
+        <th align="right">
+            This Month
+        </th>
+        <th align="right">
+            This Year
+        </th>
+        <th align="right">
+            All Time
+        </th>
+    </tr>
+    <tr>
+        <td>
+            #
+        </td>
+        <td align="right">
+            @sitesInfo.Sum(s => s.SignupsToday)
+        </td>
+        <td align="right">
+            @sitesInfo.Sum(s => s.SignupsYesterday)
+        </td>
+        <td align="right">
+            @sitesInfo.Sum(s => s.SignupsThisWeek)
+        </td>
+        <td align="right">
+            @sitesInfo.Sum(s => s.SignupsThisMonth)
+        </td>
+        <td align="right">
+            @sitesInfo.Sum(s => s.SignupsThisYear)
+        </td>
+        <td align="right">
+            @sitesInfo.Sum(s => s.TotalSignups)
+        </td>
+    </tr>
+}
+
+<script type="text/javascript">
+    $(document).ready(
+        function () {
+            $(".siteInfoTable").first().fadeIn();
+        }
+    )
+
+    function ShowSiteInfoTable(id) {
+        $(".siteInfoTable").hide();
+        $("#" + id + ".siteInfoTable").fadeIn();
+    }
+</script>
+<style type="text/css">
+    .rowHeader {
+        font-family: Verdana,Arial;
+        font-size: 11px;
+        background-color: #EEEEEE;
+    }
+</style>

@@ -1,0 +1,39 @@
+﻿<table style="width: 100%">
+	<tbody>
+		<tr>
+			<td  class="pageTitle">
+				Home
+			</td>
+			<td class="pageTitle right">
+				@if (ViewBag.AlertDiskSpace == null)
+				{
+					<p>Server Free Disk Space Remaining: @ViewBag.FreeDiskSpace GB / @ViewBag.DiskSpace GB</p>
+				}
+				else
+				{
+					<p><font color="red">Server Free Disk Space Remaining: @ViewBag.FreeDiskSpace GB / @ViewBag.DiskSpace GB</font></p>
+				}
+
+			</td>
+
+		</tr>
+		<tr id="divReports">
+			<td colspan="2" align="center">
+				<img style="width :200px; height:200px" src="/Content/images/loading.gif" />
+			</td>
+		</tr>
+	</tbody>
+</table>
+<script type="text/javascript">
+	$(document).ready(
+		function () {
+			$.ajax({
+				type: "POST",
+				url: "/Home/GetReferrersInfo",
+				success: function (data) {
+					$("#divReports").replaceWith(data);
+				}
+			});
+		}
+	)
+</script>

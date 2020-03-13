@@ -1,0 +1,293 @@
+﻿@model CastleClub.BackEnd.Models.EmailReportVM
+@{
+    ViewBag.Title = "EmailReport";
+    Dictionary<string, List<CastleClub.DataTypes.EmailReportDT>> data = ViewBag.data;
+    string sizeDataFilter = data == null ? "23%" : "100%";
+}
+
+<b>Email Report</b>
+<br /><br />
+<table style="width: 100%">
+    <tbody>        
+        <tr>
+            <td width="23%" style="vertical-align:top;">
+                @using (Html.BeginForm())
+                {
+                    <table width="@sizeDataFilter" style="background-color: #FFFFCC">
+                        <tbody>
+                            <tr>
+                                <td colspan="3" align="center">
+                                    WebSite:&nbsp
+                                    @Html.DropDownListFor(m => m.ReferrerId, Model.GetSelectList(Model.Referrers, "Id", "Name", "0", "All Webites"))
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Report Type:
+                                </td>
+                                <td>
+                                    @Html.RadioButtonFor(m => m.ReportType, "ACTIVE", new { @checked = "checked", id = "ReportType" }) Active User List
+                                </td>
+                                <td>
+                                    @Html.RadioButtonFor(m => m.ReportType, "DATE", new { id = "ReportType" }) Date Range
+                                </td>
+                            </tr>                            
+                        </tbody>
+                    </table>
+                    <table class="hidden" width="@sizeDataFilter" style="background-color: #FFFFCC">
+                        <tr>
+                            <td colspan="2">
+                                <hr size="1" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right" width="50%">
+                                Start Date:
+                            </td>
+                            <td align="left">
+                                @Html.TextBoxFor(m => m.StartDate)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right" width="50%">
+                                End Date:
+                            </td>
+                            <td align="left">
+                                @Html.TextBoxFor(m => m.EndDate)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="radio" name="time" value="CUSTOM" checked="checked" /> UseDateRangeAbove
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="radio" name="time" value="TODAY" /> 
+                                Today
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="radio" name="time" value="YESTERDAY" /> 
+                                Yesterday
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="radio" name="time" value="THISWEEK" /> 
+                                This Week
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="radio" name="time" value="LASTWEEK" /> 
+                                Last Week
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="radio" name="time" value="THISMONTH" /> 
+                                This Month
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="radio" name="time" value="LASTMONTH" /> 
+                                Last Month
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="radio" name="time" value="THISYEAR" /> 
+                                This Year
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="radio" name="time" value="LASTYEAR" /> 
+                                Last Year
+                            </td>
+                        </tr>
+                    </table>
+                    <table width="@sizeDataFilter">
+                        <tr>
+                            <td align="center">
+                                <button id="btnSubmit">Submit</button>
+                            </td>
+                        </tr>
+                    </table>
+                }
+            </td>
+            @if (data!=null)
+            {
+                <td width="77%" style="vertical-align:top;">
+                    @{bool first = true;}
+                    @foreach(var site in data.Keys)
+                    {
+                        if (!first)
+                        {                            
+                            <br /><br />
+                        }
+                        first = false;
+                        <b>@site</b>
+                        <br /><br />
+                        <table width="100%">
+                            <tr class="reportsHeaderRow">
+                                <th>CustomerID</th>
+                                <th>FirstName</th>
+                                <th>LastName</th>
+                                <th>Email</th>
+                                <th>Zip</th>
+                                <th>CustomerPass</th>
+                                <th>DateSent</th>
+                                <th>Credit Card Type</th>
+                                <th>Email Form</th>
+                            </tr>
+                            @foreach (var item in data[site])
+                            {
+                                <tr class="reportsRow">
+                                    <td>
+                                        @item.CustomerID
+                                    </td>
+                                    <td>
+                                        @item.FirstName
+                                    </td>
+                                    <td>
+                                        @item.LastName
+                                    </td>
+                                    <td>
+                                        @item.Email
+                                    </td>
+                                    <td>
+                                        @item.Zip
+                                    </td>
+                                    <td>
+                                        @item.CustomerPass
+                                    </td>
+                                    <td>
+                                        @item.DateSent
+                                    </td>
+                                    <td>
+                                        @item.CreditCardType
+                                    </td>
+                                    <td>
+                                        @item.EmailForm
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    }                    
+                </td>
+            }
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    $(function () {
+        $("#StartDate").datepicker();
+        $("#EndDate").datepicker();
+
+        $('#ReferrerId').val("@Model.ReferrerId");
+        @if (!string.IsNullOrEmpty(Model.ReportType))
+        {
+            WriteLiteral("$('input[id=ReportType][value="+Model.ReportType.ToUpper()+"]').prop('checked', true);");
+        }
+        $('#StartDate').datepicker('setDate', "@Model.StartDate.ToString()");
+        $('#EndDate').datepicker('setDate', "@Model.EndDate.ToString()");
+        @if (!string.IsNullOrEmpty(Model.Time))
+        {
+            WriteLiteral("$('input[name=time][value="+Model.Time+"]').prop('checked', true);");
+        }
+    });
+
+    $("input[type=text][id$=Date]").change(function () {
+        $('input[type=radio][id=ReportType][value=DATE]').prop('checked', true);
+        $('input[type=radio][name=time][value=CUSTOM]').prop('checked', true);
+    });
+
+    $("input[name=time]").click(function () {
+        var value = $(this).attr('value');
+        switch (value) {
+            case 'TODAY':
+                $("#StartDate").datepicker('setDate', new Date());
+                $("#EndDate").datepicker('setDate', new Date());
+                break;
+            case 'YESTERDAY':
+                var date = new Date();
+                date.setDate(date.getDate() - 1);
+                $("#StartDate").datepicker('setDate', date);
+                $("#EndDate").datepicker('setDate', date);
+                break;
+            case 'THISWEEK':
+                var date = new Date();
+                date.setDate(date.getDate() - date.getDay());
+                $("#StartDate").datepicker('setDate', date);
+                $("#EndDate").datepicker('setDate', new Date());
+                break;
+            case 'LASTWEEK':
+                var startDate = new Date();
+                startDate.setDate(startDate.getDate() - startDate.getDay() - 7);
+                var endDate = new Date();
+                endDate.setDate(endDate.getDate() - endDate.getDay() - 1);
+                $("#StartDate").datepicker('setDate', startDate);
+                $("#EndDate").datepicker('setDate', endDate);
+                break;
+            case 'THISMONTH':
+                var date = new Date();
+                date.setDate(1);
+                $("#StartDate").datepicker('setDate', date);
+                $("#EndDate").datepicker('setDate', new Date());
+                break;
+            case 'LASTMONTH':
+                var startDate = new Date();
+                startDate.setDate(1);
+                startDate.setMonth(startDate.getMonth() - 1);
+                var endDate = new Date();
+                endDate.setDate(0);
+                $("#StartDate").datepicker('setDate', startDate);
+                $("#EndDate").datepicker('setDate', endDate);
+                break;
+            case 'THISYEAR':
+                var date = new Date();
+                date.setDate(1);
+                date.setMonth(0);
+                $("#StartDate").datepicker('setDate', date);
+                $("#EndDate").datepicker('setDate', new Date());
+                break;
+            case 'LASTYEAR':
+                var startDate = new Date();
+                startDate.setDate(1);
+                startDate.setMonth(0);
+                startDate.setYear(startDate.getFullYear() - 1);
+                var endDate = new Date();
+                endDate.setDate(0);
+                endDate.setMonth(-1);
+                $("#StartDate").datepicker('setDate', startDate);
+                $("#EndDate").datepicker('setDate', endDate);
+                break;
+        }
+        $('input[type=radio][id=ReportType][value=DATE]').prop('checked', true);
+    });
+    $("#btnSubmit").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "/Report/EmailReport",
+            data: { ReportType: $("#ReportType").attr('value'), StartDate: new Date($("#StartDate").val()), EndDate: new Date($("#EndDate").val()), ReferrerId: $("#ReferrerId").val() },
+            success: function (data) {
+                $("#idReplace").html(data);
+            }
+        });
+    })
+</script>
+@if (Model.ReportType!="DATE")
+{
+    <style type="text/css">
+        TD, SPAN, LI, BODY, P {
+            color: #444;
+            font-size: 11px;
+            font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;
+        }
+    </style>
+}

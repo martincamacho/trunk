@@ -1,0 +1,198 @@
+﻿@model CastleClub.BackEnd.Models.AuthorizeCompareTransactionVM
+@{
+    ViewBag.Title = "AuthorizaTransactionCompare";
+}
+
+<table>
+    <tr>
+        <td width="20%" valign="top">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id="form" }))
+            {
+                <table class="pageTitle">
+                    <tr>
+                        <td colspan="2" align="center" class="tableTitle">
+                            Transaction compare with authorize
+                        </td>
+                    </tr>
+                    <tr style="background-color: #FFFFCC">
+                        <th>
+                            From:
+                        </th>
+                        <td>
+                            @Html.EditorFor(m => m.From)
+                        </td>
+                    </tr>
+                    <tr style="background-color: #FFFFCC">
+                        <th>
+                            To:
+                        </th>
+                        <td>
+                            @Html.EditorFor(m => m.To)
+                        </td>
+                    </tr>
+                    <tr style="background-color: #FFFFCC">
+                        <th>
+                            Web Site:
+                        </th>
+                        <td>
+                            @Html.DropDownListFor(m => m.SitedID, Model.Sites.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }))
+                        </td>
+                    </tr>
+                    <tr class="tableTitle">
+                        <td colspan="2" align="center">
+                            <input type="submit" value="Submit" />
+                        </td>
+                    </tr>
+                </table>
+            }
+        </td>
+        <td>
+            <div id="container"></div>
+        </td>
+    </tr>
+</table>
+
+<div id="alertDiv">
+
+</div>
+
+<script src="~/Content/js/Chart/highcharts.js"></script>
+<script src="~/Content/js/Chart/exporting.js"></script>
+
+<script>
+    var site = 0;
+    $(function () {
+        $("#From").datepicker();
+        $("#To").datepicker();
+    });
+
+    $("form[id=form]").submit(function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        $that = $(this);
+
+        site = $("select").val();
+
+        $("#container").empty();
+        $("<table style='width:100%'><tr><td align='center' valign='top'><img src='/Content/images/loading.gif' style='height:500px' /></td></tr></table>").appendTo($("#container"));
+
+        $.ajax({
+            url: "/Report/AuthorizeTransactionCompare",
+            data: $that = $(this).serialize(),
+            type: "POST",
+            success: function (data) {
+                $("#container").empty();
+                
+                var $newdiv = $("<div id='" + data.Id + "' style='min-width: 310px; height: 400px; margin: 0 auto'></div>");
+                $newdiv.appendTo($("#container"));
+
+                $newdiv.highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: data.Text
+                    },
+                    tooltip: {
+                        valueSuffix: 'USD'
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Values (USD)'
+                        }
+                    },
+                    colors: data.Colors,
+                    xAxis: {
+                        categories: data.Categories
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    series: data.Series,
+                    plotOptions: {
+                        series: {
+                            cursor: 'pointer',
+                            point: {
+                                events: {
+                                    click: function () {
+                                        //alert('Web Site ID selected: '+site+', Categorie: '+this.category+', Serie: ' + this.series.name + ', value: ' + this.y);
+                                        var title = this.series.name + " - " + this.category;
+                                        $.ajax({
+                                            url: "/Report/GetInvoicesTypeForSiteAndDate",
+                                            data: { WebSite: site, Date: this.category, ViewType: this.series.name },
+                                            type: "POST",
+                                            success: function (data) {
+                                                if (data != null) {
+                                                    $("#alertDiv").empty();
+                                                    $newTableTransactions = $("<table><tr id='header' class='reportsHeaderRow'></tr></table>");
+                                                    $newTableTransactions.appendTo($("#alertDiv"));
+
+                                                    $.each(data.Header, function (index, value) {
+                                                        $("<th>"+value+"</th>").appendTo($("#header"));
+                                                    });
+
+                                                    $.each(data.Data, function (index, value) {
+                                                        $("<tr id='" + index + "' class='reportsRow'></tr>").appendTo($newTableTransactions);
+                                                        $.each(value, function (indexDT, valueDT) {
+                                                            $("<td>" + valueDT + "</td>").appendTo($("#" + index));
+                                                        });
+                                                    });
+
+
+                                                    dialogChangePassword = $("#alertDiv").dialog({
+                                                        autoOpen: true,
+                                                        height: 375,
+                                                        width: 375,
+                                                        modal: true,
+                                                        title: title,
+                                                        buttons: {
+                                                            "Ok": function () {
+                                                                dialogChangePassword.dialog("close");
+                                                            }
+                                                        },
+                                                        close: function () {
+                                                        }
+                                                    });
+                                                    dialogChangePassword.dialog('open');
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+
+                $newTable = $("<table id='tblData' class='reportsTable'></table>");
+                $newTable.appendTo($("#container"));
+                $newRowHeader = $("<tr></tr>");
+                $newRowHeader.appendTo($newTable);
+
+                $newColumCell = $("<td></td>");
+                $newColumCell.appendTo($newRowHeader);
+
+                $.each(data.Table.Cols, function (indexTH, valueTH) {
+                    $newRows = $("<td class='reportsHeaderRow'>" + valueTH + "</td>");
+                    $newRows.appendTo($newRowHeader);
+                });
+
+                $.each(data.Table.Rows, function (indexTD, valueTD) {
+                    $newRows = $("<tr></tr>");
+                    $newRows.appendTo($newTable);
+
+                    $newCell0 = $("<td class='reportsHeaderRow'>" + valueTD + "</td>");
+                    $newCell0.appendTo($newRows);
+
+                    $.each(data.Table.Cols, function (indexRowTB, valueRowTB) {
+                        $newCell = $("<td class='reportsRow'>" + data.Table.Data[indexRowTB][indexTD] + "</td>");
+                        $newCell.appendTo($newRows);
+                    });
+                });
+            }
+        });
+
+        return false;
+    });
+</script>

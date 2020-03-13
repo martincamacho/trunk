@@ -1,0 +1,389 @@
+﻿@model CastleClub.FrontEnd.Models.Home.FullFormVM
+@using CastleClub.DataTypes.Enums
+@{
+    CastleClub.DataTypes.SiteDT site = ViewBag.Site;
+    string referrer = (string)ViewBag.Referrer;
+}
+<div id="opener">
+    <div class="text">
+        <img src="@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/partsgeeklogo.gif")">
+        <h2 style="color:#@site.CSSEmphasizeColor">
+    Congratulations!!<br>
+    Get $15 Cash Back
+    @if (site.SignUpFormat == "NEW")
+    {
+        @Html.Raw(" PLUS FREE <br /> Trial Offer Today.");
+        @Html.Raw("</h2>");
+        @Html.Raw("<p><span class=\"catlogos\"><img src=\"/Content/Offer" + site.Id + "/popgraphics/exclusivesavings.jpg\" width=\"221\" height=\"124\" /></span></p>");
+        @Html.Raw("<p>&nbsp;</p>");
+        @Html.Raw("<p>&nbsp;</p>");
+        @Html.Raw("<p>");
+        @Html.Raw("<br />");
+        @Html.Raw("</p>");
+        @Html.Raw("<p>&nbsp;</p>");
+        @Html.Raw("<p>");
+        @Html.Raw("<br />");
+        @Html.Raw(@referrer + " has partnered with " + @site.Name + " to help provide you with additional money saving discounts &amp; promotions. Sign up to save as much as 50% on " + @site.BusinessSector + " across America! Sign up for the " + @site.Name + " membership program for FREE for the next 30 days and then enjoy ongoing savings for only $" + @Decimal.Divide(site.PricePerQuarter, 3) + " a month, with payments of $" + @site.PricePerQuarter + " being billed to your credit card or debit card every 3 months, thereafter.");
+        @Html.Raw("You can contact us to cancel at any time. All your " + @site.Name + "  membership savings privileges will automatically renew every month unless you contact us at " + @site.Phone + "  or " + @site.Email + "  to let us know you wish to cancel. We look forward to helping you SAVE, thank you!");
+        @Html.Raw("<p align=\"center\"><img src=\"/Content/Offer" + site.Id + "/popgraphics/vip-dark.png\" width=\"200\" height=\"111\"  alt=\"\"/></p>");
+    }
+    else
+    {
+        @Html.Raw(" Savings Today.");
+        @Html.Raw("</h2>");
+        @Html.Raw("<p>");
+        @Html.Raw(@referrer + " has partnered with " + @site.Name + " to help provide you with additional money saving discounts &amp; promotions. Sign up to save as much as 50% on " + @site.BusinessSector + " across America! Sign up for the " + @site.Name + " membership program for FREE for the next 30 days and then enjoy ongoing savings for only $" + @Decimal.Divide(site.PricePerQuarter, 3) + " a month, with payments of $" + @site.PricePerQuarter + " being billed to your credit card or debit card every 3 months, thereafter. By enrolling in the " + @site.Name + " membership program, you will receive immediate online access to receive membership savings and discounts from many of the world’s most recognizable brands both nationwide as well as in your area. All your " + @site.Name + " membership savings privileges will automatically renew every month unless you contact us at " + @site.Phone + " and/or email us at " + @site.Email + " to let us know you wish to cancel. Please be sure to review the <a title=\"" + @site.Name + "Terms of Membership rel=\"gb_page_center[450, 450]\" class=\"mainlink\"  target=\"_blank\" href=\"/termsofmembership\">Terms of Membership</a> billing details prior to registering, thank you.");
+        @Html.Raw("</p>");
+        }
+
+
+
+
+
+        <div id="signuptext2">
+            <strong>
+                By entering my 
+                @if (site.SignUpFormat == "OLD")
+                {
+                    @Html.Raw(" billing ");
+                }
+                 
+                
+                information
+                @if (site.SignUpFormat == "OLD")
+                {
+                    @Html.Raw(", email address ");
+                }    
+                and clicking "YES, Save Now!", I certify that I have  read and agree to the 
+                @if (site.SignUpFormat == "OLD")
+                {
+                    @Html.Raw(" " + @site.Name + " ");
+                }    
+                 <a  target="_blank" href="/termsofmembership" class="mainlink" rel="gb_page_center[450, 450]" title="@site.Name Terms of Membership">Terms of Membership</a>
+                @if (site.SignUpFormat == "OLD")
+                {
+                    @Html.Raw(" and <a  target=\"_blank\" href=\"/salesprivacy\" class=\"mainlink\" rel=\"gb_page_center[450, 450]\" title=\"" + @site.Name + "\" Privacy Policy\">Privacy Policy</a>");
+                }
+                .<br>
+                @if (site.SignUpFormat == "OLD")
+                {
+                @Html.Raw(" I agree to enroll in the " + @site.Name + " automatic monthly renewal membership program.");
+                }
+                else
+                {
+                    @Html.Raw(" We look forward to helping you SAVE.");
+                }
+
+            </strong>
+        </div>
+
+</div>
+    <div id="couponproducts">
+        <div class="thanks">
+            <p><strong>Thank you for your @referrer Business!</strong></p>
+            @if (site.SignUpFormat == "OLD")
+            {
+                @Html.Raw("<p>");
+                    @Html.Raw("You've qualified to join the <strong>" + @site.Name + "</strong><br>");
+                    @Html.Raw("Cash Back Savings Membership Program");
+                @Html.Raw("</p>");
+            }
+            
+            <p class="cashbacklarge">
+                <strong>
+                    <img src="@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/cashbacksavingstext.gif")"></strong><strong>
+                        <br>
+                        <span class="cashbacksmall" style="color:#@site.CSSBlueColor">Good for your next @referrer purchase.<br>
+                            Please see offer &amp; billing details below.
+                        </span>
+                    </strong>
+            </p>
+            @if (site.SignUpFormat == "NEW")
+            {
+                @Html.Raw("<p class=\"cashbacklarge\"><img src=\"/Content/Offer" + site.Id + "/popgraphics/free-pop.jpg\" width=\"127\" height=\"104\" alt=\"\" /></p>");
+                @Html.Raw("<p class=\"cashbacklarge\">");
+                @Html.Raw("<strong>");
+                @Html.Raw("Auto Parts Discounts<br />");
+                @Html.Raw("Free Trial Offer!");
+                @Html.Raw("</strong>");
+                @Html.Raw("</p>");
+            }
+
+            @using (Html.BeginForm())
+            { 
+                @Html.HiddenFor(m => m.Referrer)
+                @Html.HiddenFor(m => m.SiteId)
+
+
+
+                <table width="435" cellspacing="0" cellpadding="2" border="0" align="center">
+
+                    <tbody>
+
+                    @if (site.SignUpFormat == "OLD")
+                    {
+                        @Html.Raw("<tr>");
+
+                             @Html.Raw("<td align=\"center\" class=\"bigblue\" colspan=\"2\" style=\"color:#" + @site.CSSEmphasizeColor + "\">Follow Steps Below to Enroll &amp; Save.<br>");
+                                 @Html.Raw("<br>");
+                             @Html.Raw("</td>");
+                         @Html.Raw("</tr>");
+                    }
+                    else
+                    {
+                        @Html.Raw("<tr>");
+                             @Html.Raw("<td colspan=\"2\" align=\"center\" class=\"bigblue\">");
+                                 @Html.Raw("<p>");
+                                     @Html.Raw("<span style=\"font-size: 13px\">SAVE up to 50% at <u>Thousands of Automotive Stores</u></span> Across the USA.<br />");
+                                    @Html.Raw("JOIN NOW and Save Money on Auto Parts, NEW Cars, Oil Changes, Auto Repairs &amp; More!");
+                                 @Html.Raw("</p>");
+                             @Html.Raw("</td>");
+                         @Html.Raw("</tr>");
+                    }
+                    
+
+                        <tr>
+                            <td valign="middle" align="left">
+                                <span class="inputboxes2">First Name:
+                                <br>
+                                    @Html.TextBoxFor(m => m.FirstName)
+                                </span>
+                            </td>
+                            <td valign="middle" align="left">Last Name:<br>
+                                <span class="inputboxes2">
+                                    @Html.TextBoxFor(m => m.LastName)
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td valign="middle" align="left">
+                                <span class="inputboxes2">Address:
+                                <br>
+                                    @Html.TextBoxFor(m => m.Address)
+                                </span>
+                            </td>
+                            <td valign="middle" align="left">City:<br>
+                                <span class="inputboxes2">
+                                    @Html.TextBoxFor(m => m.City)
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td valign="middle" align="left">
+                                <span class="inputboxes2">State:
+                                <br>
+                                    @Html.DropDownListFor(m => m.StateId, Model.GetSelectList(Model.States, "Id", "Name", "Select State"))
+                                </span>
+                            </td>
+                            <td valign="middle" align="left">Zip Code:<br>
+                                <span class="inputboxes4">
+                                    @Html.TextBoxFor(m => m.ZipCode, new { @class = "onlyNumbers" })
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td valign="bottom" align="left">
+                                <span class="inputboxes2">Credit Card Type:
+                                <br>
+                                <!--
+                                   
+                                    Html.DropDownListFor(m => m.CardType, Model.GetSelectList<CCType>("Select Card Type", "mastercard")) -->
+
+                                    <select data-val="true" data-val-required="El campo CardType es obligatorio." id="CardType" name="CardType">
+                                        <option value="">Select Card Type</option>
+                                    @if ((Model.SelCCType!= null) && ("VISA" == Model.SelCCType.ToUpper()))
+                                    {
+                                        <option selected="selected"value="VISA">Visa</option>
+                                    }
+                                    else
+                                    {
+                                        <option  value="VISA">Visa</option>
+                                    }         
+                                    @if ((Model.SelCCType!= null) && ("MASTERCARD" == Model.SelCCType.ToUpper()))
+                                    {
+                                        <option selected="selected" value="MASTERCARD">Mastercard</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="MASTERCARD">Mastercard</option>
+                                    }    
+                                        @if ((Model.SelCCType!= null) && ("DISCOVER" == Model.SelCCType.ToUpper()))
+                                        {
+                                            <option selected="selected" value="DISCOVER">Discover</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="DISCOVER">Discover</option>
+                                        } 
+                             
+                                    </select>
+                                </span>
+                            </td>
+                            <td valign="bottom" align="left">
+                                <img src=@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/creditcards1.jpg")></td>
+                        </tr>
+
+                        <tr>
+                            <td valign="middle" align="left">
+                                <span class="inputboxes2">Credit Card Number:
+                                <br>
+                                    @Html.TextBoxFor(m => m.CardNumber, new { @class = "onlyNumbers", maxlength = 16 })
+                                </span>
+                            </td>
+                            <td valign="middle" align="left">
+                                <span class="inputboxes4">CVV Number:
+                                <br>
+                                    @Html.TextBoxFor(m => m.CVV, new { @class = "onlyNumbers", maxlength = 4 })
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td valign="bottom" align="left">
+                                <span class="inputboxes2">Expiration Date:
+                                <br>
+                                    @Html.DropDownListFor(m => m.ExpMonth, Model.GetSelectList(Model.Months, "Item1", "Item2", "Select Month"))
+                                </span>
+                            </td>
+                            <td valign="bottom" align="left">
+                                <span class="inputboxes4">
+                                    @Html.DropDownListFor(m => m.ExpYear, Model.GetSelectList(Model.Years, "Item1", "Item2", "Select Year"))
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td valign="middle" align="left" colspan="2">
+                                <span class="inputboxes2">Email Address:
+                                <br>
+                                    @Html.TextBoxFor(m => m.Email)
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td valign="middle" align="left" colspan="2">
+                                <br>
+                                <input type="image" src="@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/yesjoinnow.gif")" style="height:51px;width:225px;border-width:0px;" />
+                                @if (site.SignUpFormat == "OLD") 
+                                { 
+                                
+                                    
+                                    @Html.Raw("<img width=\"51\" align=\"top\" hspace=\"5\" height=\"51\" alt=\"\" src=\"/Content/Offer" + site.Id + "/popgraphics/thawte_small.gif\">");
+                                }
+                               @if (site.SignUpFormat == "NEW")
+                               {
+                                    @Html.Raw("<img style=\"margin-left:10px;\" src=\"/Content/Offer" + site.Id + "/popgraphics/limited-time2.jpg\" width=\"177\" height=\"70\" alt=\"\" />");
+                               }
+
+                                <br>
+                                @if (site.SignUpFormat == "OLD")
+                                {
+                                    @Html.Raw("Yes, I want to sign up for " + @site.Name +"<br>");
+                                    @Html.Raw("plus receive my $15 Cash Back Savings.");
+                                }
+                                @if (site.SignUpFormat == "NEW")
+                                {
+                                    @Html.Raw("<img src=\"/Content/Offer" + site.Id + "/popgraphics/lock.png\" /> 100% Secrure with SSL Technology");
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td valign="middle" align="left" colspan="2">
+                                <p class="nothanks"><a href="javascript:window.close();">No thank you, I am  not interested at this time.</a></p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+    <div class="clearfix">
+        <!-- -->
+    </div>
+</div>
+
+<div class="clearfix">
+    <!-- -->
+</div>
+<div id="main">
+    <div class="banner">
+        <img src=@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/catleftbookmark.jpg") alt="" width="175" height="476"></div>
+    <div class="content">
+        @Html.Raw(site.Benefits)
+        <p>
+            @if(site.SignUpFormat=="OLD"){
+                @Html.Raw("<strong class=\"blue\">$15 Cash Back Savings</strong><br>");
+            }
+            @if (site.SignUpFormat == "NEW")
+            {
+                @Html.Raw("<strong class=\"boldcolor\">$15 Cash Back Savings</strong><br>");
+            }
+            On top of receiving every day savings, NEW @site.AltNames.Split(',')[0] Members qualify to receive a $15 cash back savings to be used on your next purchase, absolutely FREE!&nbsp; After you sign up for your free 30 day test trial membership, you will &nbsp;receive an email with instructions on how to redeem your cash back savings. This is our way of saying thank you for giving our membership service a try. Please <a href="/salesclaim" class="mainlink" rel="gb_page_center[450, 400]" title="Claim Your $15 Cash Back Savings">Click Here</a> for more information on how to receive your $15 Cash Back Savings.
+        </p>
+        <p class="emphasizep">@Html.Raw(site.WeHaveAmassed)</p>
+    </div>
+    <div class="clearfix">
+        <!-- -->
+    </div>
+</div>
+<div id="partners">
+    Participating Properties Include:<br>
+    <div class="catlogos">
+        @foreach (var filename in site.ParticipatingPropertiesLogos.Split(','))
+        {<img src=@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/" + filename) />}
+
+        @if (site.SignUpFormat == "NEW")
+        {
+            @Html.Raw("<p>&nbsp;</p>");
+            @Html.Raw("<p>&nbsp;</p>");
+            @Html.Raw("<p>&nbsp;</p>");
+            @Html.Raw("<p>&nbsp;</p>");
+            @Html.Raw("<p align=\"center\">");
+                @Html.Raw("SAVE up to 50% At Thousands of Automotive <br />");
+                @Html.Raw("Shops Across The USA!<br />");
+                @Html.Raw("&nbsp;<img src=\"/Content/Offer" + site.Id + "/popgraphics/cargirl.jpg\" width=\"660\" height=\"330\" alt=\"\" />");
+            @Html.Raw("</p>");
+            @Html.Raw("<p align=\"center\">&nbsp; </p>");
+
+
+        }
+
+        <div class="clearfix">
+            <!-- -->
+        </div>
+    </div>
+</div>
+<div id="closer">
+    <div class="detailsbox">
+        <div class="detailsbox">
+            <div class="details">
+                <p>
+                @if (site.SignUpFormat == "OLD")
+                {
+                    @Html.Raw("<strong>Offer and Billing  Details:<br>");
+                    @Html.Raw("</strong>" + @site.Name +" members receive coupons and discounts to leading "+ @site.BusinessSector + " across America.&nbsp; By enrolling in the " + @site.Name+ " membership program, you will receive immediate online access to receive membership savings and discounts from many of the world’s most recognizable brands both nationwide as well as in your area.&nbsp;Sign up for the " + @site.Name +" Membership  program for FREE for the next 30 days and then enjoy ongoing savings for only <strong>$" + @Decimal.Divide(site.PricePerQuarter, 3) + " a month, with payments of $" +@site.PricePerQuarter + " being billed to your credit card or  debit card every 3 months, thereafter. Get your $15.00 Cash Back Savings on your  next purchase.&nbsp;</strong> If you are 100% satisfied  with your " + @site.Name + " membership during the next 30 days, do nothing. <strong>All your " + @site.Name + " Membership savings privileges will automatically continue for just $" + @Decimal.Divide(site.PricePerQuarter, 3) + " a month billed $" + @site.PricePerQuarter + " every 3 months by " + @site.Name +" to the credit card or deducted from the debit card you used during your initial registration.</strong> Your membership fees will show up on your card statement as  billed by " + @site.Name +". In the event that your membership fees were to  ever change, you would be notified before being billed. " + @site.Name+" Member benefits may be enhanced or modified at anytime without prior notice. <strong>If at any time you are not completely satisfied with our  membership service, simply call us at " + @site.Phone + " and/or email us at <span class=\"mainlink\">"+@site.Email+"</span> to let us know you wish to cancel your membership  benefits. Cancel this agreement during your 30 day free trial and you will not  be billed.&nbsp; If you cancel this agreement after your 30 day free trial  period, you will not be billed for any additional months and your membership  benefits will remain active for the duration of your then three month  term.&nbsp; You will remain liable for membership fees &amp; charges accrued  after your 30 day trial period has ended up to the ending date of your then  three month billing cycle in pursuant of this agreement.</strong>");
+                }
+                
+                @if (site.SignUpFormat == "NEW")
+                {
+                    @Html.Raw("<strong>Trial Offer and Billing  Details:<br>");  
+                    @Html.Raw("</strong>" + @site.Name + " members receive coupons and discounts to leading " + @site.BusinessSector + " across America.&nbsp; By  enrolling in the " + @site.Name + " membership program, you agree to the Terms of Membership when you submit your address  and debit or credit card information to " + @site.Name + " for billing and  program processing.&nbsp; Sign up for the " + @site.Name + " membership  program for FREE for the next 30 days and then enjoy ongoing savings for only <strong>$" + @Decimal.Divide(site.PricePerQuarter, 3) + "  a month, with payments of $" + @site.PricePerQuarter + " being billed to your credit card or debit card  every 3 months, thereafter. Get your $15.00 Cash Back Savings on your next  purchase</strong>.&nbsp; If you are 100% satisfied with your " + @site.Name + " membership during the next 30 days, do nothing. <strong>All your " + @site.Name + " membership savings privileges will automatically renew for just  $" + @Decimal.Divide(site.PricePerQuarter, 3) + " a month billed $" + @site.PricePerQuarter + " every 3 months by " + @site.Name + " to the  credit card or deducted from the debit card you used during your initial  purchase and this registration.</strong> Your membership fees will show  up on your card statement as billed by " + @site.Name + ". In the event that  your membership fees were to ever change, you would be notified before being  billed. " + @site.Name + " member benefits may be enhanced or modified at  any time without prior notice.&nbsp;<strong> If at any time you are not  completely satisfied with our membership service, simply call us at " + @site.Phone + " and/or you can email  our customer support team at <span class=\"mainlink\">" + site.Email + "</span> to let us know you  wish to cancel your membership benefits. Cancel this agreement during your 30  day free trial and you will not be billed.&nbsp; If you cancel this agreement  after your 30 day free trial period, you will not be billed for any additional  months and your membership benefits will remain active for the duration of your  then three month term.&nbsp; You will remain liable for membership fees &amp;  charges accrued after your 30 day trial period has ended up to the ending date  of your then three month billing cycle in pursuant of this agreement.</strong>");
+                }
+                </p>
+                @if (site.SignUpFormat == "OLD")
+                {
+                    @Html.Raw("<p>By clicking \"Yes, Save Now!\", you consent to  enrolling in the " + @site.Name + " membership program and to receive  electronic email disclosures. Please read this offer &amp; billing details  carefully and save &amp; print a copy for your records. " + @site.AltNames.Split(',')[1] + " will communicate your benefit and other membership information to you,  including payment authorization by electronic communications, including email  and electronic postings on our site. Your membership welcome email will also  include your new member ID #, your login information along with a copy of our  membership billing details for your convenience. &nbsp;In order to receive " + @site.Name + " Membership details, you are agreeing to receive these  communications electronically, and by clicking \"Yes, Save Now!\" you  consent to do so. You may withdraw this consent by canceling the service.  Please read &amp; review our <a href=\"/salesterms\" class=\"mainlink\">Terms &amp; Conditions</a> &amp; <a href=\"/salesprivacy\" class=\"mainlink\">Privacy  Policies</a> carefully while saving &amp; printing a copy of each  for your records before agreeing to register for this  membership program.&nbsp; You should periodically review these terms,  conditions, and policies for any updates or changes. Your continued use of the "  + @site.Name + " Membership program shall constitute notice and acceptance  of any such changes.&nbsp; " + @site.AltNames.Split(',')[1] + " will communicate your  benefits and other membership information to you by email as well as electronic  postings on our site. You may withdraw this consent by canceling the service.  You can update your member identification information at anytime by logging  into your account or by contacting our customer service team.&nbsp; The $15 Cash Back Savings on your next purchase is yours to keep as our way of saying  thank you for giving our " + @site.AltNames.Split(',')[0] + " Membership service a try.</p>");
+                }
+                
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">
+        <!-- -->
+    </div>
+</div>

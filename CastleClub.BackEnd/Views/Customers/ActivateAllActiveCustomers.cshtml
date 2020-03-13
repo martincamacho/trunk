@@ -1,0 +1,90 @@
+﻿@model CastleClub.BackEnd.Models.AccessVM
+    
+        <table style="width: 100%" >
+            <tr>
+                <td colspan="2" class="tableTitle">Import Info</td>
+            </tr>
+        <tr>
+            
+            <td>
+                AMT Import Id
+            </td>
+            <td>
+
+                @Model.id
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Created At
+            </td>
+            <td>
+
+               @Model.created_at
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Status
+            </td>
+            <td>
+
+                @Model.status
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Valid Members Count
+            </td>
+            <td>
+
+                @Model.valid_members_count
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Invalid Members Count
+            </td>
+            <td>
+
+                @Model.invalid_members_count
+            </td>
+        </tr>
+        @if (Model.imported_at != null)
+        {
+            <tr>
+                <td>
+                    Imported At
+                </td>
+                <td>
+
+                   @Model.imported_at
+                </td>
+            </tr>
+        }
+      
+            @if (Model.valid_members_csv != null)
+            {
+                <tr>
+                    <td>
+                        Valid Members Csv
+                    </td>
+                    <td>
+
+                        <a href="@Model.valid_members_csv"> Link</a>  
+                    </td>
+                </tr>
+            }
+            @if (Model.invalid_members_csv != null)
+            {
+                <tr>
+                    <td>
+                        Invalid Members Csv
+                    </td>
+                    <td>
+
+                        <a href="@Model.invalid_members_csv"> Link</a> 
+                    </td>
+                </tr>
+            }
+    </table>

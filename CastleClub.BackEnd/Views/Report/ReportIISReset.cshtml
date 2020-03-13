@@ -1,0 +1,42 @@
+﻿
+@using CastleClub.DataTypes;
+@using CastleClub.DataTypes.Enums;
+@{
+    ViewBag.Title = "Report IIS Reset";
+    List<IISResetLogDT> log = ViewBag.Log;
+
+}
+
+
+<table style="width: 100%">
+    <tbody>
+        <tr>
+            <td colspan="2" class="pageTitle">
+                List by date IIS Reset
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="usersTable">
+                    <tbody>
+                        <tr>
+                            <td class="usersHeaderCell">#</td>
+                            <td class="usersHeaderCell">Date</td>
+                            <td class="usersHeaderCell">Status</td>
+                        </tr>
+                        @{int i = 0; }
+                        @foreach (IISResetLogDT field in log)
+                        {
+                            i++;
+                            <tr class="usersRow" id="log_@field.Date">
+                                <td class="usersCell">@i</td>
+                                <td class="usersCell">@field.Date.ToString("MM-dd-yyyy")</td>
+                                <td class="usersCell">@field.Status</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>

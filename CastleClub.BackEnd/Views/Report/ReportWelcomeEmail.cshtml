@@ -1,0 +1,196 @@
+﻿@model CastleClub.BackEnd.Models.ReportEmailVM
+@{
+    ViewBag.Title = "Report Welcome Email";
+    Dictionary<string, List<CastleClub.DataTypes.EmailReportDT>> data = ViewBag.data;
+    string sizeDataFilter = data == null ? "23%" : "100%";
+}
+
+
+
+    <div>
+        <table style="width: 100%">
+            <tbody>
+    <tr>
+        <td width="22%" style="vertical-align:top;">
+            @using (Html.BeginForm())
+            {
+                <table style="background-color: #FFFFCC;">
+                    <tbody>
+                        <tr>
+                            <td colspan="3" align="center">
+                                WebSite:&nbsp
+                                @Html.DropDownListFor(m => m.ReferrerId, Model.GetSelectList(Model.Referrers, "Id", "Name", "0", "All Webites"))
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" align="center">
+                                Site:&nbsp
+                                @Html.DropDownListFor(m => m.SiteId, Model.GetSelectList(Model.Sites, "Id", "Name", "0", "All Webites"))
+                            </td>
+                        </tr>
+                   <!-- </tbody>
+                </table>
+                <table class="hidden" width="@sizeDataFilter" style="background-color: #FFFFCC">-->
+                    <tr>
+                        <td colspan="2">
+                            <hr size="1" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right" width="50%">
+                            Start Date:
+                        </td>
+                        <td align="left">
+                            @Html.TextBoxFor(m => m.StartDate)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right" width="50%">
+                            End Date:
+                        </td>
+                        <td align="left">
+                            @Html.TextBoxFor(m => m.EndDate)
+                        </td>
+                    </tr>
+    </tbody>
+                            </table>
+                            <table width="@sizeDataFilter">
+                                <tr>
+                                    <td align="center">
+                                        <button id="btnSubmit">Submit</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    </td>
+        <td width="78%" style="vertical-align:top;">
+            @if (Model.delayDef != null)
+            {
+
+
+                <br /><br />
+
+
+                <table style="width:100%;">
+                    <tr class="reportsHeaderRow">
+                        <th>Site</th>
+                        <th>Days</th>
+                        <th>Emails</th>
+                        <th>Active</th>
+                        <th>% Active</th>
+                        <th>Cancelled</th>
+                        <th>% Cancelled</th>
+                    </tr>
+
+                    @{
+
+                foreach (var item in Model.Sites)
+                {
+
+                    <tr class="reportsRow">
+                        <th>@item.Name</th>
+                        <th>
+                            <!-- <table  width="100%" class="reportsrow">-->
+                            @foreach (var delay in Model.delayDef.ToList())
+                            {
+                                <!--<tr>
+                                <td>@delay </td>
+
+                            </tr>-->
+                                @delay
+                                <br />
+                            }
+                            <!-- </table>-->
+                        </th>
+
+                        <th>
+
+                            @foreach (var delay in Model.delayDef.ToList())
+                            {
+
+
+                                @Model.delayEmailSent[delay, item.Id]<br />
+
+                            }
+
+                        </th>
+                        <th>
+
+                            @foreach (var delay in Model.delayDef.ToList())
+                            {
+                                @Model.delayActiveUsers[delay, item.Id] <br />
+                            }
+
+                        </th>
+                        <th>
+
+                            @foreach (var delay in Model.delayDef.ToList())
+                            {
+                                @((Model.delayEmailSent[delay, item.Id] == 0) ? 0 : @Model.delayActiveUsers[delay, item.Id] * 100 / Model.delayEmailSent[delay, item.Id])
+                                <br />
+                            }
+
+
+                        </th>
+
+                        <th>
+
+                            @foreach (var delay in Model.delayDef.ToList())
+                            {
+
+
+                                @Model.delayCancelledUsers[delay, item.Id]
+                                <br />
+                            }
+
+                        </th>
+                        <th>
+
+                            @foreach (var delay in Model.delayDef.ToList())
+                            {
+                                @((Model.delayEmailSent[delay, item.Id] == 0) ? 0 : @Model.delayActiveUsers[delay, item.Id] * 100 / Model.delayEmailSent[delay, item.Id])
+                                <br />
+                            }
+
+
+                        </th>
+
+                    </tr>
+                }
+                    }
+
+
+                </table>
+
+
+            }
+        </td>
+                                        
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+    $(function () {
+        $("#StartDate").datepicker();
+        $("#EndDate").datepicker();
+
+        $('#ReferrerId').val("@Model.ReferrerId");
+        $('#SiteId').val("@Model.SiteId");
+        $('#StartDate').datepicker('setDate', "@Model.StartDate.ToString()");
+        $('#EndDate').datepicker('setDate', "@Model.EndDate.ToString()");
+
+    });
+    $("#btnSubmit").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "/Report/ReportWelcomeEmail",
+            data: { StartDate: new Date($("#StartDate").val()), EndDate: new Date($("#EndDate").val()), ReferrerId: $("#ReferrerId").val(), SiteId: $("#SiteId").val() },
+            success: function (data) {
+                $("#idReplace").html(data);
+            }
+        });
+    })
+</script>
+

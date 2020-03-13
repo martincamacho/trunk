@@ -1,0 +1,135 @@
+﻿@model CastleClub.BackEnd.Models.ChartReportVM
+@using CastleClub.BackEnd.Models;
+@{
+    ViewBag.Title = "Chart";
+}
+
+<table>
+    <tr>
+        <td width="20%" valign="top">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id="form" }))
+            {
+                <table class="pageTitle">
+                    <tr>
+                        <td colspan="2" align="center" class="tableTitle">
+                            Charts Reports
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #FFFFCC">
+                            Web Site:
+                        </th>
+                        <td style="background-color: #FFFFCC">
+                            @Html.DropDownListFor(x => x.SiteID, Model.Sites.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tableTitle" colspan="2" align="center">
+                            <input type="submit" value="Submit" />
+                        </td>
+                    </tr>
+                </table>
+            }
+        </td>
+        <td width="80%">
+            <div id="container"></div>
+        </td>
+    </tr>
+</table>
+
+<script src="~/Content/js/Chart/highcharts.js"></script>
+<script src="~/Content/js/Chart/exporting.js"></script>
+
+<script>
+    $("form[id=form]").submit(function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        $that = $(this);
+        $.ajax({
+            type: 'POST',
+            url: '/Report/Chart',
+            data: $that.serialize(),
+            success: function (data) {
+                $("#container").empty();
+
+                $.each(data, function (index, value) {
+                    //alert('hola');
+                    if (value.Table.Cols.length !== 0) {
+                        var $newdiv = $("<div id='" + value.Id + "' style='min-width: 310px; height: 400px; margin: 0 auto'></div>");
+                        $newdiv.appendTo($("#container"));
+
+                        $newdiv.highcharts({
+                            chart: {
+                                type: value.Type
+                            },
+                            title: {
+                                text: value.Text
+                            },
+                            tooltip: {
+                                valueSuffix: value.TooltipValueSuffix
+                            },
+                            yAxis: {
+                                title: {
+                                    text: value.YAxisTitle
+                                }
+                            },
+                            colors: value.Colors,
+                            xAxis: {
+                                categories: value.Categories
+                            },
+                            credits: {
+                                enabled: false
+                            },
+                            series: value.Series
+                        });
+
+                    
+                        $newTable = $("<table  id='tblData' class='reportsTable'></table>");
+                        $newTable.appendTo($("#container"));
+                        $newRowHeader = $("<tr></tr>");
+                        $newRowHeader.appendTo($newTable);
+
+                        $newColumCell = $("<td></td>");
+                        $newColumCell.appendTo($newRowHeader);
+
+                        $.each(value.Table.Cols, function (indexTH, valueTH) {
+                            $newRows = $("<td class='reportsHeaderRow'>" + valueTH + "</td>");
+                            $newRows.appendTo($newRowHeader);
+                        });
+
+                        $.each(value.Table.Rows, function (indexTD, valueTD) {
+                            $newRows = $("<tr></tr>");
+                            $newRows.appendTo($newTable);
+
+                            $newCell0 = $("<td class='reportsHeaderRow'>" + valueTD + "</td>");
+                            $newCell0.appendTo($newRows);
+
+                            $.each(value.Table.Cols, function (indexRowTB, valueRowTB) {
+                                $newCell = $("<td class='reportsRow'>" + value.Table.Data[indexRowTB][indexTD] + "</td>");
+                                $newCell.appendTo($newRows);
+                            });
+                        });
+                    }
+                });
+                //alert($("#container").html())
+            }
+        });
+
+        return false;
+    });
+</script>
+
+<style type="text/css">
+    $ {
+        demo .css;
+    }
+
+    TD, SPAN, LI, BODY, P {
+        color: #444;
+        font-size: 11px;
+        font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;
+    }
+</style>
+
+

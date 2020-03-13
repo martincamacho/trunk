@@ -1,0 +1,46 @@
+﻿@model CastleClub.BackEnd.Models.AccessVM
+
+
+
+
+    <div> 
+        <table style="width: 100%">
+            <tr>
+                <td colspan="2" class="pageTitle">
+                    Send Active Customers To Access
+                </td>
+            </tr>
+            
+                <tr>
+                    <td style="width: 250px;">
+                        @if (CastleClub.BusinessLogic.Data.GlobalParameters.AMTNewPlatform) 
+                        { 
+                        <input type="button" onclick="activateAllActiveCustomers()" value="Access Activate All Customers">
+                        }
+                    </td>
+                    <td>
+                        <div id="ajax-update" ></div>
+                    </td>
+                </tr>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+        function activateAllActiveCustomers() {
+          
+        
+        $.ajax({
+            type: 'GET',
+            url: '/Customers/ActivateAllActiveCustomers',
+            dataType: 'html',
+            data:'',
+            success: function (data) {
+                
+                $('#ajax-update').html(data);
+            }
+        });
+        
+    }
+    </script>
+    
+

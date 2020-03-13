@@ -1,0 +1,50 @@
+﻿@model CastleClub.BackEnd.Models.WelcomeEmailVM
+@{
+    ViewBag.Title = "WelcomeEmail";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "form" }))
+{
+    <table style="vertical-align:top;" align="center" width="90%">
+        <tr>
+            <td>Cap Email</td>
+            <td colspan="6">@Html.EditorFor(m => m.CapEmail) </td>
+        </tr>
+        <tr class="reportsHeaderRow">
+            <th>Site</th>
+            <th>Send Welcome Email</th>
+            <th>Delay </th>
+            <th>Preview Email</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>SMTP </th>
+        </tr>
+        @Html.HiddenFor(m => m.prueba)
+        @for (int i = 0; i < Model.sites.Count(); ++i)
+        {
+            <tr class="reportsRow">
+                <td>
+                    @Model.sites[i].Name
+                    @Html.HiddenFor(m => m.sites[i].Id)
+                    @Html.HiddenFor(m => m.sites[i].Name)
+                </td>
+                <td>@Html.CheckBoxFor(m => m.sites[i].SendWelcomeEmail, new { @class = "siteCheck" })</td>
+                <td>
+                
+                
+                
+                @Html.DropDownListFor(m => m.sites[i].WelcomeEmailDelay, Model.GetSelectList(Model.Delays, "Item1", "Item2", "", "Select Number of Days", Model.sites[i].WelcomeEmailDelay.ToString()))</td>
+                <td><a href="/Sites/PreviewEmail/@Model.sites[i].Id" target="_blank">Preview Email</a> </td>
+                <th>@Html.EditorFor(m => m.sites[i].Email)  </th>
+                <th>@Html.PasswordFor(m => m.sites[i].PasswordEmail)</th>
+                <th>@Html.EditorFor(m => m.sites[i].SmtpAddress)  </th>
+
+            </tr>
+        }
+        <tr>
+            <td class="tableTitle" colspan="7">
+                <input type="submit" value="Submit" />
+            </td>
+        </tr>
+    </table>
+}

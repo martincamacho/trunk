@@ -1,0 +1,66 @@
+﻿@model CastleClub.BackEnd.Models.TestVM
+@{
+    ViewBag.Title = "TestPage";
+}
+
+<table>
+    <tr>
+        <td width="10%" valign="top">
+            @using (Html.BeginForm(null, null, new { id="form" }))
+            {
+                <div>
+                    Select the site: @Html.DropDownListFor(m => m.SiteID, Model.Sites.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }))
+                    <br />
+                    <input type="submit" value="Submit" />
+                </div>
+            }
+        </td>
+        <td width="90%">
+            @if (Model != null && Model.Emails != null && Model.Emails.Count > 0)
+            {
+                <table>
+                    <tr>
+                        <td>
+                            <div>
+                                Send email to :<br />
+                                @Html.EditorFor(m => m.EmailToSend)<br />
+                                Name:<br />
+                                @Html.EditorFor(x => x.Name)<br />
+                                <button id="btnSendEmail">Send Email</button>
+                            </div>
+                        </td>
+                        <th>
+                            Emails
+                        </th>
+                    </tr>
+                    @foreach (var email in Model.Emails)
+                    {
+                        <tr>
+                            <td></td>
+                            <td align="center" valign="top">
+                                @email
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </td>
+    </tr>
+</table>
+
+<script>
+    $("#btnSendEmail").click(function () {
+        if (confirm('Are you sure send email to (Email)' + $("#EmailToSend").val() + ', (Name)' + $("#Name").val() + '?')) {
+            var siteID =@Model.SiteID +0;
+
+            alert(siteID);
+
+            $.ajax({
+                url: '/Report/SendEmail',
+                data: { SiteID: siteID, EmailToSend: $("#EmailToSend").val(), Name: $("#Name").val() },
+                type: 'POST'
+            });
+        }
+    });
+</script>
+

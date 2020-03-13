@@ -1,0 +1,182 @@
+﻿@using CastleClub.DataTypes;
+@using CastleClub.DataTypes.Enums;
+@{
+    Layout = null;
+    CustomerDT customer = ViewBag.Customer;
+    UserDT user = ViewBag.User;
+    List<InvoiceDT> invoices = ViewBag.Invoices;
+    decimal balance = ViewBag.Balance;
+}
+
+<table style="width: 100%">
+    <tbody>
+        <tr>
+            <td colspan="2"><b>Customer Id </b>@customer.Id</td>
+        </tr>
+        <tr>
+            <td colspan="2"><b>Name </b>@customer.FirstName @customer.LastName</td>
+        </tr>
+        <tr>
+            <td colspan="2"><b>Email </b>@customer.Email</td>
+        </tr>
+        <tr>
+            <td colspan="2"><b>Status </b>@customer.Status</td>
+        </tr>
+        <tr>
+            <td class="tableTitle" colspan="2">Invoice Info</td>
+        </tr>
+        <tr>
+            <td>
+                @if (invoices.Count > 0)
+                {
+                    <table style="width: 100%" class="subscriptionInvoiceTable">
+                        <tbody>
+                            <tr class="subscriptionsInvoiceHeaderRow">
+                                <td>Date</td>
+                                <td style="width: 15%">Status</td>
+                                <td style="width: 10%">Credit</td>
+                                <td style="width: 10%">Debit</td>
+                                <td style="width: 10%">Balance</td>
+                                <td style="width: 30%">
+                                    Refund / Refund Reason
+                                    @if (CastleClub.BusinessLogic.Data.GlobalParameters.TryChargeAgain)
+                                    {
+                                        <lable> / Try Charge Again</lable>
+                                    }
+                                </td>
+                            </tr>
+                            @foreach (InvoiceDT invoice in invoices)
+                            {
+                                <tr class="subscriptionsInvoiceRow">
+                                    <td onclick="showHideTransactionTable(@invoice.Id)" class="subscriptionsInvoiceCell">
+                                        <span style="font-weight: bold">
+                                            @invoice.CreatedAt.ToShortDateString()
+                                        </span>&nbsp;&nbsp;@invoice.CreatedAt.ToShortTimeString()
+                                    </td>
+                                    <td onclick="showHideTransactionTable(@invoice.Id)" id="invoiceStatus_@invoice.Id" class="subscriptionsInvoiceCell" style="color: @Html.Raw(invoice.Status == InvoiceStatus.BILLEDFAIL || invoice.Status == InvoiceStatus.REFUNDEDFAIL ? "#F00" : "#444")">@InvoiceStatusHelper.GetString(invoice.Status)</td>
+                                    <td onclick="showHideTransactionTable(@invoice.Id)" id="invoiceCredit_@invoice.Id" class="subscriptionsInvoiceCell" style="color: #060">$@String.Format("{0:N2}", invoice.Credit)</td>
+                                    <td onclick="showHideTransactionTable(@invoice.Id)" id="invoiceDebit_@invoice.Id" class="subscriptionsInvoiceCell" style="color: #F00">@Html.Raw(invoice.Debit != 0 ? "-" : "")$@String.Format("{0:N2}", invoice.Debit)</td>
+                                    <td onclick="showHideTransactionTable(@invoice.Id)" id="invoiceBalance_@invoice.Id" class="subscriptionsInvoiceCell" style="color: @Html.Raw(invoice.Balance != 0 ? "#060" : "#F00")">$@String.Format("{0:N2}", invoice.Balance)</td>
+                                    @if (invoice.Status == InvoiceStatus.BILLED || invoice.Status == InvoiceStatus.REFUNDEDFAIL)
+                                    {
+                                        <td id="invoiceRefund_@invoice.Id" class="subscriptionsInvoiceCell">
+                                            <input id="invoiceRefundButton_@invoice.Id" onclick="StartRefund(@customer.Id,@invoice.Id)" type="button" value="Start Refund" />
+                                        </td>
+                                    }
+                                    else if (invoice.Status == InvoiceStatus.REFUNDED)
+                                    {
+                                        <td onclick="showHideTransactionTable(@invoice.Id)" id="invoiceRefund_@invoice.Id" class="subscriptionsInvoiceCell">
+                                            @invoice.RefundReason
+                                        </td>
+                                    }
+                                    else if (CastleClub.BusinessLogic.Data.GlobalParameters.TryChargeAgain && (invoice.Status == InvoiceStatus.BILLEDFAIL) && (customer.CancelledDate == DateTime.MinValue))
+                                    {
+                                        <td class="subscriptionsInvoiceCell">
+                                            <button id="@invoice.Id" onclick="tryAgain(@invoice.Id, @invoice.CustomerId)" name="TryChargeAgain">Try charge again</button>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td onclick="showHideTransactionTable(@invoice.Id)" id="invoiceRefund_@invoice.Id" class="subscriptionsInvoiceCell"></td>
+                                    }
+                                </tr>
+                                <tr style="display: none" id="@invoice.Id" class="transactionTable">
+                                    <td colspan="6" style="padding-left: 10px; padding-right: 0px; padding-bottom: 0px; padding-top: 0px;">
+                                        @if (invoice.Transactions.Count > 0)
+                                        {
+                                            <table id="transactionsTable2_@invoice.Id" style="width: 100%" class="subscriptionTrnTable">
+                                                <tbody>
+                                                    <tr class="subscriptionsTrnHeaderRow">
+                                                        <td>Transacrion Id</td>
+                                                        <td>Date</td>
+                                                        <td>Type</td>
+                                                        <td>Status</td>
+                                                        <td>Amount</td>
+                                                        <td>Partent Trn Id</td>
+                                                    </tr>
+                                                    @foreach (TransactionDT transaction in invoice.Transactions)
+                                                    {
+                                                        <tr class="subscriptionsTrnRow">
+                                                            <td>@Html.Raw(transaction.AuthorizeTransactionId != 0 ? transaction.AuthorizeTransactionId.ToString() : "")</td>
+                                                            <td>@transaction.SubmitDate.ToString()</td>
+                                                            <td>@transaction.Type</td>
+                                                            <td title="@transaction.Message" style="color: @Html.Raw(transaction.Status == TransactionStatus.SUCCESFULL ? "#060" : "#F00")">@transaction.Status</td>
+                                                            <td>$@String.Format("{0:N2}", invoice.Amount)</td>
+                                                            <td>@Html.Raw(transaction.RefundedTrnAuthorizeId != 0 ? transaction.RefundedTrnAuthorizeId.ToString() : "")</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        }
+                                        @if (invoice.Transactions.Count == 0)
+                                        {
+                                            <span>No Transaction Data</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                @if (invoices.Count == 0)
+                {
+                    <span>No Invoice Data</span>
+                }
+            </td>
+        </tr>
+        <tr>
+            @if (customer.Status == CastleClub.DataTypes.Enums.CustomerStatus.ACTIVE)
+                {
+            <td class="tableTitle" colspan="2"><input id="cancellCustomer" onclick="@Html.Raw("CancelCustomerBillingHist(" + @customer.Id + ")")" type="button" value="Cancel"></td>
+                }  
+        </tr>
+    </tbody>
+</table>
+<script type="text/javascript">
+
+    function tryAgain (id, cid) {
+        if (confirm("Do you want to recharge?")) {
+            $that = $(this);
+            $.ajax({
+                url: "/Subscription/TryChargeAgain",
+                data: { Id: id },
+                type: "POST",
+                success: function (data) {
+                    if (data.Result) {
+                        alert("Transaction billed.");
+                        $table = $("#transactionsTable2_" + $that.attr("id"));
+                       
+                        $newTransaction = $('<tr class="subscriptionsTrnRow">'
+                                                + '<td>' + data.Info.Authorize + '</td>'
+                                                + '<td>' + data.Info.SubmitDate + '</td>'
+                                                + '<td>' + data.Info.Type + '</td>'
+                                                + '<td title="' + data.Info.Message + '" style="color: #060">' + data.Info.Status + '</td>'
+                                                + '<td>$' + data.Info.Amount + '</td>'
+                                                + '<td>' + data.Info.Parent + '</td>'
+                                            + '</tr>').appendTo($table);
+                        $that.parent().html('');
+                        rechargeTable();
+                        BillingHistory(cid);
+                    }
+                    else {
+                        alert("Transaction fail.");
+                        $table = $("#transactionsTable2_" + $that.attr("id"));
+                        //alert($table.html);
+                        $newTransaction = $('<tr class="subscriptionsTrnRow">'
+                                                + '<td></td>'
+                                                + '<td>' + data.Info.SubmitDate + '</td>'
+                                                + '<td>' + data.Info.Type + '</td>'
+                                                + '<td title="' + data.Info.Message + '" style="color: #F00">' + data.Info.Status + '</td>'
+                                                + '<td>$' + data.Info.Amount + '</td>'
+                                                + '<td>' + data.Info.Parent + '</td>'
+                                            + '</tr>').appendTo($table);
+                        rechargeTable();
+                        BillingHistory(cid);
+                    }
+                }
+            });
+        }
+        
+    };
+    </script>
+

@@ -1,0 +1,153 @@
+﻿@model CastleClub.BackEnd.Models.ManageSubscriptionsVM
+@using CastleClub.DataTypes;
+@using CastleClub.DataTypes.Enums;
+@{
+    List<CustomerDT> data = null;
+    int i = 0;
+    if (ViewBag.Data != null)
+    {
+        data = ViewBag.Data;
+    }
+}
+<table style="width: 100%">
+    <tbody>
+        <tr>
+            <td colspan="2" class="pageTitle">
+                Manage Subscriptions
+            </td>
+        </tr>
+        <tr>
+            @using (Html.BeginForm())
+            {
+                <td style="width: 350px; vertical-align: top;">
+                    <table style="width: 100%">
+                        <tbody>
+                            <tr>
+                                <td class="tableTitle">Find a Subscription</td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #f0f8ff">
+                                    <table style="width: 100%">
+                                        <tbody>
+                                            <tr>
+                                                <td>Website:</td>
+                                                <td style="text-align: right">
+                                                    @Html.DropDownListFor(m => m.SiteId, Model.GetSelectList(Model.Sites, "Id", "Name", "0", "All Webites"))
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Member Id:</td>
+                                                <td style="text-align: right">
+                                                    @Html.TextBoxFor(m => m.MemberId)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Last Four Digits Credit Card:</td>
+                                                <td style="text-align: right">
+                                                    @Html.TextBoxFor(m => m.LastFourDigit, new { maxlength=4 })
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Email:</td>
+                                                <td style="text-align: right">
+                                                    @Html.TextBoxFor(m => m.Email)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Phone #:</td>
+                                                <td style="text-align: right">
+                                                    @Html.TextBoxFor(m => m.Phone)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Name:</td>
+                                                <td style="text-align: right">
+                                                    @Html.TextBoxFor(m => m.Name)
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tableTitle">
+                                    <input type="submit" value="Find Subscriptions" id="find">
+                                    <input type="button" value="Reset">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td style="vertical-align: top">
+                    <table style="width: 100%">
+                        <tbody>
+                            <tr>
+                                <td class="tableTitle">Matching Subscriptions</td>
+                            </tr>
+                            <tr>
+                                <td align="left" valign="top" width="100%">
+                                    <div style="height: 165px; overflow-y: scroll">
+                                        <table style="width:100%; border-collapse: collapse;">
+                                            <tbody>
+                                                @if (data != null)
+                                                {
+                                                    foreach (CustomerDT item in data)
+                                                    {
+                                                        <tr class="subscriptionsRow" onclick="getSubscriptionInfo(@item.Id)">
+                                                            <td style="color: #00B; width: 25%">
+                                                                @item.MemberId
+                                                            </td>
+                                                            <td style="width: 25%">
+                                                                @item.FirstName @item.LastName
+                                                            </td>
+                                                            <td style="width: 25%">
+                                                                @item.CreatedAt.ToShortDateString()
+                                                            </td>
+                                                            <td id="customerStatus_@item.Id" style="width: 25%; color: @Html.Raw(@item.Status != CustomerStatus.ACTIVE ? "#F00" : "#060")">
+                                                                @item.Status
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tableTitle"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            }
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="ajax-update" style="margin-bottom: 15px">
+
+                </div>
+                <div id="refundDiv" title="Refund" style="display: none">
+                    <span>Refund Reason:&nbsp;</span><input id="refundText" type="text" />
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    function getSubscriptionInfo(cid) {
+        var values = {
+            customerId: cid
+        }
+        $.ajax({
+            type: 'GET',
+            data: values,
+            url: '/Subscription/SubscriptionInfo',
+            dataType: 'html',
+            success: function (data) {
+                $('#ajax-update').html(data);
+            }
+        });
+    }
+</script>

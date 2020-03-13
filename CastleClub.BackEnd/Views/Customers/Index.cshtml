@@ -1,0 +1,180 @@
+﻿@{
+    ViewBag.Title = "Customers";
+}
+<b>Customers</b>
+<br />
+<table width="100%">
+    <tr>
+        <td colspan="2">
+            <b>
+                There are @ViewBag.CustomersCount customers in the database&nbsp;<a id="lnkExportToExcel" href="#">Export to xlsx</a>&nbsp;<a id="lnkCancellDownload" href="#" style="display:none">Cancel download</a>
+            </b>
+        </td>
+    </tr>
+    <tr>
+        <td width="35%">
+            <a name="letter%" href="#">%</a>&nbsp;
+            <a name="letter#" href="#">#</a>&nbsp;
+            <a name="letterA" href="#">A</a>&nbsp;
+            <a name="letterB" href="#">B</a>&nbsp;
+            <a name="letterC" href="#">C</a>&nbsp;
+            <a name="letterD" href="#">D</a>&nbsp;
+            <a name="letterE" href="#">E</a>&nbsp;
+            <a name="letterF" href="#">F</a>&nbsp;
+            <a name="letterG" href="#">G</a>&nbsp;
+            <a name="letterH" href="#">H</a>&nbsp;
+            <a name="letterI" href="#">I</a>&nbsp;
+            <a name="letterJ" href="#">J</a>&nbsp;
+            <a name="letterK" href="#">K</a>&nbsp;
+            <a name="letterL" href="#">L</a>&nbsp;
+            <a name="letterM" href="#">M</a>&nbsp;
+            <a name="letterN" href="#">N</a>&nbsp;
+            <a name="letterO" href="#">O</a>&nbsp;
+            <a name="letterP" href="#">P</a>&nbsp;
+            <a name="letterK" href="#">K</a>&nbsp;
+            <a name="letterR" href="#">R</a>&nbsp;
+            <a name="letterS" href="#">S</a>&nbsp;
+            <a name="letterT" href="#">T</a>&nbsp;
+            <a name="letterU" href="#">U</a>&nbsp;
+            <a name="letterV" href="#">V</a>&nbsp;
+            <a name="letterW" href="#">W</a>&nbsp;
+            <a name="letterX" href="#">X</a>&nbsp;
+            <a name="letterY" href="#">Y</a>&nbsp;
+            <a name="letterZ" href="#">Z</a>&nbsp;
+        </td>
+        <td align="left">
+            Search For: <input type="text" id="txtFilter" />&nbsp;<input type="checkbox" id="chkOnlyActive" />Only Active&nbsp;
+            <select id="slSite">
+                <option value="0">All WebSites</option>
+                @foreach (var item in ViewBag.SitesName)
+                {
+                    <option value="@item">@item</option>                    
+                }
+            </select>
+            <input type="button" id="btnSubmit" value="submit" />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" width="100%">
+            <div id="idReplace">
+                
+            </div>
+        </td>
+    </tr>
+    <tr>
+
+    </tr>
+    <tr>
+        <td height="24px"></td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+    var page = 1;
+    var letter = "A";
+    var checkAll = false;
+
+    $("a[name^=letter]").click(function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        $("a[name=letter"+letter+"]").removeClass("lnkDecoration");
+        letter = $(this).html();
+        page = 1;        
+
+        $.ajax({
+            type: "POST",
+            url: "/Customers/GetListCustomersFilter",
+            data: { Letter: letter, Page: 1, Word: "", All: false, OnlyActive: $("#chkOnlyActive").is(':checked'), SiteName: $("#slSite").val() },
+            success: function (data) {
+                $("#idReplace").html(data);
+            }
+        });
+        $("a[name=letter" + letter + "]").addClass("lnkDecoration");
+
+        $("#txtFilter").val("");
+
+        return false;
+    })
+    $("#btnSubmit").click(function (event) {
+        page = 1;
+
+        $.ajax({
+            type: "POST",
+            url: "/Customers/GetListCustomersFilter",
+            data: { Letter: letter, Page: 1, Word: $("#txtFilter").val(), All: false, OnlyActive: $("#chkOnlyActive").is(':checked'), SiteName: $("#slSite").val() },
+            success: function (data) {
+                $("#idReplace").html(data);
+            }
+        });
+    })
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "/Customers/GetListCustomersFilter",
+            data: { Letter: "A", Page: 1, Word: "", All: false, OnlyActive: $("#chkOnlyActive").is(':checked'), SiteName: $("#slSite").val() },
+            success: function (data) {
+                $("#idReplace").html(data);
+            }
+        });
+        $("a[name=letterA]").addClass("lnkDecoration");
+    })
+
+    $("#txtFilter").keyup(function (e) {
+        if (e.keyCode == 13) {
+            $("#btnSubmit").trigger("click");
+        }
+    });
+
+    var acceptFile = new Array();
+    var index = 0;
+    $("a[id=lnkExportToExcel]").click(function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        $that = $(this);
+
+        acceptFile.push(true);
+        var i = index;
+        index = index + 1;
+
+        $.ajax({
+            type: "POST",
+            url: "/Customers/ExportToXslx",
+            data: { Letter: letter, Page: 1, Word: $("#txtFilter").val(), All: true, OnlyActive: $("#chkOnlyActive").is(':checked'), SiteName: $("#slSite").val() },
+            success: function (data) {
+                if (acceptFile[i] && data.success) {
+                    var url = "/Customers/ExportToXslx?fName=" + data.fName;
+                    $(location).attr('href', url);
+                }
+                $("#lnkCancellDownload").hide();
+                $that.show();
+            },
+            error: function () {
+                $("#lnkCancellDownload").hide();
+                $that.show();
+                alert("An error ocurred in build to excel file.");
+            }
+        });
+
+        $(this).hide();
+        $("#lnkCancellDownload").show();
+
+        return false;
+    })
+
+    $("#lnkCancellDownload").click(function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        acceptFile[index - 1] = false;
+        $("#lnkCancellDownload").hide();
+        $("#lnkExportToExcel").show();
+
+        return false;
+    })
+
+</script>
+<style type="text/css">
+    .lnkDecoration{
+        text-decoration:none;
+    }
+</style>

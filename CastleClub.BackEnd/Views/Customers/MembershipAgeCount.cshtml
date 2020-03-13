@@ -1,0 +1,166 @@
+﻿@model CastleClub.BackEnd.Models.MembershipAgeCountVM
+@{
+    ViewBag.Title = "MembershipAgeCount";
+}
+
+@Html.ValidationSummary()
+
+@using (Html.BeginForm())
+{
+    <table width="100%">
+        <tr>
+            <td width="20%" valign="top">
+                <table width="100%">
+                    <tr>
+                        <th class="tableTitle" colspan="2" align="center">
+                            Select web site:
+                        </th>
+                    </tr>
+                    <tr style="background-color: #FFFFCC">
+                        <td>
+                            Web Site:
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(m => m.SiteID, Model.Sites.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center" class="tableTitle">
+                            <input type="submit" value="Submit" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td width="80%">
+                @if (Model.Show)
+                {
+                    DateTime today=DateTime.Now;
+                    int activeTotal=Model.Range_0_to_3_Months_Count_Active+Model.Range_1_to_2_Years_Count_Active+Model.Range_2_to_3_Years_Count_Active+Model.Range_3_to_6_Months_Count_Active+Model.Range_6_to_12_Months_Count_Active+Model.Range_Old_Count_Active;
+                    int unactiveTotal=Model.Range_0_to_3_Months_Count_Unactive+Model.Range_1_to_2_Years_Count_Unactive+Model.Range_2_to_3_Years_Count_Unactive+Model.Range_3_to_6_Months_Count_Unactive+Model.Range_6_to_12_Months_Count_Unactive+Model.Range_Old_Count_Unactive;
+                    <table width="100%">
+                        <tr class="reportsHeaderRow">
+                            <th>
+                                Range
+                            </th>
+                            <th>
+                                Active Members
+                            </th>
+                            <th>
+                                Inactive Members
+                            </th>
+                            <th>
+                                Total Members
+                            </th>
+                        </tr>
+                        <tr class="reportsRow">
+                            <th align="left">
+                                0 to 3 months old (@today to @today.AddMonths(-3))
+                            </th>
+                            <td align="center">
+                                @Model.Range_0_to_3_Months_Count_Active (@((Model.Range_0_to_3_Months_Count_Active*100)/activeTotal)% - @Model.Range_0_to_3_Months_Count_Active/@activeTotal)
+                            </td>
+                            <td align="center">
+                                @Model.Range_0_to_3_Months_Count_Unactive (@((Model.Range_0_to_3_Months_Count_Unactive * 100) / unactiveTotal)% - @Model.Range_0_to_3_Months_Count_Unactive/@unactiveTotal)
+                            </td>
+                            <td align="center">
+                                @(Model.Range_0_to_3_Months_Count_Active+Model.Range_0_to_3_Months_Count_Unactive)
+                            </td>
+                        </tr>
+
+                        <tr class="reportsRow">
+                            <th align="left">
+                                3 to 6 months old (@today.AddMonths(-3) to @today.AddMonths(-6))
+                            </th>
+                            <td align="center">
+                                @Model.Range_3_to_6_Months_Count_Active (@((Model.Range_3_to_6_Months_Count_Active * 100) / activeTotal)% - @Model.Range_3_to_6_Months_Count_Active/@activeTotal)
+                            </td>
+                            <td align="center">
+                                @Model.Range_3_to_6_Months_Count_Unactive (@((Model.Range_3_to_6_Months_Count_Unactive * 100) / unactiveTotal)% - @Model.Range_3_to_6_Months_Count_Unactive/@unactiveTotal)
+                            </td>
+                            <td align="center">
+                                @(Model.Range_3_to_6_Months_Count_Active + Model.Range_3_to_6_Months_Count_Unactive)
+                            </td>
+                        </tr>
+
+                        <tr class="reportsRow">
+                            <th align="left">
+                                6 to 12 months old (@today.AddMonths(-6) to @today.AddMonths(-12))
+                            </th>
+                            <td align="center">
+                                @Model.Range_6_to_12_Months_Count_Active (@((Model.Range_6_to_12_Months_Count_Active * 100) / activeTotal)% - @Model.Range_6_to_12_Months_Count_Active/@activeTotal)
+                            </td>
+                            <td align="center">
+                                @Model.Range_6_to_12_Months_Count_Unactive (@((Model.Range_6_to_12_Months_Count_Unactive * 100) / unactiveTotal)% - @Model.Range_6_to_12_Months_Count_Unactive/@unactiveTotal)
+                            </td>
+                            <td align="center">
+                                @(Model.Range_6_to_12_Months_Count_Active + Model.Range_6_to_12_Months_Count_Unactive)
+                            </td>
+                        </tr>
+
+                        <tr class="reportsRow">
+                            <th align="left">
+                                1 to 2 years old (@today.AddYears(-1) to @today.AddYears(-2))
+                            </th>
+                            <td align="center">
+                                @Model.Range_1_to_2_Years_Count_Active (@((Model.Range_1_to_2_Years_Count_Active * 100) / activeTotal)% - @Model.Range_1_to_2_Years_Count_Active/@activeTotal)
+                            </td>
+                            <td align="center">
+                                @Model.Range_1_to_2_Years_Count_Unactive (@((Model.Range_1_to_2_Years_Count_Unactive * 100) / unactiveTotal)% - @Model.Range_1_to_2_Years_Count_Unactive/@unactiveTotal)
+                            </td>
+                            <td align="center">
+                                @(Model.Range_1_to_2_Years_Count_Active + Model.Range_1_to_2_Years_Count_Unactive)
+                            </td>
+                        </tr>
+
+                        <tr class="reportsRow">
+                            <th align="left">
+                                2 to 3 years old (@today.AddYears(-2) to @today.AddYears(-3))
+                            </th>
+                            <td align="center">
+                                @Model.Range_2_to_3_Years_Count_Active (@((Model.Range_2_to_3_Years_Count_Active * 100) / activeTotal)% - @Model.Range_2_to_3_Years_Count_Active/@activeTotal)
+                            </td>
+                            <td align="center">
+                                @Model.Range_2_to_3_Years_Count_Unactive (@((Model.Range_2_to_3_Years_Count_Unactive * 100) / unactiveTotal)% - @Model.Range_2_to_3_Years_Count_Unactive/@unactiveTotal)
+                            </td>
+                            <td align="center">
+                                @(Model.Range_2_to_3_Years_Count_Active + Model.Range_2_to_3_Years_Count_Unactive)
+                            </td>
+                        </tr>
+
+                        <tr class="reportsRow">
+                            <th align="left">
+                                More 3 years old (@today.AddYears(-3))
+                            </th>
+                            <td align="center">
+                                @Model.Range_Old_Count_Active (@((Model.Range_Old_Count_Active * 100) / activeTotal)% - @Model.Range_Old_Count_Active/@activeTotal)
+                            </td>
+                            <td align="center">
+                                @Model.Range_Old_Count_Unactive (@((Model.Range_Old_Count_Unactive * 100) / unactiveTotal)% - @Model.Range_Old_Count_Unactive/@unactiveTotal)
+                            </td>
+                            <td align="center">
+                                @(Model.Range_Old_Count_Active + Model.Range_Old_Count_Unactive)
+                            </td>
+                        </tr>
+
+                        <tr class="reportsHeaderRow">
+                            <th align="left">
+                                Total:
+                            </th>
+                            <td>
+                                @activeTotal
+                            </td>
+                            <td>
+                                @unactiveTotal
+                            </td>
+                            <td>
+                                @(activeTotal+unactiveTotal)
+                            </td>
+                        </tr>
+                    </table>
+                }
+            </td>
+        </tr>
+        
+    </table>
+}
+

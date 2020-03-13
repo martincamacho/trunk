@@ -1,0 +1,50 @@
+﻿@model CastleClub.BackEnd.Models.AuthorizeFileVM
+@{
+    ViewBag.Title = "Synchronize";
+}
+
+<h5>Upload the file report from Authorize.net</h5>
+@using (Html.BeginForm("Synchronize", "Authorize", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <table>
+        <tr>
+            <th align="right">
+                File:
+            </th>
+            <td>
+                @Html.TextBoxFor(m => m.File, new { type = "file", name = "file" })
+            </td>
+        </tr>
+        <tr>
+            <th align="right">
+                Only refund
+            </th>
+            <td>
+                @Html.EditorFor(m => m.OnlyRefund)
+            </td>
+        </tr>
+        <tr>
+            <td align="center" colspan="2">
+                <input type="submit" value="Upload" />
+            </td>
+        </tr>
+    </table>    
+}
+
+<script>
+    $('INPUT[type="file"]').change(function () {
+        var ext = $(this).val().split('.').pop().toLowerCase();
+        if ($.inArray(ext, ['txt', 'csv']) == -1) {
+            alert('invalid extension!');
+            $(this).val('');
+        }
+    })
+</script>
+
+@if (Model!=null && Model.Upload)
+{
+    <script>
+        alert("Report file upload.");
+    </script>
+}
+

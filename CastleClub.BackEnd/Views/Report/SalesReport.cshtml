@@ -1,0 +1,330 @@
+﻿@model CastleClub.BackEnd.Models.SalesReportVM
+@using CastleClub.DataTypes;
+@{
+    List<KeyValuePair<string, List<ReferrerSalesInfoDT>>> data = null;
+    if (ViewBag.Data != null)
+    {
+        data = ViewBag.Data;
+    }
+}
+<table style="width: 100%">
+    <tbody>
+        <tr>
+            <td colspan="2" class="pageTitle">
+                Sales Report
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 250px; vertical-align:top;">
+                @using (Html.BeginForm())
+                {
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="tableTitle">Date Range:</td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #FFFFCC">
+                                    <table style="width: 100%">
+                                        <tbody>
+                                            <tr>
+                                                <td>Start Date:</td>
+                                                <td style="text-align: right">
+                                                    @Html.TextBoxFor(m => m.StartDate)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>End Date:</td>
+                                                <td style="text-align: right">
+                                                    @Html.TextBoxFor(m => m.EndDate)
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <hr size="1">
+                                    <table style="width: 100%">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    @Html.RadioButtonFor(m => m.Range, "CUSTOM")
+                                                    Custom Date Range
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.RadioButtonFor(m => m.Range, "TODAY", new { @checked = "checked" })
+                                                    Today
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.RadioButtonFor(m => m.Range, "YESTERDAY")
+                                                    Yesterday
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.RadioButtonFor(m => m.Range, "THISWEEK")
+                                                    This Week
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.RadioButtonFor(m => m.Range, "LASTWEEK")
+                                                    Last Week
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.RadioButtonFor(m => m.Range, "THISMONTH")
+                                                    This Month
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.RadioButtonFor(m => m.Range, "LASTMONTH")
+                                                    Last Month
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.RadioButtonFor(m => m.Range, "THISYEAR")
+                                                    This Year
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.RadioButtonFor(m => m.Range, "LASTYEAR")
+                                                    Last Year
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tableTitle">Qualifiers:</td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #CCFFFF">
+                                    <table style="width: 100%">
+                                        <tbody>
+                                            <tr>
+                                                <td>Website:</td>
+                                                <td style="text-align: right">
+                                                    @Html.DropDownListFor(m => m.ReferrerId, Model.GetSelectList(Model.Referrers, "Id", "Name", "0", "All Webites"))
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Sites:</td>
+                                                <td style="text-align: right">
+                                                    @Html.DropDownListFor(m => m.SiteId, Model.GetSelectList(Model.Sites, "Id", "Name", "0", "All Sites"))
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tableTitle">Report Type:</td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #CCCCFF">
+                                    <table style="width: 100%">
+                                        <tbody>
+                                            <tr>
+                                                <td style="font-weight: bold">Group Data By:</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.RadioButtonFor(m => m.GroupBy, "DAY", new { @checked = "checked" })
+                                                    Day
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.RadioButtonFor(m => m.GroupBy, "MONTH")
+                                                    Month
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.RadioButtonFor(m => m.GroupBy, "YEAR")
+                                                    Year
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tableTitle">
+                                    <input type="submit" value="Submit">
+                                    <input type="button" name="resetForm" value="Reset">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+            </td>
+            @if (data != null)
+            {
+                <td style="padding-right: 50px; padding-left: 50px; vertical-align: top;  margin-bottom: 40px">
+                    @foreach (KeyValuePair<string, List<ReferrerSalesInfoDT>> item in data)
+                    {
+                        <p class="reportsTableName">@item.Key</p>
+                        <table class="reportsTable">
+                            <tbody>
+                                <tr class="reportsHeaderRow">
+                                    <td>Date</td>
+                                    <td>Visits</td>
+                                    <td># New Orders</td>
+                                    <td># Cancelled</td>
+                                    <td># Billed</td>
+                                    <td># Refunded</td>
+                                    <td>Revenue $</td>
+                                    <td>Refund $</td>
+                                    <td>Profit $</td>
+                                </tr>
+                                <tr class="reportsHeaderRow">
+                                    <td>Total</td>
+                                    <td>@String.Format("{0:N0}", item.Value.Sum(d => d.Visits))</td>
+                                    <td>@item.Value.Sum(d => d.Signups)</td>
+                                    <td>@item.Value.Sum(d => d.Cancelled)</td>
+                                    <td>@item.Value.Sum(d => d.Billed)</td>
+                                    <td>@item.Value.Sum(d => d.Refunded)</td>
+                                    <td>$@String.Format("{0:N2}", item.Value.Sum(d => d.Profit))</td>
+                                    <td>@Html.Raw(item.Value.Sum(d => d.Refund) != 0 ? "-" : "")$@String.Format("{0:N2}", item.Value.Sum(d => d.Refund))</td>
+                                    <td>$@String.Format("{0:N2}", item.Value.Sum(d => d.Revenue))</td>
+                                </tr>
+                                @foreach (CastleClub.DataTypes.ReferrerSalesInfoDT row in item.Value)
+                                {
+                                    <tr class="reportsRow">
+                                        <td>@row.DateString</td>
+                                        <td>@String.Format("{0:N0}", row.Visits)</td>
+                                        <td>@row.Signups</td>
+                                        <td>@row.Cancelled</td>
+                                        <td>@row.Billed</td>
+                                        <td>@row.Refunded</td>
+                                        <td>$@String.Format("{0:N2}", row.Profit)</td>
+                                        <td>@Html.Raw(row.Refund != 0 ? "-" : "")$@String.Format("{0:N2}", row.Refund)</td>
+                                        <td>$@String.Format("{0:N2}", row.Revenue)</td>
+                                    </tr>
+                                }
+                                <tr class="reportsHeaderRow">
+                                    <td>Total</td>
+                                    <td>@String.Format("{0:N0}", item.Value.Sum(d => d.Visits))</td>
+                                    <td>@item.Value.Sum(d => d.Signups)</td>
+                                    <td>@item.Value.Sum(d => d.Cancelled)</td>
+                                    <td>@item.Value.Sum(d => d.Billed)</td>
+                                    <td>@item.Value.Sum(d => d.Refunded)</td>
+                                    <td>$@String.Format("{0:N2}", item.Value.Sum(d => d.Profit))</td>
+                                    <td>@Html.Raw(item.Value.Sum(d => d.Refund) != 0 ? "-" : "")$@String.Format("{0:N2}", item.Value.Sum(d => d.Refund))</td>
+                                    <td>$@String.Format("{0:N2}", item.Value.Sum(d => d.Revenue))</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+                </td>
+            }
+        </tr>
+    </tbody>
+</table>
+
+<script>
+    $(function () {
+        $("#StartDate").datepicker();
+        $("#EndDate").datepicker();
+        $("#StartDate").change(function () {
+            $("input[name=Range][value=CUSTOM]").prop("checked", "checked");
+        });
+        $("#EndDate").change(function () {
+            $("input[name=Range][value=CUSTOM]").prop("checked", "checked");
+        });
+    });
+
+    $(function () {
+        $("input[name=resetForm]").click(function () {
+            $("#StartDate").datepicker('setDate', new Date());
+            $("#EndDate").datepicker('setDate', new Date());
+            $("input[name=Range][value=TODAY]").prop("checked", "checked");
+            $("input[name=GroupBy][value=DAY]").prop("checked", "checked");
+            $("select[name=ReferrerId] option:eq(0)").prop("selected", true);
+        });
+    });
+
+    $(function () {
+        $("input[name=Range]").click(function () {
+            var value = $(this).attr('value');
+            switch (value) {
+                case 'TODAY':
+                    $("#StartDate").datepicker('setDate', new Date());
+                    $("#EndDate").datepicker('setDate', new Date());
+                    break;
+                case 'YESTERDAY':
+                    var date = new Date();
+                    date.setDate(date.getDate() - 1);
+                    $("#StartDate").datepicker('setDate', date);
+                    $("#EndDate").datepicker('setDate', date);
+                    break;
+                case 'THISWEEK':
+                    var date = new Date();
+                    date.setDate(date.getDate() - date.getDay());
+                    $("#StartDate").datepicker('setDate', date);
+                    $("#EndDate").datepicker('setDate', new Date());
+                    break;
+                case 'LASTWEEK':
+                    var startDate = new Date();
+                    startDate.setDate(startDate.getDate() - startDate.getDay() - 7);
+                    var endDate = new Date();
+                    endDate.setDate(endDate.getDate() - endDate.getDay() - 1);
+                    $("#StartDate").datepicker('setDate', startDate);
+                    $("#EndDate").datepicker('setDate', endDate);
+                    break;
+                case 'THISMONTH':
+                    var date = new Date();
+                    date.setDate(1);
+                    $("#StartDate").datepicker('setDate', date);
+                    $("#EndDate").datepicker('setDate', new Date());
+                    break;
+                case 'LASTMONTH':
+                    var startDate = new Date();
+                    startDate.setDate(1);
+                    startDate.setMonth(startDate.getMonth() - 1);
+                    var endDate = new Date();
+                    endDate.setDate(0);
+                    $("#StartDate").datepicker('setDate', startDate);
+                    $("#EndDate").datepicker('setDate', endDate);
+                    break;
+                case 'THISYEAR':
+                    var date = new Date();
+                    date.setDate(1);
+                    date.setMonth(0);
+                    $("#StartDate").datepicker('setDate', date);
+                    $("#EndDate").datepicker('setDate', new Date());
+                    break;
+                case 'LASTYEAR':
+                    var startDate = new Date();
+                    startDate.setDate(1);
+                    startDate.setMonth(0);
+                    startDate.setYear(startDate.getFullYear() - 1);
+                    var endDate = new Date();
+                    endDate.setDate(0);
+                    endDate.setMonth(-1);
+                    $("#StartDate").datepicker('setDate', startDate);
+                    $("#EndDate").datepicker('setDate', endDate);
+                    break;
+            }
+        });
+    });
+</script>
+
+@if (data == null)
+{
+    <script>
+        $(function () {
+            $("#StartDate").datepicker('setDate', new Date());
+            $("#EndDate").datepicker('setDate', new Date());
+        });
+    </script>
+}

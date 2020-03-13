@@ -1,0 +1,27 @@
+﻿@{
+    CastleClub.DataTypes.SiteDT site = ViewBag.Site;
+    string referrer = ViewBag.Referrer != null ? ViewBag.Referrer : string.Empty;  
+}
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Terms of Membership</title>
+    <link href="/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div id="rightcontent">
+      <h1>Terms of Membership</h1>
+      <div class="pagecontent">
+        <p>@site.Name members receive coupons and discounts to @site.BusinessSector all across America.&nbsp; By enrolling in the @site.Name membership program, you will receive immediate online access to receive membership savings and discounts from many of the world’s most recognizable brands both nationwide as well as in your area.&nbsp; Sign up for the @site.Name membership program for FREE for the next 30 days and then  enjoy ongoing savings for only <strong>$@Decimal.Divide(site.PricePerQuarter, 3) a month, with payments of $@site.PricePerQuarter being  billed to your credit card or debit card every 3 months, thereafter. Get your $15.00 Cash Back Savings on your next purchase</strong>.&nbsp; If you are 100%  satisfied with your @site.Name membership during the next 30 days, do nothing. <strong>All your @site.Name</strong> <strong>membership savings privileges  will automatically renew for just $@Decimal.Divide(site.PricePerQuarter, 3) a month billed $@site.PricePerQuarter every 3 months by @site.Name</strong> <strong>to the credit card or deducted from the debit card  you used during your initial purchase and this registration opt-in.</strong> Your  membership fees will show up on your card statement as billed by @site.Name. In the event that your membership fees were to ever change, you would be notified before being billed. @site.Name member benefits may be  enhanced or modified at anytime without prior notice.&nbsp;<strong> If at any time  you are not completely satisfied with our membership service, simply call us at @site.Phone and/or email us at @site.Email to let us know you wish to cancel your membership benefits. Cancel this agreement during your 30 day free trial and you will not be billed.&nbsp; If you cancel this agreement after your 30 day free trial period, you will not be billed for any additional months and your membership benefits will remain active for the duration of your then three month term.&nbsp; You will remain liable for membership fees &amp; charges accrued after your 30 day trial period has ended up to the ending date of your then three month billing cycle in pursuant of this agreement.<u><br />
+        </u></strong><span class="mainlink"><br />
+            <br />
+        </span><span class="small">These Terms of Membership were last updated on <em>@site.LastUpdate</em>.</span> </p>
+      </div>
+    </div>
+</body>
+</html>

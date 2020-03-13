@@ -1,0 +1,186 @@
+﻿@model CastleClub.BackEnd.Models.NewUserVM
+@using CastleClub.DataTypes;
+@using CastleClub.DataTypes.Enums;
+@{
+    List<UserDT> users = ViewBag.Users;
+    UserDT loggedUser = ViewBag.User;
+}
+<table style="width: 100%">
+    <tbody>
+        <tr>
+            <td colspan="2" class="pageTitle">
+                Manage Users
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="usersTable">
+                    <tbody>
+                        <tr>
+                            <td class="usersHeaderCell">Email</td>
+                            <td class="usersHeaderCell">First Name</td>
+                            <td class="usersHeaderCell">Last Name</td>
+                            <td class="usersHeaderCell">User Level</td>
+                            <td class="usersHeaderCell"></td>
+                        </tr>
+                        @foreach (UserDT user in users)
+                        {
+                            if (loggedUser.Role >= user.Role)
+                            { 
+                            <tr class="usersRow" id="user_@user.Id">
+                                <td class="usersCell">@user.Email</td>
+                                <td class="usersCell">@user.FirstName</td>
+                                <td class="usersCell">@user.LastName</td>
+                                <td class="usersCell">@UserRoleHelper.GetString(user.Role)</td>
+                                <td class="usersCell">
+                                    @if (user.Id == loggedUser.Id)
+                                    {
+                                        <input type="button" value="Change Password" onclick="ChangePassword()"/>
+                                        <div id="changePasswordDiv" style="display:none">
+                                            @{Html.RenderAction("ChangePassword", "User", null);}
+                                        </div>
+                                    }
+                                    else if (loggedUser.Role == UserRole.ADMIN || loggedUser.Role == UserRole.SUPERADMIN)
+                                    {
+                                        <input type="button" value="Delete" onclick="DeleteUser(@user.Id,'@user.Email')" />
+                                    }
+                                </td>
+                            </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @if (loggedUser.Role == UserRole.ADMIN || loggedUser.Role == UserRole.SUPERADMIN)
+                {
+                    <input type="button" value="Add New User" onclick="AddNewUserResetForm()" />
+                    <div id="addNewUserDiv" title="Add New User" style="display: none">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>@Html.TextBoxFor(m => m.Email)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>First Name</td>
+                                        <td>@Html.TextBoxFor(m => m.FirstName)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Last Name</td>
+                                        <td>@Html.TextBoxFor(m => m.LastName)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>User Level</td>
+                                        <td>@Html.DropDownListFor(m => m.UserLevel, Model.GetSelectList<UserRole>())</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Password</td>
+                                        <td>@Html.PasswordFor(m => m.Password)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                                            <input type="submit" id="newUserSubmit" tabindex="-1" style="position:absolute; top:-1000px">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                }
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    function AddNewUserResetForm() {
+        $("#Email").val('');
+        $("#Email").removeClass("input-validation-error");
+        $("#FirstName").val('');
+        $("#FirstName").removeClass("input-validation-error");
+        $("#LastName").val('');
+        $("#LastName").removeClass("input-validation-error");
+        $("#Password").val('');
+        $("#Password").removeClass("input-validation-error");
+        AddNewUser();
+    }
+
+    function AddNewUser() {
+        dialog = $("#addNewUserDiv").dialog({
+            autoOpen: false,
+            height: 250,
+            width: 300,
+            modal: true,
+            buttons: {
+                "Add": function () {
+                    $('#newUserSubmit').click();
+                    dialog.dialog("close");
+                },
+                Cancel: function () {
+                    dialog.dialog("close");
+                }
+            },
+            close: function () {
+            }
+        });
+        dialog.dialog('open');
+    }
+
+    function DeleteUser(uId,uEmail) {
+        if (confirm("Do you want to delete user with email '"+uEmail+"'?")){
+            var values = {
+                userId: uId
+            }
+            $.ajax({
+                type: 'GET',
+                data: values,
+                url: '/User/DeleteUser',
+                dataType: 'html',
+                success: function (data) {
+                    $('#user_' + uId).remove();
+                },
+                error: function (data) {
+                }
+            });
+        }
+    }
+
+    function ChangePassword() {
+        ResetChangePasswordForm();
+        dialogChangePassword = $("#changePasswordDiv").dialog({
+            autoOpen: true,
+            height: 165,
+            width: 312,
+            modal: true,
+            title: "Change password",
+            buttons: {
+                "Ok": function () {
+                    $('#changePasswordBtn').click();
+                },
+                Cancel: function () {
+                    dialogChangePassword.dialog("close");
+                }
+            },
+            close: function () {
+            }
+        });
+        dialogChangePassword.dialog('open');
+    }
+
+    function CloseChangePasswordDlg() {
+        dialogChangePassword.dialog("close");
+    }
+</script>
+@if (ViewBag.Valid == false)
+{
+    <script>
+        $(document).ready(AddNewUser());
+    </script>
+}

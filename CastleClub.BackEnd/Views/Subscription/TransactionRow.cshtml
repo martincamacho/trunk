@@ -1,0 +1,17 @@
+﻿@using CastleClub.DataTypes;
+@using CastleClub.DataTypes.Enums;
+@{
+    Layout = null;
+    TransactionDT transaction = ViewBag.Transaction;
+    decimal amount = ViewBag.Amount;
+}
+<tr class="subscriptionsTrnRow">
+    <td class="subscriptionsTrnCell">@Html.Raw(transaction.AuthorizeTransactionId != 0 ? transaction.AuthorizeTransactionId.ToString() : "")</td>
+    <td class="subscriptionsTrnCell">@transaction.SubmitDate.ToString()</td>
+    <td class="subscriptionsTrnCell">@transaction.Type</td>
+    <td id="transactionStatusInvoice_@transaction.InvoiceId" title="@transaction.Message" class="subscriptionsTrnCell" style="color: @Html.Raw(transaction.Status == TransactionStatus.SUCCESFULL ? "#060" : "#F00")">@transaction.Status</td>
+    <td class="subscriptionsTrnCell">$@String.Format("{0:N2}", amount)</td>
+    <td class="subscriptionsTrnCell">@Html.Raw(transaction.RefundedTrnAuthorizeId != 0 ? transaction.RefundedTrnAuthorizeId.ToString() : "")</td>
+</tr>
+
+

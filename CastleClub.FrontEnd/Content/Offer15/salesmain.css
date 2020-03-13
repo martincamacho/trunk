@@ -1,0 +1,144 @@
+﻿@charset "utf-8";
+
+body, p, div, ul, li, ol, form, h1, h2, h3, h4, h5, h6 { margin: 0px; padding: 0px; }
+body, p, div, td, ol, ul, li, input, textarea, select { font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #000; }
+body { background: #FFFFFF; text-align: center; padding-top: 10px; padding-bottom: 5px; }
+p {
+	padding-bottom: 10px;
+	font-size: 18px;
+}
+
+.clearfix { height: 0px; clear: both; font-size:1px; padding: 0px; margin:0px; line-height: 0px; }
+
+.underline { text-decoration: underline; }
+.bold { font-weight: bold; }
+.italic { font-style: italic; }
+.boldcolor { color: #1a387e; }
+
+.leftalign { text-align: left; }
+.rightalign { text-align: right; }
+.centeralign { text-align: center; }
+img { text-decoration: none; border-width: 0px; border-style: none; }
+
+.green { color: #0B7446; }
+.black { color: #000000; }
+
+.purple { color: #192172; }
+
+.blue { color: #bd0100; }
+.yellow { color: #FBE33C; }
+.grey { color: #666666; }
+.small { font-size: 11px; }
+
+.mainlink { color: #bc2f0e; text-decoration: underline; font-weight:bold; }
+.mainlink:hover { text-decoration: none; }
+
+#outercontainer { margin: 0px auto; padding: 5px; width: 715px; background: #FFFFFF; border-top-width: 10px; border-top-style: solid; border-top-color: #1a387e; }
+
+#header { padding-bottom: 5px; border-bottom: 2px solid #a2bc1b; padding-top: 5px; }
+#preheader { padding-top: 5px; padding-bottom: 10px; }
+
+#preheader td { font-size: 12px; font-weight: bold; }
+#preheader table { border: 1px solid #6AA4E3; background: #F7F7F7; }
+#preheader .nothankyou { font-weight: normal; font-size: 11px; }
+#partners { margin-top: -10px; margin-bottom: 5px; border: 1px solid #D8DAD9; padding-top: 8px; padding-bottom: 5px; font-weight: bold; text-align: center; }
+#partners img { padding-top: 10px; }
+
+.nothankyou a { font-weight: bold; padding: 1px 2px; color: #1D5A9E; }
+.nothankyou a:hover { text-decoration: none; }
+
+
+#header .logo { float: left; padding-left: 5px; padding-top: 2px; }
+.bigblue { font-size: 14px; color: #1a387e; }
+
+#header .partnership { float: right; padding-right: 5px; padding-top: 2px; }
+
+
+#opener { }
+#opener .text { float: left; text-align: center; width: 250px; padding-top: 10px; }
+#opener .text p { font-size: 11px; padding-top: 5px; line-height: 1.3em; text-decoration: none; text-align: left; }
+#opener .text h2 { color: #1a387e; font-size: 14px; font-weight: bold; padding-bottom: 6px; text-align: center; }
+#couponproducts { float: right; width: 440px; }
+#couponproducts .thanks { color: #192172; font-size: 13px; padding-top: 8px; }
+#couponproducts .thanks p { font-size: 13px; padding-top: 5px; }
+#signuptext   { padding: 10px 10px; margin-top: 5px; border: 1px solid #C2C5C4; width: 395px; margin-right: auto; margin-left: auto; }
+#signuptext  p { font-size: 11px; }
+#signuptext2   { margin-top: 5px; border: 1px solid #C2C5C4; margin-right: auto; margin-left: auto; padding: 10px; margin-bottom: 5px; }
+#signuptext2  p { font-size: 11px; }
+
+
+
+#couponproducts .coupontext { padding-top: 136px; color: #FFFFFF; font-weight: bold; padding-right: 5px; padding-left: 5px; line-height: 1.1em; }
+#couponproducts .coupon { background: url(cashbackcertificate.jpg) no-repeat; height: 193px; width: 449px; margin-top: 10px; }
+#couponproducts .couponclicktext { font-size: 11px; color: #AA0000; padding-top: 2px; font-weight: bold; }
+#couponproducts .couponsmalltext { font-size: 12px; font-weight: bold; padding-top: 132px; }
+#couponproducts .productsboxtree { background: url(productsbox-vtree.jpg) no-repeat; height: 164px; width: 446px; margin-top: 10px; margin-left: 1px; }
+#couponproducts .productsboxmenu { background: url(productsbox-vmenu.jpg) no-repeat; height: 164px; width: 446px; margin-top: 10px; margin-left: 1px; }
+#couponproducts .productsboxpartsgeek { background: url(productsbox-partsgeek.jpg) no-repeat; height: 164px; width: 446px; margin-top: 10px; margin-left: 1px; }
+#couponproducts .thanks .cashbacklarge {
+	font-size: 26px;
+	color: #098B0C;
+}
+#couponproducts .thanks .cashbacklarge .cashbacksmall { font-size: 11px; }
+#couponproducts .thanks form { text-align: left; }
+#couponproducts .nothanks a { font-size: 11px; color: #000000; font-weight: normal; }
+#couponproducts .thanks td { font-weight: bold; }
+
+
+
+
+
+#main { margin-top: 12px; }
+#main .banner { float: left; width: 177px; }
+#main .banner img { border: 1px solid #999999; }
+
+#main .content { float: right; text-align: left; width: 525px; }
+#main .content p { font-size: 12px; padding-bottom: 25px; }
+
+.content .small a { color: #1D5A9E; text-decoration: underline; }
+.content .small a:hover { text-decoration: none; }
+.emphasizep { font-size: 14px; font-style: italic; font-weight: bold; color: #0f6997; background: url(popgraphics/goldstar.gif) no-repeat; height: 72px; padding-top: 12px; padding-left: 80px; }
+
+
+#closer { padding-top: 10px; padding-bottom: 5px; }
+#closer .detailsbox { text-align: left; }
+#closer p { font-size: 12px; }
+
+#closer .details { border: 1px solid #D8DAD9; padding: 6px 10px 0px; color: #003366; font-weight: normal; }
+#closer .signup { float: right; width: 265px; text-align: left; }
+.inputboxes input { border: 1px solid #BEBCBF; font-size: 12px; width: 225px; margin-top: 4px; padding: 4px; background: #FFFFB0; }
+.inputboxes2 input, .inputboxes2 select { border: 1px solid #BEBCBF; font-size: 12px; margin-top: 2px; padding: 4px; background: #FFFFB0; width: 195px; }
+.inputboxes3 input, .inputboxes3 select { border: 1px solid #BEBCBF; font-size: 12px; margin-top: 2px; padding: 4px; background: #FFFFB0; width:410px; }
+.inputboxes4 input, .inputboxes4 select { border: 1px solid #BEBCBF; font-size: 12px; margin-top: 2px; padding: 4px; background: #FFFFB0; width:100px; }
+.inputboxes input:focus, .inputboxes2 input:focus, .inputboxes3 input:focus, .inputboxes4 input:focus { background:#EAEAEA; }
+.signup .join { margin-top: 5px; }
+.signup .nothanks { padding-top: 50px; padding-bottom: 33px; }
+.signup .nothanks a { color: #000000; }
+#thanks { padding-top: 12px; padding-bottom: 12px; font-size: 12px; text-align: left; }
+#thanks p { font-size: 12px; }
+
+
+
+#rightcontent { text-align: left; width: 400px; padding-left: 5px; background: #FFFFFF; }
+#rightcontent h1, .joinyourinfo h1, .joinbillinginfo h1 { padding-left: 33px; color: #1a387e; font-size: 18px; font-weight: bold; padding-bottom: 10px; background-image: url(../graphics/bullet1.gif); background-repeat: no-repeat; background-position: 4px 0px; }
+#rightcontent .pagecontent h2 { font: bold 14px Arial, Helvetica, sans-serif; color: #1d1e19; border-bottom: 1px solid #CECFD1; border-top-color: #CECFD1; border-right-color: #CECFD1; border-left-color: #CECFD1; margin-bottom: 4px; }
+#rightcontent .pagecontent h3 { font: bold 12px Arial, Helvetica, sans-serif; color: #1d1e19; border-bottom: 1px solid #CECFD1; border-top-color: #CECFD1; border-right-color: #CECFD1; border-left-color: #CECFD1; margin-bottom: 4px; }
+#rightcontent .pagecontent { padding-left: 25px; padding-top: 5px; }
+#rightcontent p, #rightcontent div { font: 11px Verdana, Arial, Helvetica, sans-serif; }
+#rightcontent .pagecontent a, .mainlink { font-weight: bold; color: #0f6997; text-decoration: underline; }
+#rightcontent .pagecontent a:hover, .mainlink:hover {text-decoration: none;}
+#rightcontent .small { color: #676D79; font: italic 10px Arial, Helvetica, sans-serif; }
+#rightcontent .underline { font-weight: bold; text-decoration: underline; }
+#rightcontent .pagecontent ol { padding-left: 20px; padding-top: 5px; padding-bottom: 15px; }
+#rightcontent .pagecontent li { line-height: 1.1em; padding-bottom: 3px; }
+
+
+
+#footer { font-size: 10px; text-align: center; padding-top: 10px; padding-bottom: 10px; width: 500px; margin-right: auto; margin-left: auto; }
+#opener .text img { padding-bottom: 13px; }
+.signupterms { width: 230px; }
+#signuptext2  img { padding-top: 8px; padding-bottom: 0px!important; }
+#partners .catlogos { text-align: center; margin-right: auto; margin-left: auto; width: 668px; }
+
+
+.catlogos img { float: left; padding-right: 5px; padding-left: 10px; padding-bottom: 12px; }

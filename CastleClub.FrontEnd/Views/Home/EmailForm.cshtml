@@ -1,0 +1,130 @@
+﻿@model CastleClub.FrontEnd.Models.Home.EmailFormVM
+@using CastleClub.DataTypes.Enums
+@{
+    CastleClub.DataTypes.SiteDT site = ViewBag.Site;
+    string referrer = (string)ViewBag.referrer;
+}
+<div id="opener">
+    <div class="text">
+        <img src="@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/partsgeeklogo.gif")">
+        <h2 style="color:#@site.CSSEmphasizeColor">Congratulations!!<br>
+            Get $15 Cash Back Savings Today.
+        </h2>
+        <p>
+            @referrer has partnered with @site.Name to help provide you with additional money saving discounts &amp; promotions. Sign up to save as much as 50% on @site.BusinessSector across America! Sign up for the @site.Name membership program for FREE for the next 30 days and then enjoy ongoing savings for only $@Decimal.Divide(site.PricePerQuarter, 3) a month, with payments of $@site.PricePerQuarter being billed to your credit card or debit card every 3 months, thereafter. By enrolling in the @site.Name membership program, you agree to authorize @referrer to securely transfer your name, address and debit or credit card information to @site.Name for billing and program processing. All your @site.Name membership savings privileges will automatically renew every month unless you contact us at @site.Phone and/or email us at @site.Email to let us know you wish to cancel. Please be sure to review the <a title="@site.Name Terms of Membership" rel="gb_page_center[450, 450]" class="mainlink"  target="_blank" href="/termsofmembership">Terms of Membership</a> billing details prior to registering, thank you.
+        </p>
+    </div>
+    <div id="couponproducts">
+        <div class="thanks">
+            <p><strong>Thank you for your @referrer Business!</strong></p>
+            <p>
+                You've qualified to join the <strong>@site.Name</strong><br>
+                Cash Back Savings Membership Program
+            </p>
+            <p class="cashbacklarge">
+                <strong>
+                    <img src="@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/cashbacksavingstext.gif")"></strong><strong>
+                        <br>
+                        <span class="cashbacksmall" style="color:#@site.CSSBlueColor">Good for your next @referrer purchase.<br>
+                            Please see offer &amp; billing details below.
+                        </span>
+                    </strong>
+            </p>
+            @using (Html.BeginForm())
+            { 
+                @Html.HiddenFor(m => m.SiteId)
+                <table width="435" cellspacing="0" cellpadding="5" border="0" align="center">
+                    <tbody>
+                        <tr>
+                            <td align="center" class="bigblue" colspan="3" style="color:#@site.CSSEmphasizeColor">Follow Steps 1-3 to Enroll &amp; Save.</td>
+                        </tr>
+                        <tr>
+                            <td valign="middle" align="left">
+                                <img width="33" height="33" src="@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/step1.gif")"></td>
+                            <td valign="middle" align="left"><span class="inputboxes">
+                                @Html.TextBoxFor(m => m.Email)
+                            </span></td>
+                            <td valign="middle" align="left">Enter your email address</td>
+                        </tr>
+                        <tr>
+                            <td valign="middle" align="left">
+                                <img width="33" height="33" src="@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/step2.gif")"></td>
+                            <td valign="middle" align="left"><span class="inputboxes">
+                                @Html.TextBoxFor(m => m.EmailVerification)
+                            </span></td>
+                            <td valign="middle" align="left">Verify your email address</td>
+                        </tr>
+                        <tr>
+                            <td width="10%" valign="middle" align="left">
+                                <img width="33" height="33" src="@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/step3.gif")"></td>
+                            <td valign="middle" align="left" colspan="2">
+                                <input type="image"  src="@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/yesjoinnow.gif")" width="225" height="51" />
+                                <img width="51" align="top" hspace="5" height="51" alt="" src="@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/thawte_small.gif")">
+                                <br>
+                                Yes, I want to sign up for @site.Name<br>
+                                plus receive my $15 Cash Back Savings.</td>
+                        </tr>
+                        <tr>
+                            <td valign="middle" align="left">&nbsp;</td>
+                            <td valign="middle" align="left" colspan="2">
+                                <p class="nothanks"><a href="javascript:window.close();">No thank you, I am  not interested at this time.</a></p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            <div id="signuptext">
+                <strong>By entering my email address and clicking "YES, Save Now!", I certify that I have read and agree to the @site.Name <a  target="_blank" href="/termsofmembership" class="mainlink" rel="gb_page_center[450, 450]" title="@site.Name Terms of Membership">Terms of Membership</a> and <a  target="_blank" href="/salesprivacy" class="mainlink" rel="gb_page_center[450, 450]" title="@site.Name Privacy Policy">Privacy Policy</a>. I agree to enroll in the @site.Name automatic monthly renewal membership program.</strong>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">
+        <!-- -->
+    </div>
+</div>
+
+<div class="clearfix">
+    <!-- -->
+</div>
+<div id="main">
+    <div class="banner">
+        <img src=@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/catleftbookmark.jpg") alt="" width="175" height="476"></div>
+    <div class="content">
+        @Html.Raw(site.Benefits)
+        <p>
+            <strong class="blue">$15 Cash Back Savings</strong><br>
+            On top of receiving every day savings, NEW @site.AltNames.Split(',')[0] Members qualify to receive a $15 cash back savings to be used on your next purchase, absolutely FREE!&nbsp; After you sign up for your free 30 day test trial membership, you will &nbsp;receive an email with instructions on how to redeem your cash back savings. This is our way of saying thank you for giving our membership service a try. Please <a href="/salesclaim" class="mainlink" rel="gb_page_center[450, 400]" title="Claim Your $15 Cash Back Savings">Click Here</a> for more information on how to receive your $15 Cash Back Savings.
+        </p>
+        <p class="emphasizep">@Html.Raw(site.WeHaveAmassed)</p>
+    </div>
+    <div class="clearfix">
+        <!-- -->
+    </div>
+</div>
+<div id="partners">
+    Participating Properties Include:<br>
+    <div class="catlogos">
+        @foreach (var filename in site.ParticipatingPropertiesLogos.Split(','))
+        {<img src=@Html.Raw("/Content/Offer" + site.Id + "/popgraphics/" + filename) />}
+        <div class="clearfix">
+            <!-- -->
+        </div>
+    </div>
+</div>
+<div id="closer">
+    <div class="detailsbox">
+        <div class="detailsbox">
+            <div class="details">
+                <p>
+                    <strong>Offer and Billing  Details:<br>
+                    </strong>@site.Name members receive coupons and discounts to leading @site.BusinessSector across America.&nbsp; By enrolling in the @site.Name  membership program, you agree to authorize @referrer to securely transfer  your name, address and debit or credit card information to @site.Name for billing and program processing.&nbsp;Sign up for the @site.Name Membership  program for FREE for the next 30 days and then enjoy ongoing savings for only <strong>$@Decimal.Divide(site.PricePerQuarter, 3) a month, with payments of $@site.PricePerQuarter  being billed to your credit card or  debit card every 3 months, thereafter. Get your $15.00 Cash Back Savings on your  next purchase.&nbsp;</strong> If you are 100% satisfied  with your @site.Name membership during the next 30 days, do nothing. <strong>All your @site.Name Membership savings privileges will automatically continue for just $@Decimal.Divide(site.PricePerQuarter, 3) a month billed $@site.PricePerQuarter  every 3 months by @site.Name to the credit card or deducted from the debit card you used during your initial purchase and this registration opt-in.</strong> Your membership fees will show up on your card statement as  billed by @site.Name. In the event that your membership fees were to  ever change, you would be notified before being billed. @site.Name Member benefits may be enhanced or modified at anytime without prior notice. <strong>If at any time you are not completely satisfied with our  membership service, simply call us at @site.Phone and/or email us at <span class="mainlink">customerservice@@@site.OfferDomain</span> to let us know you wish to cancel your membership  benefits. Cancel this agreement during your 30 day free trial and you will not  be billed.&nbsp; If you cancel this agreement after your 30 day free trial  period, you will not be billed for any additional months and your membership  benefits will remain active for the duration of your then three month  term.&nbsp; You will remain liable for membership fees &amp; charges accrued  after your 30 day trial period has ended up to the ending date of your then  three month billing cycle in pursuant of this agreement.</strong>
+                </p>
+                <p>By clicking "Yes, Save Now!", you consent to  enrolling in the @site.Name membership program and to receive  electronic email disclosures. Please read this offer &amp; billing details  carefully and save &amp; print a copy for your records. @site.AltNames.Split(',')[1] will communicate your benefit and other membership information to you,  including payment authorization by electronic communications, including email  and electronic postings on our site. Your membership welcome email will also  include your new member ID #, your login information along with a copy of our  membership billing details for your convenience. &nbsp;In order to receive @site.Name Membership details, you are agreeing to receive these  communications electronically, and by clicking "Yes, Save Now!" you  consent to do so. You may withdraw this consent by canceling the service.  Please read &amp; review our <a  target="_blank" href="/salesterms" class="mainlink">Terms &amp; Conditions</a> &amp; <a target="_blank" href="/salesprivacy" class="mainlink">Privacy  Policies</a> carefully while saving &amp; printing a copy of each  for your records before agreeing to register and "opt-in" for this  membership program.&nbsp; You should periodically review these terms,  conditions, and policies for any updates or changes. Your continued use of the @site.Name Membership program shall constitute notice and acceptance  of any such changes.&nbsp; @site.AltNames.Split(',')[1] will communicate your  benefits and other membership information to you by email as well as electronic  postings on our site. You may withdraw this consent by canceling the service.  You can update your member identification information at anytime by logging  into your account or by contacting our customer service team.&nbsp; The $15 Cash Back Savings on your next purchase is yours to keep as our way of saying  thank you for giving our @site.AltNames.Split(',')[0] Membership service a try.</p>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">
+        <!-- -->
+    </div>
+</div>
+
